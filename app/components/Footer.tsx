@@ -18,19 +18,13 @@ export default function Footer() {
         <div className="flex gap-12">
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#"
+            href="/polityka-prywatnosci"
           >
             Prywatność
           </a>
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#"
-          >
-            Regulamin
-          </a>
-          <a
-            className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
-            href="#"
+            href="mailto:kontakt@bifor.games"
           >
             Wsparcie
           </a>

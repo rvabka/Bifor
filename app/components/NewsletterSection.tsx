@@ -24,6 +24,7 @@ declare global {
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >('idle');
@@ -85,15 +86,18 @@ export default function NewsletterSection() {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, turnstileToken })
+        body: JSON.stringify({ email, firstName, turnstileToken })
       });
 
       const data = await res.json();
 
       if (res.ok) {
         setStatus('success');
-        setMessage('Jesteś na liście! Wkrótce się odezwiemy. 🎉');
+        setMessage(
+          'Sprawdź swoją skrzynkę e-mail i kliknij link potwierdzający! 📧'
+        );
         setEmail('');
+        setFirstName('');
       } else {
         setStatus('error');
         setMessage(data.error || 'Coś poszło nie tak. Spróbuj ponownie.');
@@ -143,6 +147,17 @@ export default function NewsletterSection() {
             onSubmit={handleSubmit}
             className="w-full max-w-md relative z-10 flex flex-col gap-8 items-center"
           >
+            <div className="relative w-full">
+              <input
+                type="text"
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+                className="w-full bg-transparent border-0 border-b border-white/20 py-6 px-0 text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
+                placeholder="Twoje imię"
+                required
+                disabled={status === 'loading'}
+              />
+            </div>
             <div className="relative w-full">
               <input
                 type="email"

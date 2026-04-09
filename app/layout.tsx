@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: 'https://bifor.app'
+    canonical: 'https://bifor.games'
   }
 };
 
