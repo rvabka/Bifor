@@ -1,0 +1,6 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="128" fill="#0e0e0e"/>
+  <g transform="translate(256,256) rotate(-8) translate(-256,-256)">
+    <path d="M176 136h112c28 0 50 9 66 26s24 38 24 64c0 20-5 36-15 48s-23 21-38 26v2c22 5 38 14 49 30s17 35 17 57c0 30-10 53-31 70s-48 26-82 26H176V136zm52 120h56c18 0 32-5 42-14s15-22 15-38c0-15-5-27-14-35s-24-13-42-13h-57v100zm0 136h64c20 0 35-5 46-16s16-25 16-42c0-18-6-32-17-41s-27-15-47-15h-62v114z" fill="white"/>
+  </g>
+</svg>
