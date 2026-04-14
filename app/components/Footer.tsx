@@ -15,7 +15,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex gap-12">
+        <div className="flex items-center gap-12">
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
             href="/polityka-prywatnosci"
@@ -27,6 +27,21 @@ export default function Footer() {
             href="mailto:kontakt@bifor.games"
           >
             Wsparcie
+          </a>
+          <a
+            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-primary/30 transition-all group"
+            href="https://www.tiktok.com/@biforgames"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+          >
+            <svg
+              className="w-4 h-4 text-on-surface-variant group-hover:text-primary transition-colors"
+              fill="currentColor"
+              viewBox="0 0 448 512"
+            >
+              <path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.3v178.8A162.6 162.6 0 1 1 185 188.3v89.9a74.6 74.6 0 1 0 52.2 71.2V0h88a121 121 0 0 0 1.9 22.2 121.4 121.4 0 0 0 68 84.1 120.7 120.7 0 0 0 52.9 13.4v90.2Z" />
+            </svg>
           </a>
         </div>
 

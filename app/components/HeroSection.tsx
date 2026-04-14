@@ -111,9 +111,8 @@ export default function HeroSection() {
             </span>
           </button>
           <span className="text-xs text-on-surface-variant font-light">
-            Dołącz do{' '}
-            <span className="text-primary font-medium">setek graczy</span>{' '}
-            czekających na premierę
+            Już <span className="text-primary font-medium">500+ osób</span>{' '}
+            czeka na premierę — dołącz do nich!
           </span>
         </div>
 
