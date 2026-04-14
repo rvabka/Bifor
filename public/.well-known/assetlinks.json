@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bifor.app",
+      "sha256_cert_fingerprints": [
+        "53:F5:96:A0:68:26:6A:9D:EB:DD:74:74:87:B1:A7:5C:49:78:E4:DA:D3:86:27:9E:C5:3A:29:28:9D:F6:38:2C"
+      ]
+    }
+  }
+]
