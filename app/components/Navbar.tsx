@@ -20,9 +20,9 @@ export default function Navbar() {
       />
       <button
         onClick={scrollToNewsletter}
-        className="bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-full text-white text-sm font-light hover:bg-white/20 transition-all tracking-tight cursor-pointer"
+        className="bg-primary text-on-primary px-6 py-3 rounded-full text-sm font-semibold hover:shadow-[0_0_30px_rgba(255,178,0,0.4)] hover:scale-105 transition-all tracking-tight cursor-pointer"
       >
-        Pozostańmy w kontakcie
+        Zapisz się!
       </button>
     </nav>
   );

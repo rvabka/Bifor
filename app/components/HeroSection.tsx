@@ -1,10 +1,18 @@
+'use client';
+
 export default function HeroSection() {
+  const scrollToNewsletter = () => {
+    document
+      .getElementById('newsletter')
+      ?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative pt-40 pb-40 overflow-hidden min-h-screen flex flex-col items-center">
+    <section className="relative pt-28 pb-16 overflow-hidden min-h-screen flex flex-col items-center">
       <div className="absolute inset-0 hero-gradient -z-10" />
 
-      <div className="max-w-[1440px] w-full mx-auto px-4 md:px-8 text-center space-y-12 relative z-10">
-        <div className="space-y-6 relative">
+      <div className="max-w-[1440px] w-full mx-auto px-4 md:px-8 text-center space-y-8 relative z-10">
+        <div className="space-y-4 relative">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-highest border border-outline-variant/15 text-primary text-[0.7rem] uppercase tracking-[0.2em] font-medium mx-auto">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             Gry imprezowe • Wkrótce
@@ -20,7 +28,7 @@ export default function HeroSection() {
             loop
             muted
             playsInline
-            className="absolute -right-4 md:-right-30 top-full md:-bottom-32 md:top-auto w-28 md:w-86 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-20"
+            className="absolute -right-4 md:-right-30 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-86 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-20"
           >
             <source src="/dancing.webm" type="video/webm" />
           </video>
@@ -30,7 +38,7 @@ export default function HeroSection() {
             loop
             muted
             playsInline
-            className="absolute -left-4 md:-left-20 top-full md:-bottom-32 md:top-auto w-28 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-20"
+            className="absolute -left-4 md:-left-20 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-20"
           >
             <source src="/flying.webm" type="video/webm" />
           </video>
@@ -41,7 +49,7 @@ export default function HeroSection() {
             na swoich telefonach.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3 pt-2">
+          <div className="flex flex-wrap justify-center gap-3">
             <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] md:text-xs text-on-surface-variant font-light">
               🎲 4 gry na start
             </span>
@@ -53,7 +61,7 @@ export default function HeroSection() {
             </span>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 pt-4">
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
             <div className="relative group">
               <button
                 disabled
@@ -93,7 +101,23 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-3 pt-2">
+        <div className="flex flex-col items-center gap-4 pt-2">
+          <button
+            onClick={scrollToNewsletter}
+            className="group relative bg-primary text-on-primary px-8 py-4 rounded-full font-semibold text-lg uppercase tracking-[0.15em] hover:scale-105 hover:shadow-[0_0_60px_rgba(255,178,0,0.5)] transition-all duration-300 cursor-pointer newsletter-pulse"
+          >
+            <span className="relative z-10">
+              🔥 Zapisz się — bądź pierwszy!
+            </span>
+          </button>
+          <span className="text-xs text-on-surface-variant font-light">
+            Dołącz do{' '}
+            <span className="text-primary font-medium">setek graczy</span>{' '}
+            czekających na premierę
+          </span>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 pt-1">
           <span className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-medium">
             Przewiń w dół
           </span>
@@ -137,28 +161,28 @@ export default function HeroSection() {
             </div>
 
             <div className="absolute -left-4 md:-left-36 top-[2%] floating-element z-30">
-              <div className="bg-primary px-3 py-2.5 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[160px] md:max-w-[210px]">
+              <div className="bg-primary px-4 py-3 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[190px] md:max-w-[210px]">
                 <div className="flex items-center gap-2 md:gap-3 mb-1">
-                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-black/20" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-black/60">
+                  <div className="w-6 h-6 rounded-full bg-black/20" />
+                  <span className="text-[10px] font-bold text-black/60">
                     KINGA
                   </span>
                 </div>
-                <p className="text-[10px] md:text-xs font-medium text-black leading-snug">
+                <p className="text-xs font-medium text-black leading-snug">
                   Gramy dziś wieczorem? 🎉
                 </p>
               </div>
             </div>
 
             <div className="absolute -right-4 md:-right-36 top-[18%] md:top-[12%] floating-element-delayed z-30">
-              <div className="bg-[#1e1e1e] border border-white/10 px-3 py-2.5 md:px-5 md:py-4 rounded-2xl rounded-br-none shadow-2xl max-w-[160px] md:max-w-[210px]">
+              <div className="bg-[#1e1e1e] border border-white/10 px-4 py-3 md:px-5 md:py-4 rounded-2xl rounded-br-none shadow-2xl max-w-[190px] md:max-w-[210px]">
                 <div className="flex items-center gap-2 md:gap-3 mb-1">
-                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary/40" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-white/60">
+                  <div className="w-6 h-6 rounded-full bg-primary/40" />
+                  <span className="text-[10px] font-bold text-white/60">
                     MAREK
                   </span>
                 </div>
-                <p className="text-[10px] md:text-xs text-white leading-snug">
+                <p className="text-xs text-white leading-snug">
                   Jasne, tworzę lobby! 🚀
                 </p>
               </div>
@@ -168,14 +192,14 @@ export default function HeroSection() {
               className="absolute -left-2 md:-left-40 top-[38%] md:top-[30%] floating-element z-30"
               style={{ animationDelay: '1s' }}
             >
-              <div className="bg-[#1e1e1e] border border-white/10 px-3 py-2.5 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[150px] md:max-w-[210px]">
+              <div className="bg-[#1e1e1e] border border-white/10 px-4 py-3 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[190px] md:max-w-[210px]">
                 <div className="flex items-center gap-2 md:gap-3 mb-1">
-                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-tertiary/40" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-white/60">
+                  <div className="w-6 h-6 rounded-full bg-tertiary/40" />
+                  <span className="text-[10px] font-bold text-white/60">
                     MAJA
                   </span>
                 </div>
-                <p className="text-[10px] md:text-xs text-white leading-snug">
+                <p className="text-xs text-white leading-snug">
                   Czekaj, dołączam za minutkę! ⏳
                 </p>
               </div>
@@ -185,28 +209,28 @@ export default function HeroSection() {
               className="absolute -right-2 md:-right-36 top-[55%] md:top-[42%] floating-element z-30"
               style={{ animationDelay: '3s' }}
             >
-              <div className="bg-primary px-3 py-2.5 md:px-5 md:py-4 rounded-2xl rounded-br-none shadow-2xl max-w-[150px] md:max-w-[210px]">
+              <div className="bg-primary px-4 py-3 md:px-5 md:py-4 rounded-2xl rounded-br-none shadow-2xl max-w-[190px] md:max-w-[210px]">
                 <div className="flex items-center gap-2 md:gap-3 mb-1">
-                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-black/20" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-black/60">
+                  <div className="w-6 h-6 rounded-full bg-black/20" />
+                  <span className="text-[10px] font-bold text-black/60">
                     TOMEK
                   </span>
                 </div>
-                <p className="text-[10px] md:text-xs font-medium text-black leading-snug">
+                <p className="text-xs font-medium text-black leading-snug">
                   Kto wybrał tę talię? 😂
                 </p>
               </div>
             </div>
 
             <div className="absolute -left-4 md:-left-36 top-[72%] md:top-[58%] floating-element-delayed z-30">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/15 px-3 py-2.5 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[150px] md:max-w-[210px]">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/15 px-4 py-3 md:px-5 md:py-4 rounded-2xl rounded-bl-none shadow-2xl max-w-[190px] md:max-w-[210px]">
                 <div className="flex items-center gap-2 md:gap-3 mb-1">
-                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary/30" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-white/60">
+                  <div className="w-6 h-6 rounded-full bg-primary/30" />
+                  <span className="text-[10px] font-bold text-white/60">
                     ANIA
                   </span>
                 </div>
-                <p className="text-[10px] md:text-xs text-white leading-snug">
+                <p className="text-xs text-white leading-snug">
                   Wygrywam trzeci raz z rzędu 💪
                 </p>
               </div>

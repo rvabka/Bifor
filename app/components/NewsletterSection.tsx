@@ -117,8 +117,12 @@ export default function NewsletterSection() {
   return (
     <section id="newsletter" className="py-16 bg-background">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <div className="bg-surface-container-lowest p-12 md:p-24 rounded-[4rem] border border-white/5 flex flex-col items-center text-center gap-16 relative overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-dim/10 blur-[120px] rounded-full" />
+        <div className="bg-surface-container-lowest p-12 md:p-24 rounded-[4rem] border-2 border-primary/20 flex flex-col items-center text-center gap-16 relative overflow-hidden newsletter-glow">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/15 blur-[100px] rounded-full animate-pulse" />
+          <div
+            className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full animate-pulse"
+            style={{ animationDelay: '1s' }}
+          />
 
           <video
             autoPlay
@@ -131,15 +135,20 @@ export default function NewsletterSection() {
           </video>
 
           <div className="max-w-2xl relative z-10 space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-[0.2em] uppercase mx-auto">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Limitowane miejsca
+            </div>
             <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-none">
-              Bądź pierwszy
+              Nie przegap{' '}
+              <span className="text-primary font-normal">premiery</span>
             </h2>
             <p className="text-on-surface-variant text-xl font-extralight leading-relaxed max-w-xl mx-auto">
-              Zapisz się, aby uzyskać wczesny dostęp do aplikacji, ekskluzywne
-              gry i wpływ na to, co stworzymy dalej.
+              Zapisz się teraz, aby uzyskać wczesny dostęp do aplikacji,
+              ekskluzywne gry i wpływ na to, co stworzymy dalej.
             </p>
             <div className="flex items-center justify-center gap-4 text-xs text-primary font-medium tracking-[0.2em] uppercase">
-              <span>Wczesny dostęp + ekskluzywne bonusy</span>
+              <span>✨ Wczesny dostęp + ekskluzywne bonusy ✨</span>
             </div>
           </div>
 
@@ -175,9 +184,9 @@ export default function NewsletterSection() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full max-w-xs bg-primary-dim text-on-primary py-6 rounded-2xl font-medium text-lg hover:bg-primary hover:shadow-[0_0_40px_rgba(255,178,0,0.3)] transition-all uppercase tracking-[0.1em] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full max-w-xs bg-primary text-on-primary py-6 rounded-2xl font-bold text-lg hover:shadow-[0_0_60px_rgba(255,178,0,0.4)] transition-all uppercase tracking-[0.1em] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-105 newsletter-pulse"
             >
-              {status === 'loading' ? 'Wysyłanie...' : 'Zaczynamy'}
+              {status === 'loading' ? 'Wysyłanie...' : '🔥 Zaczynamy'}
             </button>
 
             {message && (
