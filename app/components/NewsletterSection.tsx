@@ -129,10 +129,9 @@ export default function NewsletterSection() {
             loop
             muted
             playsInline
-            className="absolute bottom-0 -right-2 md:-right-6 w-32 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.25)] z-20 hidden md:block"
+            className="absolute bottom-0 -right-2 md:-right-6 w-32 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.25)] z-20 hidden md:block safari-hide-video"
           >
             <source src="/bboy.webm" type="video/webm" />
-            <source src="/bboy.mov" type="video/quicktime" />
           </video>
 
           <div className="max-w-2xl relative z-10 space-y-8">

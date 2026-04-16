@@ -79,6 +79,20 @@
 }
 
 /* Custom utilities */
+
+/* Hide videos on Safari (no VP9 alpha support) */
+@supports not (font: -apple-system-body) {
+  .safari-hide-video {
+    display: revert;
+  }
+}
+
+@supports (font: -apple-system-body) {
+  .safari-hide-video {
+    display: none !important;
+  }
+}
+
 .glass-card {
   background: rgba(38, 38, 38, 0.4);
   backdrop-filter: blur(24px);

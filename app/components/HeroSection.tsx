@@ -28,10 +28,9 @@ export default function HeroSection() {
             loop
             muted
             playsInline
-            className="absolute -right-4 md:-right-30 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-86 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-20"
+            className="absolute -right-4 md:-right-30 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-86 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-20 safari-hide-video"
           >
             <source src="/dancing.webm" type="video/webm" />
-            <source src="/dancing.mov" type="video/quicktime" />
           </video>
 
           <video
@@ -39,10 +38,9 @@ export default function HeroSection() {
             loop
             muted
             playsInline
-            className="absolute -left-4 md:-left-20 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-20"
+            className="absolute -left-4 md:-left-20 top-[140%] md:-bottom-32 md:top-auto w-32 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-20 safari-hide-video"
           >
             <source src="/flying.webm" type="video/webm" />
-            <source src="/flying.mov" type="video/quicktime" />
           </video>
 
           <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto font-extralight leading-relaxed">
