@@ -39,6 +39,7 @@ export default function FeaturesSection() {
                 className="absolute bottom-0 -right-12 md:-right-16 w-60 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10"
               >
                 <source src="/handrising.webm" type="video/webm" />
+                <source src="/handrising.mov" type="video/quicktime" />
               </video>
               <div className="text-center pt-8 px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
@@ -77,6 +78,7 @@ export default function FeaturesSection() {
                 className="absolute bottom-0 -left-12 md:-left-16 w-60 md:w-80 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10"
               >
                 <source src="/jump.webm" type="video/webm" />
+                <source src="/jump.mov" type="video/quicktime" />
               </video>
               <div className="text-center pt-8 px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
