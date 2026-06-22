@@ -1,9 +1,18 @@
 'use client';
 
-import { createElement, forwardRef, useEffect } from 'react';
+import { createElement, forwardRef, useEffect, useRef } from 'react';
 
 const SCRIPT_SRC =
   'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js';
+
+function injectModelViewer() {
+  if (document.querySelector('script[data-model-viewer]')) return;
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.src = SCRIPT_SRC;
+  s.setAttribute('data-model-viewer', '');
+  document.head.appendChild(s);
+}
 
 type Props = {
   src: string;
@@ -17,17 +26,32 @@ const Character3D = forwardRef<HTMLElement, Props>(function Character3D(
   { src, autoRotate = false, controls = false, cameraOrbit = '0deg 90deg 105%', className },
   ref
 ) {
+  const localRef = useRef<HTMLElement | null>(null);
+
+  const setRefs = (node: HTMLElement | null) => {
+    localRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
+
   useEffect(() => {
-    if (document.querySelector('script[data-model-viewer]')) return;
-    const s = document.createElement('script');
-    s.type = 'module';
-    s.src = SCRIPT_SRC;
-    s.setAttribute('data-model-viewer', '');
-    document.head.appendChild(s);
+    const el = localRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          injectModelViewer();
+          io.disconnect();
+        }
+      },
+      { rootMargin: '700px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   const attrs: Record<string, unknown> = {
-    ref,
+    ref: setRefs,
     src,
     alt: 'Postać 3D Bifor',
     exposure: '1.05',
@@ -40,7 +64,8 @@ const Character3D = forwardRef<HTMLElement, Props>(function Character3D(
     'field-of-view': '26deg',
     'disable-zoom': true,
     'disable-pan': true,
-    loading: 'eager',
+    loading: 'lazy',
+    reveal: 'auto',
     style: { width: '100%', height: '100%', backgroundColor: 'transparent' },
     className
   };
