@@ -11,12 +11,12 @@ const faqs = [
   {
     question: 'Ile osób może grać jednocześnie?',
     answer:
-      'W zależności od gry, od 3 do nawet 16 graczy w jednym lobby. Wystarczy, że każdy ma telefon i wpisze kod PIN — żadnego logowania, żadnych kont.'
+      'Zależnie od gry, od 2 do nawet 10 osób w jednym pokoju. Część gier działa też na jednym telefonie podawanym z ręki do ręki — wtedy wystarczy jedno urządzenie na całą ekipę.'
   },
   {
     question: 'Czy potrzebuję internetu do gry?',
     answer:
-      'Tak, gracze muszą być połączeni z internetem (Wi-Fi lub dane mobilne). Nie musicie być w tej samej sieci — grajcie z dowolnego miejsca na świecie!'
+      'Tryby online wymagają internetu (Wi-Fi lub dane mobilne), ale nie musicie być w tej samej sieci. Część gier, jak Zakazane czy Gra na P, działa też w pełni lokalnie na jednym telefonie.'
   },
   {
     question: 'Kiedy premiera aplikacji?',
@@ -39,7 +39,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 bg-background">
+    <section id="faq" className="py-24 bg-background">
       <div className="max-w-3xl mx-auto px-4 md:px-8">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-none">

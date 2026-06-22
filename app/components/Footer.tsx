@@ -1,9 +1,9 @@
 'use client';
 
+import { smoothScrollTo } from './scrollTo';
+
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => smoothScrollTo('top');
 
   return (
     <footer className="bg-background border-t border-white/5">
@@ -16,6 +16,12 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-12">
+          <a
+            className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
+            href="/faq"
+          >
+            FAQ
+          </a>
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
             href="/polityka-prywatnosci"

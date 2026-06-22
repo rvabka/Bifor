@@ -17,8 +17,12 @@ export default function AuthCallbackPage() {
 
     if (isIos || isAndroid) {
       const params = new URLSearchParams(window.location.search);
-      const scheme = `bifor://auth/callback?${params.toString()}`;
-      window.location.href = scheme;
+      const hasAuthPayload =
+        params.has('code') || params.has('token_hash') || params.has('error');
+      if (hasAuthPayload) {
+        const scheme = `bifor://auth/callback?${params.toString()}`;
+        window.location.href = scheme;
+      }
     }
   }, []);
 

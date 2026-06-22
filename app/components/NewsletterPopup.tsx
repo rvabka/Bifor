@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { smoothScrollTo } from './scrollTo';
 
 export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
@@ -26,9 +27,7 @@ export default function NewsletterPopup() {
   };
 
   const handleClick = () => {
-    document
-      .getElementById('newsletter')
-      ?.scrollIntoView({ behavior: 'smooth' });
+    smoothScrollTo('newsletter');
     handleDismiss();
   };
 

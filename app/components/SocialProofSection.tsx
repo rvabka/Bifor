@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const stats = [
   { value: 500, suffix: '+', label: 'Osób czeka na premierę', icon: '🔥' },
-  { value: 4, suffix: '', label: 'Gry na start', icon: '🎲' },
+  { value: 6, suffix: '', label: 'Gier na start', icon: '🎲' },
   { value: 30, suffix: 's', label: 'Do pierwszej rozgrywki', icon: '⚡' },
   { value: 0, suffix: '%', label: 'Rejestracji wymaganej', icon: '🚀' }
 ];

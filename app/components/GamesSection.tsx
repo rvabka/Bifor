@@ -1,93 +1,191 @@
 'use client';
 
-import { useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
+import { useEffect, useRef, useState } from 'react';
 
-const games = [
-  {
-    title: 'Zakazane słowa',
-    emoji: '🚫',
-    description:
-      'Opisz hasło, ale uważaj — niektóre słowa są zakazane! Klasyczna gra imprezowa w nowym, mobilnym wydaniu.',
-    players: '4–16 graczy',
-    time: '~2 min / runda',
-    color: 'from-amber-500/20 to-orange-600/10'
-  },
-  {
-    title: 'Czółko',
-    emoji: '🤔',
-    description:
-      'Zgadnij, co masz „na czole" — zadawaj pytania, a znajomi odpowiadają tak lub nie. Kto odgadnie pierwszy?',
-    players: '3–12 graczy',
-    time: '~3 min / runda',
-    color: 'from-purple-500/20 to-pink-500/10'
-  },
-  {
-    title: 'Impostor',
-    emoji: '🕵️',
-    description:
-      'Jeden z was jest oszustem! Rozmawiajcie, podejrzewajcie i głosujcie — kto jest impostorem na imprezie?',
-    players: '5–16 graczy',
-    time: '~5 min / runda',
-    color: 'from-red-500/20 to-rose-600/10'
-  },
-  {
-    title: 'Sekrety',
-    emoji: '💬',
-    description:
-      'Apka zadaje pytanie, każdy odpowiada anonimowo. Przeczytajcie odpowiedzi, serduszkujcie najlepsze i zgadnijcie — kto jest autorem?',
-    players: '4–16 graczy',
-    time: '~3 min / runda',
-    color: 'from-cyan-500/20 to-blue-500/10'
-  }
+type Game = {
+  title: string;
+  tagline: string;
+  players: string;
+  mode: string;
+  art: string;
+  glow: string;
+};
+
+const GAMES: Game[] = [
+  { title: 'Czółko', tagline: 'Zgadnij kim jesteś, zanim czas minie.', players: '2–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/czolko.png', glow: '#F59E0B' },
+  { title: 'Zakazane', tagline: 'Opisz hasło bez używania zakazanych słów.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/zakazane.png', glow: '#22C55E' },
+  { title: 'Impostor', tagline: 'Odkryj zdrajcę wśród przyjaciół.', players: '3–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/impostor.png', glow: '#EF4444' },
+  { title: 'Sekrety', tagline: 'Poznajcie się lepiej, zanim impreza się rozkręci.', players: '3–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/sekrety.png', glow: '#A855F7' },
+  { title: 'Państwa Miasta', tagline: 'Litera, kolumny i walka o punkty.', players: '2–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/panstwa.png', glow: '#3B82F6' },
+  { title: 'Gra na P', tagline: 'Opisz hasło tylko słowami na literę P.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/granap.png', glow: '#F97316' }
 ];
 
+const N = GAMES.length;
+const VH_PER_GAME = 55;
+
 export default function GamesSection() {
-  const [activeGame, setActiveGame] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+  const [dims, setDims] = useState({ cardW: 280, cardH: 350, spacing: 330 });
+
+  useEffect(() => {
+    const calc = () => {
+      const stageH = stageRef.current?.clientHeight ?? window.innerHeight * 0.5;
+      let cardH = Math.min(440, Math.max(190, stageH * 0.82));
+      let cardW = cardH * 0.8;
+      const maxW = window.innerWidth * 0.72;
+      if (cardW > maxW) {
+        cardW = maxW;
+        cardH = cardW * 1.25;
+      }
+      const spacing = Math.min(440, cardW * 1.18);
+      setDims({ cardW, cardH, spacing });
+    };
+    calc();
+    window.addEventListener('resize', calc, { passive: true });
+    return () => window.removeEventListener('resize', calc);
+  }, []);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < -vh || rect.top > vh) return;
+
+      const dist = el.offsetHeight - vh;
+      const scrolled = Math.min(Math.max(-rect.top, 0), dist);
+      const p = dist > 0 ? scrolled / dist : 0;
+      const f = p * (N - 1);
+
+      for (let i = 0; i < N; i++) {
+        const card = cardRefs.current[i];
+        if (!card) continue;
+        const off = i - f;
+        const abs = Math.abs(off);
+        const x = off * dims.spacing;
+        const ry = Math.max(-52, Math.min(52, -off * 40));
+        const tz = -Math.min(abs, 3) * 150;
+        const sc = Math.max(0.62, 1 - abs * 0.14);
+        card.style.transform = `translate(-50%, -50%) translateX(${x.toFixed(1)}px) translateZ(${tz.toFixed(1)}px) rotateY(${ry.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+        card.style.opacity = String(Math.max(0.12, 1 - abs * 0.34));
+        card.style.zIndex = String(100 - Math.round(abs * 10));
+      }
+
+      const idx = Math.max(0, Math.min(N - 1, Math.round(f)));
+      setActive((prev) => (prev === idx ? prev : idx));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [dims]);
+
+  const g = GAMES[active];
 
   return (
-    <section className="py-24 bg-background">
-      <div className="max-w-360 mx-auto px-4 md:px-8">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-none">
-            Nasze <span className="text-primary font-normal">gry</span>
+    <section
+      id="gry"
+      ref={sectionRef}
+      className="relative bg-background"
+      style={{ height: `${N * VH_PER_GAME + 40}vh` }}
+    >
+      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
+        <div className="px-4 pt-24 text-center md:pt-28">
+          <h2 className="text-4xl font-light leading-none tracking-tight md:text-6xl">
+            Sześć <span className="text-primary font-normal">gier</span>, jeden
+            wieczór.
           </h2>
-          <p className="text-on-surface-variant text-lg md:text-xl font-extralight max-w-xl mx-auto">
-            Cztery gry na start — każda przetestowana na dziesiątkach imprez.
+          <p className="mx-auto mt-4 max-w-xl text-base font-extralight text-on-surface-variant md:text-lg">
+            Poznaj ekipę, która rozkręci każdą imprezę. Każda gra gotowa w kilka
+            sekund — wystarczy telefon.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {games.map((game, i) => (
-            <button
-              key={game.title}
-              onClick={() => setActiveGame(i)}
-              className={`group text-left p-8 rounded-4xl border transition-all duration-500 cursor-pointer ${
-                activeGame === i
-                  ? 'bg-surface-container-high border-primary/30 scale-[1.02] shadow-[0_0_40px_rgba(255,178,0,0.1)]'
-                  : 'bg-surface-container border-white/5 hover:border-white/15 hover:bg-surface-container-high'
-              }`}
-            >
+        <div ref={stageRef} className="relative flex-1" style={{ perspective: 1500 }}>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 transition-[background] duration-500"
+            style={{
+              background: `radial-gradient(40% 50% at 50% 45%, ${g.glow}26, transparent 70%)`
+            }}
+          />
+
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+            {GAMES.map((game, i) => (
               <div
-                className={`w-16 h-16 rounded-2xl bg-linear-to-br ${game.color} flex items-center justify-center text-3xl mb-6`}
+                key={game.title}
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
+                className="absolute left-1/2 top-1/2 overflow-hidden rounded-[2rem]"
+                style={{
+                  width: dims.cardW,
+                  height: dims.cardH,
+                  border: `1px solid ${game.glow}40`,
+                  backgroundColor: `${game.glow}10`,
+                  boxShadow: `0 30px 60px rgba(0,0,0,0.5), 0 0 40px ${game.glow}33`,
+                  willChange: 'transform, opacity'
+                }}
               >
-                {game.emoji}
+                <img
+                  src={game.art}
+                  alt={game.title}
+                  className="h-full w-full object-cover object-top"
+                  style={{ maxWidth: 'none' }}
+                  draggable={false}
+                />
               </div>
-              <h3 className="text-xl font-medium mb-3 tracking-tight">
-                {game.title}
-              </h3>
-              <p className="text-on-surface-variant font-extralight text-sm leading-relaxed mb-6">
-                {game.description}
+            ))}
+          </div>
+        </div>
+
+        <div className="px-4 pb-12 text-center md:pb-16">
+          <div className="mx-auto h-[112px] max-w-lg">
+            <div key={active} className="animate-[fadeUp_0.5s_ease-out]">
+              <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
+                {String(active + 1).padStart(2, '0')} / 0{N}
               </p>
-              <div className="flex flex-wrap gap-3">
-                <span className="text-[10px] uppercase tracking-[0.15em] text-primary/80 bg-primary/10 px-3 py-1 rounded-full">
-                  {game.players}
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.15em] text-on-surface-variant bg-white/5 px-3 py-1 rounded-full">
-                  {game.time}
-                </span>
-              </div>
-            </button>
-          ))}
+              <h3
+                className="mt-2 text-3xl font-light tracking-tight md:text-4xl"
+                style={{ color: g.glow }}
+              >
+                {g.title}
+              </h3>
+              <p className="mt-2 text-base font-extralight text-on-surface md:text-lg">
+                {g.tagline}
+              </p>
+              <p className="mt-1 text-sm font-light text-on-surface-variant">
+                {g.players} · {g.mode}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 flex items-center justify-center gap-2">
+            {GAMES.map((game, i) => (
+              <span
+                key={game.title}
+                className="h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  width: i === active ? 26 : 8,
+                  backgroundColor: i === active ? game.glow : 'rgba(255,255,255,0.18)'
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

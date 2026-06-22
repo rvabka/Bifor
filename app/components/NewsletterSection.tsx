@@ -107,7 +107,6 @@ export default function NewsletterSection() {
       setMessage('Błąd połączenia. Sprawdź internet i spróbuj ponownie.');
     }
 
-    // Reset turnstile
     if (widgetIdRef.current && window.turnstile) {
       window.turnstile.reset(widgetIdRef.current);
       setTurnstileToken('');

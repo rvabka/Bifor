@@ -98,8 +98,8 @@ export default function FeaturesSection() {
                   Twoje ulubione gry
                 </h3>
                 <p className="text-on-surface-variant font-extralight text-lg md:text-xl leading-relaxed max-w-sm">
-                  Zakazane słowa, Czółko, Impostor i więcej w planach. Wybierz
-                  grę, ustaw zasady i baw się po swojemu.
+                  Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na
+                  P. Wybierz grę, ustaw zasady i baw się po swojemu.
                 </p>
               </div>
             </div>
