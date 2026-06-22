@@ -14,10 +14,10 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <Character3DScroll />
         <SocialProofSection />
         <GamesSection />
         <FeaturesSection />
+        <Character3DScroll />
         <NewsletterSection />
       </main>
       <Footer />
