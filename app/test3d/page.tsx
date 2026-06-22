@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import Character3D from '../components/Character3D';
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false }
+};
 
 export default function Test3DPage() {
   return (
