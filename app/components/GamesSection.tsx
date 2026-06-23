@@ -13,12 +13,12 @@ type Game = {
 };
 
 const GAMES: Game[] = [
-  { title: 'Czółko', tagline: 'Zgadnij kim jesteś, zanim czas minie.', players: '2–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/czolko.png', glow: '#F59E0B' },
-  { title: 'Zakazane', tagline: 'Opisz hasło bez używania zakazanych słów.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/zakazane.png', glow: '#22C55E' },
-  { title: 'Impostor', tagline: 'Odkryj zdrajcę wśród przyjaciół.', players: '3–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/impostor.png', glow: '#EF4444' },
-  { title: 'Sekrety', tagline: 'Poznajcie się lepiej, zanim impreza się rozkręci.', players: '3–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/sekrety.png', glow: '#A855F7' },
-  { title: 'Państwa Miasta', tagline: 'Litera, kolumny i walka o punkty.', players: '2–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/panstwa.png', glow: '#3B82F6' },
-  { title: 'Gra na P', tagline: 'Opisz hasło tylko słowami na literę P.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/granap.png', glow: '#F97316' }
+  { title: 'Czółko', tagline: 'Zgadnij kim jesteś, zanim czas minie.', players: '2–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/czolko.webp', glow: '#F59E0B' },
+  { title: 'Zakazane', tagline: 'Opisz hasło bez używania zakazanych słów.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/zakazane.webp', glow: '#22C55E' },
+  { title: 'Impostor', tagline: 'Odkryj zdrajcę wśród przyjaciół.', players: '3–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/impostor.webp', glow: '#EF4444' },
+  { title: 'Sekrety', tagline: 'Poznajcie się lepiej, zanim impreza się rozkręci.', players: '3–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/sekrety.webp', glow: '#A855F7' },
+  { title: 'Państwa Miasta', tagline: 'Litera, kolumny i walka o punkty.', players: '2–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/panstwa.webp', glow: '#3B82F6' },
+  { title: 'Gra na P', tagline: 'Opisz hasło tylko słowami na literę P.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/granap.webp', glow: '#F97316' }
 ];
 
 const N = GAMES.length;
