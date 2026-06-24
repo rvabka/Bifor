@@ -22,7 +22,6 @@ const GAMES: Game[] = [
 ];
 
 const N = GAMES.length;
-const VH_PER_GAME = 55;
 
 export default function GamesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -100,16 +99,15 @@ export default function GamesSection() {
     <section
       id="gry"
       ref={sectionRef}
-      className="relative bg-background"
-      style={{ height: `${N * VH_PER_GAME + 40}vh` }}
+      className="relative bg-background h-[300vh] md:h-[370vh]"
     >
       <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
-        <div className="px-4 pt-24 text-center md:pt-28">
-          <h2 className="text-4xl font-light leading-none tracking-tight md:text-6xl">
+        <div className="px-4 pt-20 text-center sm:pt-24 md:pt-28">
+          <h2 className="text-[2.25rem] font-light leading-none tracking-tight sm:text-4xl md:text-6xl">
             Sześć <span className="text-primary font-normal">gier</span>, jeden
             wieczór.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base font-extralight text-on-surface-variant md:text-lg">
+          <p className="mx-auto mt-3 max-w-xl px-2 text-sm font-extralight text-on-surface-variant sm:mt-4 sm:text-base md:text-lg">
             Poznaj ekipę, która rozkręci każdą imprezę. Każda gra gotowa w kilka
             sekund — wystarczy telefon.
           </p>
@@ -153,8 +151,8 @@ export default function GamesSection() {
           </div>
         </div>
 
-        <div className="px-4 pb-12 text-center md:pb-16">
-          <div className="mx-auto h-[112px] max-w-lg">
+        <div className="px-4 pb-10 text-center sm:pb-12 md:pb-16">
+          <div className="mx-auto min-h-32 max-w-lg sm:min-h-28">
             <div key={active} className="animate-[fadeUp_0.5s_ease-out]">
               <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
                 {String(active + 1).padStart(2, '0')} / 0{N}
@@ -165,7 +163,7 @@ export default function GamesSection() {
               >
                 {g.title}
               </h3>
-              <p className="mt-2 text-base font-extralight text-on-surface md:text-lg">
+              <p className="mt-2 px-2 text-base font-extralight text-on-surface md:text-lg">
                 {g.tagline}
               </p>
               <p className="mt-1 text-sm font-light text-on-surface-variant">

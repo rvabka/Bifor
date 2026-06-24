@@ -80,6 +80,16 @@
 
 /* Custom utilities */
 
+/* Remove the grey tap flash on mobile + smooth out touch */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* Hide videos on Safari (no VP9 alpha support) */
 @supports not (font: -apple-system-body) {
   .safari-hide-video {
@@ -90,6 +100,18 @@
 @supports (font: -apple-system-body) {
   .safari-hide-video {
     display: none !important;
+  }
+}
+
+/* Static character fallback — shown ONLY on Safari/iOS where the
+   alpha .webm characters are hidden. Mirror of .safari-hide-video. */
+.safari-only {
+  display: none;
+}
+
+@supports (font: -apple-system-body) {
+  .safari-only {
+    display: block;
   }
 }
 
@@ -181,5 +203,53 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Entrance animation for above-the-fold content (hero).
+   Stagger with inline style={{ animationDelay }}. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll-driven reveal for below-the-fold blocks. Progressive
+   enhancement: without scroll-timeline support the element just
+   stays visible. Each .reveal animates on its own scroll position,
+   so siblings naturally stagger as they enter the viewport. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
   }
 }

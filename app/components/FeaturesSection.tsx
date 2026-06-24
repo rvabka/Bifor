@@ -1,46 +1,35 @@
 export default function FeaturesSection() {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-12 sm:py-16 bg-background">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          <div className="space-y-8 pt-10">
-            <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-[0.95]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+          <div className="space-y-6 sm:space-y-8 pt-4 sm:pt-10">
+            <h2 className="reveal text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[0.95]">
               Graj razem,
-              <br />
-              gdziekolwiek jesteś
+              <br className="hidden sm:block" /> gdziekolwiek jesteś
             </h2>
-            <p className="text-on-surface-variant text-xl font-extralight max-w-md leading-relaxed">
+            <p className="text-on-surface-variant text-lg sm:text-xl font-extralight max-w-md leading-relaxed">
               Dołącz do znajomych jednym kodem PIN. Zero konfiguracji, zero
               czekania — czysta zabawa na wyciągnięcie ręki.
             </p>
-            <button className="flex items-center gap-3 bg-surface-bright px-4 py-4 rounded-full font-medium text-sm hover:bg-surface-variant transition-colors border border-white/5 cursor-pointer">
-              Pobierz
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                />
-              </svg>
-            </button>
 
-            <div className="relative rounded-[2.5rem] overflow-hidden group aspect-[4/5] mt-12 bg-surface-container-low flex items-start md:items-center justify-center">
+            <div className="reveal relative rounded-[2.5rem] overflow-hidden group aspect-[4/5] mt-8 sm:mt-12 bg-surface-container-low flex items-start md:items-center justify-center">
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="absolute bottom-0 -right-12 md:-right-16 w-60 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
+                className="absolute bottom-0 -right-12 md:-right-16 w-56 sm:w-60 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
               >
                 <source src="/handrising.webm" type="video/webm" />
               </video>
-              <div className="text-center pt-8 px-12 pb-40 md:p-8 space-y-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/characters/boy2.webp"
+                alt=""
+                className="safari-only absolute bottom-0 -right-10 md:-right-14 w-48 sm:w-52 md:w-72 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10"
+              />
+              <div className="text-center pt-8 px-8 sm:px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
                   <svg
                     className="w-10 h-10 text-primary"
@@ -67,18 +56,24 @@ export default function FeaturesSection() {
             </div>
           </div>
 
-          <div className="space-y-12">
-            <div className="relative rounded-[2.5rem] overflow-hidden group aspect-[4/5] bg-surface-container-low flex items-start md:items-center justify-center">
+          <div className="space-y-8 md:space-y-12">
+            <div className="reveal relative rounded-[2.5rem] overflow-hidden group aspect-[4/5] bg-surface-container-low flex items-start md:items-center justify-center">
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="absolute bottom-0 -left-12 md:-left-16 w-60 md:w-80 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
+                className="absolute bottom-0 -left-12 md:-left-16 w-56 sm:w-60 md:w-80 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
               >
                 <source src="/jump.webm" type="video/webm" />
               </video>
-              <div className="text-center pt-8 px-12 pb-40 md:p-8 space-y-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/characters/boy4.webp"
+                alt=""
+                className="safari-only absolute bottom-0 -left-10 md:-left-14 w-48 sm:w-52 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10"
+              />
+              <div className="text-center pt-8 px-8 sm:px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
                   <svg
                     className="w-10 h-10 text-primary"
@@ -104,8 +99,8 @@ export default function FeaturesSection() {
               </div>
             </div>
 
-            <div className="glass-card p-12 rounded-[2.5rem] border border-white/5 relative">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8">
+            <div className="reveal glass-card p-8 sm:p-12 rounded-[2.5rem] border border-white/5 relative">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 sm:mb-8">
                 <svg
                   className="w-7 h-7 text-primary"
                   fill="none"
@@ -120,7 +115,7 @@ export default function FeaturesSection() {
                   />
                 </svg>
               </div>
-              <h3 className="text-3xl font-light mb-6 tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-light mb-4 sm:mb-6 tracking-tight">
                 Synchronizacja w czasie rzeczywistym
               </h3>
               <p className="text-on-surface-variant font-extralight text-lg leading-relaxed">

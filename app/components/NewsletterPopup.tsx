@@ -40,7 +40,7 @@ export default function NewsletterPopup() {
       }`}
     >
       <div className="bg-primary/95 backdrop-blur-xl border-t border-primary shadow-[0_-10px_60px_rgba(255,178,0,0.3)]">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3 text-on-primary">
             <span className="text-2xl">🎮</span>
             <div>
@@ -55,13 +55,13 @@ export default function NewsletterPopup() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleClick}
-              className="bg-on-primary text-primary px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer whitespace-nowrap"
+              className="bg-on-primary text-primary px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
               Zapisz się teraz
             </button>
             <button
               onClick={handleDismiss}
-              className="text-on-primary/60 hover:text-on-primary p-2 transition-colors cursor-pointer"
+              className="text-on-primary/60 hover:text-on-primary active:scale-90 p-2 transition-all cursor-pointer"
               aria-label="Zamknij"
             >
               <svg

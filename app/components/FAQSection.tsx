@@ -7,14 +7,14 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 bg-background">
+    <section id="faq" className="py-16 sm:py-24 bg-background">
       <div className="max-w-3xl mx-auto px-4 md:px-8">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-none">
+        <div className="reveal text-center space-y-4 mb-10 sm:mb-16">
+          <h2 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
             Pytania i{' '}
             <span className="text-primary font-normal">odpowiedzi</span>
           </h2>
-          <p className="text-on-surface-variant text-lg font-extralight">
+          <p className="text-on-surface-variant text-base sm:text-lg font-extralight">
             Najczęściej zadawane pytania o Bifor.
           </p>
         </div>
@@ -23,11 +23,11 @@ export default function FAQSection() {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="border border-white/5 rounded-2xl overflow-hidden transition-colors hover:border-white/10"
+              className="reveal border border-white/5 rounded-2xl overflow-hidden transition-colors hover:border-white/10"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-6 md:p-8 text-left cursor-pointer group"
+                className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 md:p-8 text-left cursor-pointer group active:bg-white/5 transition-colors"
               >
                 <span className="text-base md:text-lg font-light tracking-tight pr-4">
                   {faq.question}
@@ -56,7 +56,7 @@ export default function FAQSection() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="px-6 md:px-8 pb-6 md:pb-8 text-on-surface-variant font-extralight leading-relaxed">
+                  <p className="px-5 sm:px-6 md:px-8 pb-5 sm:pb-6 md:pb-8 text-sm sm:text-base text-on-surface-variant font-extralight leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>

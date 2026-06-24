@@ -26,7 +26,6 @@ const BEATS: Beat[] = [
   }
 ];
 
-const VH_PER_BEAT = 150;
 
 export default function Character3DScroll() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -74,8 +73,7 @@ export default function Character3DScroll() {
     <section
       id="jak-to-dziala"
       ref={sectionRef}
-      className="relative bg-background"
-      style={{ height: `${BEATS.length * VH_PER_BEAT}vh` }}
+      className="relative bg-background h-[270vh] md:h-[450vh]"
     >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <div
@@ -99,11 +97,11 @@ export default function Character3DScroll() {
                 }}
                 aria-hidden={active !== i}
               >
-                <h2 className="text-5xl font-light leading-[0.98] tracking-tight md:text-7xl">
+                <h2 className="text-balance text-[2.75rem] font-light leading-[0.98] tracking-tight sm:text-5xl md:text-7xl">
                   {b.pre} <span className="text-primary font-normal">{b.accent}</span>
                   {b.post ? ` ${b.post}` : ''}
                 </h2>
-                <p className="mx-auto mt-6 max-w-md text-lg font-extralight leading-relaxed text-on-surface-variant lg:mx-0">
+                <p className="mx-auto mt-4 max-w-md text-base font-extralight leading-relaxed text-on-surface-variant sm:mt-6 sm:text-lg lg:mx-0">
                   {b.desc}
                 </p>
               </div>

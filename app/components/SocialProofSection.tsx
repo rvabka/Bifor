@@ -50,13 +50,15 @@ function StatCard({
   const count = useCountUp(value, isVisible);
 
   return (
-    <div className="text-center p-6 md:p-8">
-      <div className="text-3xl mb-3">{icon}</div>
-      <div className="text-4xl md:text-5xl font-light text-primary tracking-tight mb-2">
+    <div className="text-center p-4 sm:p-6 md:p-8">
+      <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">{icon}</div>
+      <div className="text-4xl md:text-5xl font-light text-primary tracking-tight mb-1.5 sm:mb-2">
         {count}
         {suffix}
       </div>
-      <p className="text-on-surface-variant text-sm font-extralight">{label}</p>
+      <p className="text-on-surface-variant text-xs sm:text-sm font-extralight leading-snug">
+        {label}
+      </p>
     </div>
   );
 }
@@ -81,9 +83,9 @@ export default function SocialProofSection() {
   }, []);
 
   return (
-    <section ref={ref} className="py-16 bg-background">
+    <section ref={ref} className="py-12 sm:py-16 bg-background">
       <div className="max-w-360 mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 rounded-[2.5rem] bg-surface-container border border-white/5 p-4 md:p-6">
+        <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-8 rounded-[2rem] sm:rounded-[2.5rem] bg-surface-container border border-white/5 p-3 sm:p-4 md:p-6">
           {stats.map(stat => (
             <StatCard key={stat.label} {...stat} isVisible={isVisible} />
           ))}

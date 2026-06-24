@@ -24,15 +24,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Always close the mobile menu when the route changes (e.g. FAQ link).
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   const goSection = (id: string) => {
     setOpen(false);
-    if (onHome) smoothScrollTo(id);
+    // Wait for the menu overlay to close, then scroll to the section.
+    if (onHome) requestAnimationFrame(() => smoothScrollTo(id));
     else window.location.href = `/#${id}`;
   };
 
   const goNewsletter = () => {
     setOpen(false);
-    if (onHome) smoothScrollTo('newsletter');
+    if (onHome) requestAnimationFrame(() => smoothScrollTo('newsletter'));
     else window.location.href = '/#newsletter';
   };
 
@@ -50,7 +56,11 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
-        <button onClick={goTop} aria-label="Bifor — góra strony" className="cursor-pointer">
+        <button
+          onClick={goTop}
+          aria-label="Bifor — góra strony"
+          className="cursor-pointer transition-transform active:scale-95"
+        >
           <Image src="/logo.png" alt="Bifor" width={120} height={40} priority className="h-9 w-auto" />
         </button>
 
@@ -75,13 +85,13 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={goNewsletter}
-            className="bg-primary text-on-primary px-5 md:px-6 py-2.5 rounded-full text-sm font-semibold tracking-tight hover:scale-105 hover:shadow-[0_0_30px_rgba(255,178,0,0.4)] transition-all cursor-pointer"
+            className="bg-primary text-on-primary px-5 md:px-6 py-2.5 rounded-full text-sm font-semibold tracking-tight hover:scale-105 hover:shadow-[0_0_30px_rgba(255,178,0,0.4)] active:scale-95 transition-all cursor-pointer"
           >
             Zapisz się!
           </button>
           <button
             onClick={() => setOpen((o) => !o)}
-            className="md:hidden flex h-10 w-10 items-center justify-center text-on-surface cursor-pointer"
+            className="md:hidden flex h-10 w-10 items-center justify-center text-on-surface cursor-pointer transition-transform active:scale-90"
             aria-label={open ? 'Zamknij menu' : 'Otwórz menu'}
             aria-expanded={open}
           >
@@ -101,22 +111,28 @@ export default function Navbar() {
           open ? 'max-h-72' : 'max-h-0'
         }`}
       >
-        <div className="flex flex-col gap-1 border-b border-white/5 bg-background/95 px-4 pb-6 pt-1 backdrop-blur-xl">
+        <div className="flex flex-col gap-1 border-b border-white/5 bg-background/95 px-3 pb-6 pt-2 backdrop-blur-xl">
           {SECTION_LINKS.map((l) => (
             <button
               key={l.id}
               onClick={() => goSection(l.id)}
-              className="py-3 text-left text-base font-light text-on-surface-variant hover:text-on-surface transition-colors"
+              className="flex items-center justify-between rounded-2xl px-3 py-3.5 text-left text-base font-light text-on-surface-variant transition-colors hover:text-on-surface active:bg-white/5"
             >
               {l.label}
+              <svg className="h-4 w-4 text-outline" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
             </button>
           ))}
           <Link
             href="/faq"
             onClick={() => setOpen(false)}
-            className="py-3 text-left text-base font-light text-on-surface-variant hover:text-on-surface transition-colors"
+            className="flex items-center justify-between rounded-2xl px-3 py-3.5 text-left text-base font-light text-on-surface-variant transition-colors hover:text-on-surface active:bg-white/5"
           >
             FAQ
+            <svg className="h-4 w-4 text-outline" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
           </Link>
         </div>
       </div>

@@ -114,9 +114,9 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section id="newsletter" className="py-16 bg-background">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <div className="bg-surface-container-lowest p-12 md:p-24 rounded-[4rem] border-2 border-primary/20 flex flex-col items-center text-center gap-16 relative overflow-hidden newsletter-glow">
+    <section id="newsletter" className="py-12 sm:py-16 bg-background">
+      <div className="max-w-[1440px] mx-auto md:px-8">
+        <div className="reveal bg-surface-container-lowest p-7 sm:p-12 md:p-24 rounded-[2.5rem] sm:rounded-[3rem] md:rounded-[4rem] border-2 border-primary/20 flex flex-col items-center text-center gap-10 sm:gap-16 relative overflow-hidden newsletter-glow">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/15 blur-[100px] rounded-full animate-pulse" />
           <div
             className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full animate-pulse"
@@ -138,29 +138,29 @@ export default function NewsletterSection() {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Limitowane miejsca
             </div>
-            <h2 className="text-5xl md:text-7xl font-light tracking-tight leading-none">
+            <h2 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
               Nie przegap{' '}
               <span className="text-primary font-normal">premiery</span>
             </h2>
-            <p className="text-on-surface-variant text-xl font-extralight leading-relaxed max-w-xl mx-auto">
+            <p className="text-on-surface-variant text-lg sm:text-xl font-extralight leading-relaxed max-w-xl mx-auto">
               Zapisz się teraz, aby uzyskać wczesny dostęp do aplikacji,
               ekskluzywne gry i wpływ na to, co stworzymy dalej.
             </p>
-            <div className="flex items-center justify-center gap-4 text-xs text-primary font-medium tracking-[0.2em] uppercase">
+            <div className="flex items-center justify-center gap-4 text-[11px] sm:text-xs text-primary font-medium tracking-[0.2em] uppercase">
               <span>✨ Wczesny dostęp + ekskluzywne bonusy ✨</span>
             </div>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md relative z-10 flex flex-col gap-8 items-center"
+            className="w-full max-w-md relative z-10 flex flex-col gap-6 sm:gap-8 items-center"
           >
             <div className="relative w-full">
               <input
                 type="text"
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
-                className="w-full bg-transparent border-0 border-b border-white/20 py-6 px-0 text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
+                className="w-full bg-transparent border-0 border-b border-white/20 py-4 sm:py-6 px-0 text-xl sm:text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
                 placeholder="Twoje imię"
                 required
                 disabled={status === 'loading'}
@@ -171,7 +171,7 @@ export default function NewsletterSection() {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full bg-transparent border-0 border-b border-white/20 py-6 px-0 text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
+                className="w-full bg-transparent border-0 border-b border-white/20 py-4 sm:py-6 px-0 text-xl sm:text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
                 placeholder="Twój adres e-mail"
                 required
                 disabled={status === 'loading'}
@@ -183,7 +183,7 @@ export default function NewsletterSection() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full max-w-xs bg-primary text-on-primary py-6 rounded-2xl font-bold text-lg hover:shadow-[0_0_60px_rgba(255,178,0,0.4)] transition-all uppercase tracking-[0.1em] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-105 newsletter-pulse"
+              className="w-full max-w-xs bg-primary text-on-primary py-5 sm:py-6 rounded-2xl font-bold text-lg hover:shadow-[0_0_60px_rgba(255,178,0,0.4)] transition-all uppercase tracking-[0.1em] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-105 active:scale-95 newsletter-pulse"
             >
               {status === 'loading' ? 'Wysyłanie...' : '🔥 Zaczynamy'}
             </button>

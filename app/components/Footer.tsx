@@ -7,15 +7,15 @@ export default function Footer() {
 
   return (
     <footer className="bg-background border-t border-white/5">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-20 flex flex-col md:flex-row justify-between items-center gap-12 relative">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-14 sm:py-20 flex flex-col md:flex-row justify-between items-center gap-10 md:gap-12 relative">
         <div className="flex flex-col items-center md:items-start gap-4">
           <img src="/logo.png" alt="Bifor" className="h-10 w-auto" />
-          <p className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-medium">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-medium text-center md:text-left">
             © {new Date().getFullYear()} Bifor. Wszystkie prawa zastrzeżone.
           </p>
         </div>
 
-        <div className="flex items-center gap-12">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-10">
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
             href="/faq"
@@ -35,7 +35,7 @@ export default function Footer() {
             Wsparcie
           </a>
           <a
-            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-primary/30 transition-all group"
+            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-primary/30 active:scale-90 transition-all group"
             href="https://www.tiktok.com/@biforgames"
             target="_blank"
             rel="noopener noreferrer"
@@ -53,7 +53,7 @@ export default function Footer() {
 
         <button
           onClick={scrollToTop}
-          className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors group cursor-pointer"
+          className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all group cursor-pointer"
           aria-label="Przewiń na górę"
         >
           <svg
