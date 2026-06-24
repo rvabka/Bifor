@@ -27,8 +27,25 @@ export default function GamesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastFRef = useRef(-1);
   const [active, setActive] = useState(0);
   const [dims, setDims] = useState({ cardW: 280, cardH: 350, spacing: 330 });
+
+  // On touch devices iOS throttles scroll events during momentum scrolling,
+  // so the carousel jumps between sparse updates. A short transition on the
+  // cards interpolates those gaps for a smooth feel. Desktop (fine pointer,
+  // continuous scroll events) stays transition-free to avoid lag.
+  useEffect(() => {
+    if (!window.matchMedia('(pointer: coarse)').matches) return;
+    const id = requestAnimationFrame(() => {
+      for (const card of cardRefs.current) {
+        if (card)
+          card.style.transition =
+            'transform 0.16s ease-out, opacity 0.16s ease-out';
+      }
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useEffect(() => {
     const calc = () => {
@@ -50,6 +67,8 @@ export default function GamesSection() {
 
   useEffect(() => {
     let raf = 0;
+    // dims changed (e.g. resize) → force the next frame to recompute.
+    lastFRef.current = -1;
     const update = () => {
       raf = 0;
       const el = sectionRef.current;
@@ -62,6 +81,10 @@ export default function GamesSection() {
       const scrolled = Math.min(Math.max(-rect.top, 0), dist);
       const p = dist > 0 ? scrolled / dist : 0;
       const f = p * (N - 1);
+
+      // Skip redundant work when the position barely moved.
+      if (Math.abs(f - lastFRef.current) < 0.002) return;
+      lastFRef.current = f;
 
       for (let i = 0; i < N; i++) {
         const card = cardRefs.current[i];

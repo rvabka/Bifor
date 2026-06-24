@@ -11,7 +11,7 @@ export default function HeroSection() {
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-0 hidden h-svh overflow-hidden md:block"
+        className="pointer-events-none absolute inset-x-0 top-0 hidden h-svh overflow-hidden md:block"
       >
         <video
           autoPlay
