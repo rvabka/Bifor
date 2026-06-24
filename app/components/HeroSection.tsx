@@ -18,33 +18,19 @@ export default function HeroSection() {
           loop
           muted
           playsInline
-          className="absolute bottom-0 left-0 h-[20vh] w-auto md:h-[34vh] lg:h-[40vh] drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] safari-hide-video"
+          className="absolute bottom-0 left-0 h-[20vh] w-auto mix-blend-screen md:h-[34vh] lg:h-[40vh]"
         >
-          <source src="/flying.webm" type="video/webm" />
+          <source src="/flying.mp4" type="video/mp4" />
         </video>
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute bottom-0 right-0 h-[20vh] w-auto md:h-[34vh] lg:h-[40vh] drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] safari-hide-video"
+          className="absolute bottom-0 right-0 h-[20vh] w-auto mix-blend-screen md:h-[34vh] lg:h-[40vh]"
         >
-          <source src="/dancing.webm" type="video/webm" />
+          <source src="/dancing.mp4" type="video/mp4" />
         </video>
-
-        {/* iOS/Safari fallback — alpha .webm not supported there */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/characters/girl2.webp"
-          alt=""
-          className="safari-only absolute bottom-0 left-0 h-[19vh] w-auto md:h-[32vh] lg:h-[38vh] drop-shadow-[0_0_25px_rgba(255,178,0,0.2)]"
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/characters/boy1.webp"
-          alt=""
-          className="safari-only absolute bottom-0 right-0 h-[19vh] w-auto md:h-[32vh] lg:h-[38vh] drop-shadow-[0_0_30px_rgba(255,178,0,0.2)]"
-        />
       </div>
 
       <div className="max-w-[1440px] w-full mx-auto px-4 md:px-8 text-center space-y-6 sm:space-y-8 relative z-10">

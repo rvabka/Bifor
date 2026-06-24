@@ -19,16 +19,10 @@ export default function FeaturesSection() {
                 loop
                 muted
                 playsInline
-                className="absolute bottom-0 -right-12 md:-right-16 w-56 sm:w-60 md:w-80 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
+                className="absolute bottom-0 -right-12 md:-right-16 w-56 sm:w-60 md:w-80 pointer-events-none mix-blend-screen z-10"
               >
-                <source src="/handrising.webm" type="video/webm" />
+                <source src="/handrising.mp4" type="video/mp4" />
               </video>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/characters/boy2.webp"
-                alt=""
-                className="safari-only absolute bottom-0 -right-10 md:-right-14 w-48 sm:w-52 md:w-72 pointer-events-none drop-shadow-[0_0_30px_rgba(255,178,0,0.2)] z-10"
-              />
               <div className="text-center pt-8 px-8 sm:px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
                   <svg
@@ -63,16 +57,10 @@ export default function FeaturesSection() {
                 loop
                 muted
                 playsInline
-                className="absolute bottom-0 -left-12 md:-left-16 w-56 sm:w-60 md:w-80 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10 safari-hide-video"
+                className="absolute bottom-0 -left-12 md:-left-16 w-56 sm:w-60 md:w-80 pointer-events-none mix-blend-screen z-10"
               >
-                <source src="/jump.webm" type="video/webm" />
+                <source src="/jump.mp4" type="video/mp4" />
               </video>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/characters/boy4.webp"
-                alt=""
-                className="safari-only absolute bottom-0 -left-10 md:-left-14 w-48 sm:w-52 md:w-72 pointer-events-none drop-shadow-[0_0_25px_rgba(255,178,0,0.2)] z-10"
-              />
               <div className="text-center pt-8 px-8 sm:px-12 pb-40 md:p-8 space-y-6">
                 <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
                   <svg

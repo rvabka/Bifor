@@ -90,30 +90,10 @@ html {
   text-size-adjust: 100%;
 }
 
-/* Hide videos on Safari (no VP9 alpha support) */
-@supports not (font: -apple-system-body) {
-  .safari-hide-video {
-    display: revert;
-  }
-}
-
-@supports (font: -apple-system-body) {
-  .safari-hide-video {
-    display: none !important;
-  }
-}
-
-/* Static character fallback — shown ONLY on Safari/iOS where the
-   alpha .webm characters are hidden. Mirror of .safari-hide-video. */
-.safari-only {
-  display: none;
-}
-
-@supports (font: -apple-system-body) {
-  .safari-only {
-    display: block;
-  }
-}
+/* Character clips have a solid BLACK background (no real alpha). We play
+   them as H.264 .mp4 (works on iOS Safari, unlike the VP9 .webm) and use
+   mix-blend-mode: screen so the black drops out against the dark UI on
+   every browser. Keep their backdrop dark for the effect to read. */
 
 .glass-card {
   background: rgba(38, 38, 38, 0.4);
