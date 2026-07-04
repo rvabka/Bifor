@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appID": "REPLACE_APPLE_TEAM_ID.com.bifor.app",
+        "appID": "799BGSX76W.com.bifor.app",
         "paths": ["/auth/*"]
       }
     ]

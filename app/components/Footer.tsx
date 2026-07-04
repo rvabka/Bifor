@@ -30,6 +30,12 @@ export default function Footer() {
           </a>
           <a
             className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
+            href="/terms"
+          >
+            Regulamin
+          </a>
+          <a
+            className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
             href="mailto:kontakt@bifor.games"
           >
             Wsparcie
