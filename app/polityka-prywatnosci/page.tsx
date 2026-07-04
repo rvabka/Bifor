@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Polityka prywatności — Bifor',
+  title: 'Polityka prywatności - Bifor',
   description: 'Polityka prywatności aplikacji Bifor.'
 };
 
@@ -53,14 +53,14 @@ export default function PrivacyPolicyPage() {
           </p>
           <ul className="list-disc list-inside text-on-surface-variant font-extralight leading-relaxed space-y-2 pl-4">
             <li>
-              <strong className="font-normal text-on-surface">Imię</strong> —
+              <strong className="font-normal text-on-surface">Imię</strong> -
               podane dobrowolnie w formularzu zapisu na newsletter.
             </li>
             <li>
               <strong className="font-normal text-on-surface">
                 Adres e-mail
               </strong>{' '}
-              — podany w formularzu zapisu na newsletter w celu otrzymywania
+              - podany w formularzu zapisu na newsletter w celu otrzymywania
               informacji o aplikacji Bifor.
             </li>
           </ul>
@@ -118,21 +118,21 @@ export default function PrivacyPolicyPage() {
               <strong className="font-normal text-on-surface">
                 Resend, Inc.
               </strong>{' '}
-              — obsługa newslettera i przechowywanie listy kontaktów (USA,
+              - obsługa newslettera i przechowywanie listy kontaktów (USA,
               zgodność z RODO na podstawie standardowych klauzul umownych).
             </li>
             <li>
               <strong className="font-normal text-on-surface">
                 Cloudflare, Inc.
               </strong>{' '}
-              — ochrona formularza przed botami za pomocą usługi Turnstile (USA,
+              - ochrona formularza przed botami za pomocą usługi Turnstile (USA,
               zgodność z RODO na podstawie standardowych klauzul umownych).
             </li>
             <li>
               <strong className="font-normal text-on-surface">
                 Vercel Inc.
               </strong>{' '}
-              — hosting strony internetowej (USA, zgodność z RODO na podstawie
+              - hosting strony internetowej (USA, zgodność z RODO na podstawie
               standardowych klauzul umownych).
             </li>
           </ul>
@@ -191,7 +191,7 @@ export default function PrivacyPolicyPage() {
             <li>Prawo do przenoszenia danych.</li>
             <li>Prawo do wycofania zgody w dowolnym momencie.</li>
             <li>
-              Prawo do wniesienia skargi do organu nadzorczego — Prezesa Urzędu
+              Prawo do wniesienia skargi do organu nadzorczego - Prezesa Urzędu
               Ochrony Danych Osobowych (PUODO).
             </li>
           </ul>

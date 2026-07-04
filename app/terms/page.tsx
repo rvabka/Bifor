@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Regulamin — Bifor',
+  title: 'Regulamin - Bifor',
   description:
     'Regulamin i warunki korzystania z aplikacji Bifor, w tym zasady dotyczące treści użytkowników.'
 };
@@ -72,22 +72,22 @@ export default function TermsPage() {
           <ul className={UL_CLASS}>
             <li>
               <strong className="font-normal text-on-surface">Użytkownik</strong>{' '}
-              — osoba korzystająca z Aplikacji, zalogowana lub w trybie gościa.
+              - osoba korzystająca z Aplikacji, zalogowana lub w trybie gościa.
             </li>
             <li>
-              <strong className="font-normal text-on-surface">Konto</strong> —
+              <strong className="font-normal text-on-surface">Konto</strong> -
               konto tworzone przez email, Google lub Apple.
             </li>
             <li>
               <strong className="font-normal text-on-surface">
                 Treści Użytkownika
               </strong>{' '}
-              — dowolne treści, które tworzysz lub wprowadzasz w Aplikacji:
+              - dowolne treści, które tworzysz lub wprowadzasz w Aplikacji:
               pseudonim (nick), sekrety, stwierdzenia, odpowiedzi, zdjęcia
               (selfie) oraz inne dane przekazywane w trakcie gry.
             </li>
             <li>
-              <strong className="font-normal text-on-surface">Pokój</strong> —
+              <strong className="font-normal text-on-surface">Pokój</strong> -
               prywatna sesja gry online, do której inni dołączają za pomocą kodu
               PIN lub kodu QR.
             </li>
@@ -154,7 +154,7 @@ export default function TermsPage() {
             </li>
             <li>
               zawierają treści seksualne z udziałem osób nieletnich lub w
-              jakikolwiek sposób seksualizują osoby nieletnie — takie treści
+              jakikolwiek sposób seksualizują osoby nieletnie - takie treści
               zgłaszamy odpowiednim organom;
             </li>
             <li>
@@ -206,7 +206,7 @@ export default function TermsPage() {
             <strong className="font-normal text-on-surface">
               w ciągu 24 godzin
             </strong>{' '}
-            — usuwając treści naruszające Regulamin oraz, w uzasadnionych
+            - usuwając treści naruszające Regulamin oraz, w uzasadnionych
             przypadkach, blokując lub usuwając konto sprawcy. Zastrzegamy sobie
             prawo do moderowania, ograniczania lub usuwania treści oraz kont
             naruszających Regulamin, według naszego uznania i zgodnie z
@@ -216,8 +216,8 @@ export default function TermsPage() {
 
         <Section title="7. Konsekwencje naruszeń">
           <p className={P_CLASS}>
-            W przypadku naruszenia Regulaminu możemy — w zależności od wagi
-            naruszenia — usunąć treść, ograniczyć dostęp do funkcji, zawiesić lub
+            W przypadku naruszenia Regulaminu możemy - w zależności od wagi
+            naruszenia - usunąć treść, ograniczyć dostęp do funkcji, zawiesić lub
             trwale usunąć Konto, a także zgłosić sprawę właściwym organom, jeśli
             wymaga tego prawo. Możesz w każdej chwili usunąć swoje Konto w
             ustawieniach Aplikacji; usunięcie Konta powoduje trwałe skasowanie
