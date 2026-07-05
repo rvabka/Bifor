@@ -96,11 +96,13 @@ export default function TermsPage() {
 
         <Section title="3. Wiek i uprawnienie do korzystania">
           <p className={P_CLASS}>
-            Aby założyć konto i korzystać z Aplikacji, musisz mieć ukończone co
-            najmniej 16 lat. Część treści (kategorie oznaczone jako „dla
-            dorosłych” / 18+) jest dostępna wyłącznie dla osób pełnoletnich i
-            wymaga potwierdzenia wieku. Korzystając z Aplikacji, oświadczasz, że
-            spełniasz te wymagania oraz że wszystkie podane przez Ciebie dane są
+            Aby zakładać konto i korzystać z Aplikacji, musisz mieć ukończone co
+            najmniej 16 lat; przy pierwszym uruchomieniu potwierdzasz swój wiek.
+            Aplikacja zawiera treści imprezowe przeznaczone dla nastoletnich i
+            dorosłych użytkowników, w tym humor dla dorosłych oraz odniesienia do
+            alkoholu — zgodnie z kategorią wiekową przypisaną Aplikacji w sklepie
+            App Store / Google Play. Korzystając z Aplikacji, oświadczasz, że
+            spełniasz wymóg wieku oraz że wszystkie podane przez Ciebie dane są
             prawdziwe.
           </p>
         </Section>
