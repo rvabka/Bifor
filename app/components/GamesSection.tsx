@@ -31,22 +31,6 @@ export default function GamesSection() {
   const [active, setActive] = useState(0);
   const [dims, setDims] = useState({ cardW: 280, cardH: 350, spacing: 330 });
 
-  // On touch devices iOS throttles scroll events during momentum scrolling,
-  // so the carousel jumps between sparse updates. A short transition on the
-  // cards interpolates those gaps for a smooth feel. Desktop (fine pointer,
-  // continuous scroll events) stays transition-free to avoid lag.
-  useEffect(() => {
-    if (!window.matchMedia('(pointer: coarse)').matches) return;
-    const id = requestAnimationFrame(() => {
-      for (const card of cardRefs.current) {
-        if (card)
-          card.style.transition =
-            'transform 0.16s ease-out, opacity 0.16s ease-out';
-      }
-    });
-    return () => cancelAnimationFrame(id);
-  }, []);
-
   useEffect(() => {
     const calc = () => {
       const stageH = stageRef.current?.clientHeight ?? window.innerHeight * 0.5;
@@ -70,14 +54,11 @@ export default function GamesSection() {
     // dims changed (e.g. resize) → force the next frame to recompute.
     lastFRef.current = -1;
     const update = () => {
-      raf = 0;
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      if (rect.bottom < -vh || rect.top > vh) return;
-
-      const dist = el.offsetHeight - vh;
+      const dist = rect.height - vh;
       const scrolled = Math.min(Math.max(-rect.top, 0), dist);
       const p = dist > 0 ? scrolled / dist : 0;
       const f = p * (N - 1);
@@ -103,15 +84,35 @@ export default function GamesSection() {
       const idx = Math.max(0, Math.min(N - 1, Math.round(f)));
       setActive((prev) => (prev === idx ? prev : idx));
     };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+    // iOS coalesces scroll events during momentum scrolling, so an
+    // event-driven update runs in sparse bursts and the carousel stutters.
+    // A continuous rAF loop ticks once per rendered frame regardless of when
+    // scroll events fire, giving true refresh-rate motion. It runs only while
+    // the section is on screen (IntersectionObserver) to save battery.
+    const loop = () => {
+      update();
+      raf = requestAnimationFrame(loop);
     };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+
+    let running = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !running) {
+          running = true;
+          lastFRef.current = -1;
+          loop();
+        } else if (!entry.isIntersecting && running) {
+          running = false;
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: '100px 0px' }
+    );
+    const node = sectionRef.current;
+    if (node) io.observe(node);
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      io.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
   }, [dims]);

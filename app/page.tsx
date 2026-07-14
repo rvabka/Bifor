@@ -5,7 +5,6 @@ import SocialProofSection from './components/SocialProofSection';
 import GamesSection from './components/GamesSection';
 import FeaturesSection from './components/FeaturesSection';
 import NewsletterSection from './components/NewsletterSection';
-import NewsletterPopup from './components/NewsletterPopup';
 import Footer from './components/Footer';
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
         <NewsletterSection />
       </main>
       <Footer />
-      <NewsletterPopup />
     </>
   );
 }
