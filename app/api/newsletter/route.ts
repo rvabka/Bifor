@@ -123,7 +123,7 @@ export async function POST(request: Request) {
           </a>
           <p style="margin:24px 0 0;font-size:12px;color:#666666;line-height:1.5;">
             Link jest ważny przez 24 godziny.<br>
-            Jeśli to nie Ty — zignoruj tę wiadomość.
+            Jeśli to nie Ty - zignoruj tę wiadomość.
           </p>
         </td></tr>
         <tr><td style="padding:20px 32px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">

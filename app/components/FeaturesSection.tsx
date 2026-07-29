@@ -10,7 +10,7 @@ export default function FeaturesSection() {
             </h2>
             <p className="text-on-surface-variant text-lg sm:text-xl font-extralight max-w-md leading-relaxed">
               Dołącz do znajomych jednym kodem PIN. Zero konfiguracji, zero
-              czekania — czysta zabawa na wyciągnięcie ręki.
+              czekania - czysta zabawa na wyciągnięcie ręki.
             </p>
 
             <div className="reveal relative rounded-[2.5rem] overflow-hidden group aspect-[4/5] mt-8 sm:mt-12 bg-surface-container-low flex items-start md:items-center justify-center">
@@ -107,7 +107,7 @@ export default function FeaturesSection() {
                 Synchronizacja w czasie rzeczywistym
               </h3>
               <p className="text-on-surface-variant font-extralight text-lg leading-relaxed">
-                Każdy gracz widzi to, co powinien — na swoim telefonie, w
+                Każdy gracz widzi to, co powinien - na swoim telefonie, w
                 idealnym momencie. Żadnych opóźnień, żadnych kompromisów.
               </p>
             </div>

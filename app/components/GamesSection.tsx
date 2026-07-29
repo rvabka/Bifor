@@ -117,7 +117,7 @@ export default function GamesSection() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl px-2 text-sm font-extralight text-on-surface-variant sm:mt-4 sm:text-base md:text-lg">
             Poznaj ekipę, która rozkręci każdą imprezę. Każda gra gotowa w kilka
-            sekund — wystarczy telefon.
+            sekund - wystarczy telefon.
           </p>
         </div>
 

@@ -18,7 +18,7 @@ const statusMessages: Record<
     icon: '👋',
     title: 'Już jesteś na liście!',
     description:
-      'Ten adres e-mail jest już zapisany. Nie musisz nic więcej robić — odezwiemy się wkrótce.'
+      'Ten adres e-mail jest już zapisany. Nie musisz nic więcej robić - odezwiemy się wkrótce.'
   },
   expired: {
     icon: '⏰',

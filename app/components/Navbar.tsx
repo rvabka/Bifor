@@ -61,7 +61,7 @@ export default function Navbar() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
         <button
           onClick={goTop}
-          aria-label="Bifor — góra strony"
+          aria-label="Bifor - góra strony"
           className="cursor-pointer transition-transform active:scale-95"
         >
           <Image src="/logo.png" alt="Bifor" width={120} height={40} priority className="h-9 w-auto" />

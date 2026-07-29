@@ -99,8 +99,8 @@ export default function TermsPage() {
           <p className={P_CLASS}>
             Aby zakładać konto i korzystać z Aplikacji, musisz mieć ukończone co
             najmniej 16 lat; przy pierwszym uruchomieniu potwierdzasz swój wiek.
-            Aplikacja zawiera treści imprezowe — pytania, zabawy i wyzwania
-            towarzyskie — zgodnie z kategorią wiekową przypisaną Aplikacji w
+            Aplikacja zawiera treści imprezowe - pytania, zabawy i wyzwania
+            towarzyskie - zgodnie z kategorią wiekową przypisaną Aplikacji w
             sklepie App Store / Google Play. Korzystając z Aplikacji, oświadczasz,
             że spełniasz wymóg wieku oraz że wszystkie podane przez Ciebie dane są
             prawdziwe.

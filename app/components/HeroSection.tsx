@@ -118,11 +118,11 @@ export default function HeroSection() {
             onClick={scrollToNewsletter}
             className="group relative w-full max-w-sm sm:w-auto bg-primary text-on-primary px-6 sm:px-8 py-4 rounded-full font-semibold text-base sm:text-lg uppercase tracking-[0.1em] sm:tracking-[0.15em] hover:scale-105 hover:shadow-[0_0_60px_rgba(255,178,0,0.5)] active:scale-95 transition-all duration-300 cursor-pointer newsletter-pulse"
           >
-            <span className="relative z-10">🔥 Zapisz się — bądź pierwszy!</span>
+            <span className="relative z-10">🔥 Zapisz się - bądź pierwszy!</span>
           </button>
           <span className="text-xs text-on-surface-variant font-light">
             Już <span className="text-primary font-medium">500+ osób</span> czeka
-            na premierę — dołącz do nich!
+            na premierę - dołącz do nich!
           </span>
         </div>
 
