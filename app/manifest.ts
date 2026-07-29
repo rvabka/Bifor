@@ -1,17 +1,20 @@
 import type { MetadataRoute } from 'next';
+import { SHORT_DESCRIPTION } from './lib/site';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Bifor — Gry imprezowe na telefon',
+    id: '/',
+    name: 'Bifor - gry imprezowe na telefon',
     short_name: 'Bifor',
-    description:
-      'Gry imprezowe na telefon. Stwórz lobby kodem PIN i grajcie razem ze znajomymi.',
+    description: SHORT_DESCRIPTION,
     start_url: '/',
+    scope: '/',
     display: 'standalone',
     background_color: '#0a0a0a',
     theme_color: '#0a0a0a',
     lang: 'pl',
-    categories: ['games', 'entertainment'],
+    dir: 'ltr',
+    categories: ['games', 'entertainment', 'social'],
     icons: [{ src: '/logo.png', sizes: 'any', type: 'image/png', purpose: 'any' }]
   };
 }

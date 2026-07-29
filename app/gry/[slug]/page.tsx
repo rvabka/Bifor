@@ -107,9 +107,9 @@ export default async function GamePage({ params }: Props) {
             </ol>
           </nav>
 
-          <header className="mt-8 space-y-6">
+          <header className="mt-8 flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:gap-10">
             <div
-              className="relative overflow-hidden rounded-[2rem] border"
+              className="w-full max-w-[240px] shrink-0 overflow-hidden rounded-[1.75rem] border"
               style={{
                 borderColor: `${game.glow}40`,
                 backgroundColor: `${game.glow}10`,
@@ -120,18 +120,19 @@ export default async function GamePage({ params }: Props) {
                 src={game.art}
                 alt={`${game.title} - gra imprezowa w aplikacji Bifor`}
                 width={800}
-                height={500}
+                height={1071}
                 priority
-                className="h-56 w-full object-cover object-top sm:h-72"
+                sizes="(max-width: 640px) 240px, 240px"
+                className="h-auto w-full"
               />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 text-center sm:text-left">
               <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
                 {game.genre}
               </p>
               <h1
-                className="text-[2.75rem] font-light leading-none tracking-tight sm:text-6xl"
+                className="text-[2.75rem] font-light leading-none tracking-tight sm:text-5xl md:text-6xl"
                 style={{ color: game.glow, textShadow: `0 0 40px ${game.glow}59` }}
               >
                 {game.title}

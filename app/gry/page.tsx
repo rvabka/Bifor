@@ -155,7 +155,7 @@ export default function GamesHubPage() {
                 <li key={game.slug}>
                   <Link
                     href={gamePath(game.slug)}
-                    className="group block overflow-hidden rounded-[1.75rem] border transition-colors"
+                    className="flex h-full gap-4 overflow-hidden rounded-[1.75rem] border p-4 transition-colors"
                     style={{
                       borderColor: `${game.glow}33`,
                       backgroundColor: `${game.glow}0d`
@@ -165,12 +165,13 @@ export default function GamesHubPage() {
                       src={game.art}
                       alt={`${game.title} - ${game.tagline}`}
                       width={800}
-                      height={420}
-                      className="h-40 w-full object-cover object-top"
+                      height={1071}
+                      sizes="112px"
+                      className="h-auto w-24 shrink-0 self-start rounded-2xl sm:w-28"
                     />
-                    <div className="space-y-2 p-5">
+                    <div className="space-y-1.5">
                       <h3
-                        className="text-2xl font-light tracking-tight"
+                        className="text-xl font-light tracking-tight"
                         style={{ color: game.glow }}
                       >
                         {game.title}
@@ -178,8 +179,10 @@ export default function GamesHubPage() {
                       <p className="text-sm font-extralight leading-relaxed text-on-surface">
                         {game.tagline}
                       </p>
-                      <p className="text-xs text-on-surface-variant">
-                        {game.players} · {game.duration} · {game.modeLabel}
+                      <p className="text-xs leading-relaxed text-on-surface-variant">
+                        {game.players} · {game.duration}
+                        <br />
+                        {game.modeLabel}
                       </p>
                     </div>
                   </Link>
