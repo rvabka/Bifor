@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Polityka prywatności - Bifor',
+  title: 'Polityka prywatności',
   description:
-    'Polityka prywatności aplikacji mobilnej Bifor oraz strony bifor.games.'
+    'Polityka prywatności aplikacji mobilnej Bifor oraz strony bifor.games - jakie dane zbieramy i w jakim celu.',
+  alternates: { canonical: '/polityka-prywatnosci' }
 };
 
 export default function PrivacyPolicyPage() {

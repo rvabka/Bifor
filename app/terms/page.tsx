@@ -3,9 +3,10 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Regulamin - Bifor',
+  title: 'Regulamin',
   description:
-    'Regulamin i warunki korzystania z aplikacji Bifor, w tym zasady dotyczące treści użytkowników.'
+    'Regulamin i warunki korzystania z aplikacji Bifor z grami imprezowymi, w tym zasady dotyczące treści użytkowników.',
+  alternates: { canonical: '/terms' }
 };
 
 const P_CLASS =

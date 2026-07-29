@@ -25,6 +25,12 @@ const nextConfig: NextConfig = {
         destination: "/terms",
         permanent: true,
       },
+      { source: "/games", destination: "/gry", permanent: true },
+      { source: "/gry-imprezowe", destination: "/gry", permanent: true },
+      { source: "/gry-na-impreze", destination: "/gry", permanent: true },
+      { source: "/gry/panstwa", destination: "/gry/panstwa-miasta", permanent: true },
+      { source: "/gry/czolko-gra", destination: "/gry/czolko", permanent: true },
+      { source: "/pytania", destination: "/faq", permanent: true },
     ];
   },
 };

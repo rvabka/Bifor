@@ -10,12 +10,14 @@ export default function FAQSection() {
     <section id="faq" className="py-16 sm:py-24 bg-background">
       <div className="max-w-3xl mx-auto px-4 md:px-8">
         <div className="reveal text-center space-y-4 mb-10 sm:mb-16">
-          <h2 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
+          <h1 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
             Pytania i{' '}
             <span className="text-primary font-normal">odpowiedzi</span>
-          </h2>
-          <p className="text-on-surface-variant text-base sm:text-lg font-extralight">
-            Najczęściej zadawane pytania o Bifor.
+          </h1>
+          <p className="mx-auto max-w-xl text-on-surface-variant text-base sm:text-lg font-extralight leading-relaxed">
+            Najczęściej zadawane pytania o Bifor - aplikację z grami imprezowymi na
+            telefon. Znajdziesz tu informacje o liczbie graczy, trybach gry, cenie i
+            premierze.
           </p>
         </div>
 
@@ -25,29 +27,30 @@ export default function FAQSection() {
               key={i}
               className="reveal border border-white/5 rounded-2xl overflow-hidden transition-colors hover:border-white/10"
             >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 md:p-8 text-left cursor-pointer group active:bg-white/5 transition-colors"
-              >
-                <span className="text-base md:text-lg font-light tracking-tight pr-4">
-                  {faq.question}
-                </span>
-                <svg
-                  className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${
-                    openIndex === i ? 'rotate-45' : ''
-                  }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
+              <h2 className="text-base md:text-lg font-light tracking-tight">
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  aria-expanded={openIndex === i}
+                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 md:p-8 text-left cursor-pointer group active:bg-white/5 transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
-              </button>
+                  <span className="pr-4">{faq.question}</span>
+                  <svg
+                    className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${
+                      openIndex === i ? 'rotate-45' : ''
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </button>
+              </h2>
               <div
                 className={`grid transition-all duration-300 ${
                   openIndex === i

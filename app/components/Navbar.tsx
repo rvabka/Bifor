@@ -6,9 +6,11 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { smoothScrollTo } from './scrollTo';
 
-const SECTION_LINKS = [
-  { label: 'Gry', id: 'gry' },
-  { label: 'Jak to działa', id: 'jak-to-dziala' }
+const SECTION_LINKS = [{ label: 'Jak to działa', id: 'jak-to-dziala' }];
+
+const PAGE_LINKS = [
+  { label: 'Gry', href: '/gry' },
+  { label: 'FAQ', href: '/faq' }
 ];
 
 export default function Navbar() {
@@ -49,6 +51,7 @@ export default function Navbar() {
 
   return (
     <nav
+      aria-label="Nawigacja główna"
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
         scrolled || open
           ? 'bg-background/80 backdrop-blur-xl border-b border-white/5'
@@ -65,6 +68,15 @@ export default function Navbar() {
         </button>
 
         <div className="hidden md:flex items-center gap-9">
+          {PAGE_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-sm font-light tracking-tight text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              {l.label}
+            </Link>
+          ))}
           {SECTION_LINKS.map((l) => (
             <button
               key={l.id}
@@ -74,12 +86,6 @@ export default function Navbar() {
               {l.label}
             </button>
           ))}
-          <Link
-            href="/faq"
-            className="text-sm font-light tracking-tight text-on-surface-variant hover:text-on-surface transition-colors"
-          >
-            FAQ
-          </Link>
         </div>
 
         <div className="flex items-center gap-2">
@@ -112,6 +118,19 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col gap-1 border-b border-white/5 bg-background/95 px-3 pb-6 pt-2 backdrop-blur-xl">
+          {PAGE_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between rounded-2xl px-3 py-3.5 text-left text-base font-light text-on-surface-variant transition-colors hover:text-on-surface active:bg-white/5"
+            >
+              {l.label}
+              <svg className="h-4 w-4 text-outline" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </Link>
+          ))}
           {SECTION_LINKS.map((l) => (
             <button
               key={l.id}
@@ -124,16 +143,6 @@ export default function Navbar() {
               </svg>
             </button>
           ))}
-          <Link
-            href="/faq"
-            onClick={() => setOpen(false)}
-            className="flex items-center justify-between rounded-2xl px-3 py-3.5 text-left text-base font-light text-on-surface-variant transition-colors hover:text-on-surface active:bg-white/5"
-          >
-            FAQ
-            <svg className="h-4 w-4 text-outline" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-          </Link>
         </div>
       </div>
     </nav>

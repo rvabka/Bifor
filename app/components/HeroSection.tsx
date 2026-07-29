@@ -46,15 +46,18 @@ export default function HeroSection() {
           >
             Impreza zaczyna <br className="hidden sm:block" />
             się <span className="text-primary font-normal">tutaj.</span>
+            <span className="mt-4 block text-base font-extralight tracking-normal text-on-surface-variant sm:mt-5 sm:text-lg md:text-xl">
+              Gry imprezowe na telefon dla ekipy od 2 do 10 osób
+            </span>
           </h1>
 
           <p
             className="animate-rise text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto font-extralight leading-relaxed"
             style={{ animationDelay: '0.16s' }}
           >
-            Zakazane słowa, Czółko, Impostor i więcej — wszystko w jednej
-            aplikacji. Stwórz lobby, zaproś znajomych kodem PIN i grajcie razem
-            na swoich telefonach.
+            Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P -
+            sześć gier w jednej aplikacji. Grajcie na jednym telefonie albo
+            każdy na swoim, dołączając do pokoju kodem.
           </p>
 
           <div

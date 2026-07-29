@@ -1,25 +1,9 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-
-type Game = {
-  title: string;
-  tagline: string;
-  players: string;
-  mode: string;
-  art: string;
-  glow: string;
-};
-
-const GAMES: Game[] = [
-  { title: 'Czółko', tagline: 'Zgadnij kim jesteś, zanim czas minie.', players: '2–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/czolko.webp', glow: '#F59E0B' },
-  { title: 'Zakazane', tagline: 'Opisz hasło bez używania zakazanych słów.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/zakazane.webp', glow: '#22C55E' },
-  { title: 'Impostor', tagline: 'Odkryj zdrajcę wśród przyjaciół.', players: '3–8 graczy', mode: 'Na jednym lub wielu telefonach', art: '/games/impostor.webp', glow: '#EF4444' },
-  { title: 'Sekrety', tagline: 'Poznajcie się lepiej, zanim impreza się rozkręci.', players: '3–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/sekrety.webp', glow: '#A855F7' },
-  { title: 'Państwa Miasta', tagline: 'Litera, kolumny i walka o punkty.', players: '2–10 graczy', mode: 'Każdy na swoim telefonie', art: '/games/panstwa.webp', glow: '#3B82F6' },
-  { title: 'Gra na P', tagline: 'Opisz hasło tylko słowami na literę P.', players: '2–4 drużyny', mode: 'Na jednym telefonie', art: '/games/granap.webp', glow: '#F97316' }
-];
+import { GAMES, gamePath } from '../lib/games';
 
 const N = GAMES.length;
 
@@ -163,20 +147,26 @@ export default function GamesSection() {
                   willChange: 'transform, opacity'
                 }}
               >
-                <img
-                  src={game.art}
-                  alt={game.title}
-                  className="h-full w-full object-cover object-top"
-                  style={{ maxWidth: 'none' }}
-                  draggable={false}
-                />
+                <Link
+                  href={gamePath(game.slug)}
+                  aria-label={`${game.title} - zasady gry i jak grać`}
+                  className="block h-full w-full"
+                >
+                  <img
+                    src={game.art}
+                    alt={`${game.title} - ${game.tagline}`}
+                    className="h-full w-full object-cover object-top"
+                    style={{ maxWidth: 'none' }}
+                    draggable={false}
+                  />
+                </Link>
               </div>
             ))}
           </div>
         </div>
 
         <div className="px-4 pb-10 text-center sm:pb-12 md:pb-16">
-          <div className="mx-auto min-h-32 max-w-lg sm:min-h-28">
+          <div className="mx-auto min-h-40 max-w-lg sm:min-h-36">
             <div key={active} className="animate-[fadeUp_0.5s_ease-out]">
               <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
                 {String(active + 1).padStart(2, '0')} / 0{N}
@@ -191,8 +181,15 @@ export default function GamesSection() {
                 {g.tagline}
               </p>
               <p className="mt-1 text-sm font-light text-on-surface-variant">
-                {g.players} · {g.mode}
+                {g.players} · {g.modeLabel}
               </p>
+              <Link
+                href={gamePath(g.slug)}
+                className="mt-2 inline-block text-xs uppercase tracking-[0.2em] transition-opacity hover:opacity-70"
+                style={{ color: g.glow }}
+              >
+                Zasady i jak grać
+              </Link>
             </div>
           </div>
 

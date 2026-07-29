@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import JsonLd from './components/JsonLd';
+import { appNode, organizationNode, websiteNode } from './lib/jsonld';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -8,63 +11,66 @@ const inter = Inter({
   display: 'swap'
 });
 
-const SITE = 'https://bifor.games';
-const DESCRIPTION =
-  'Bifor to aplikacja z grami imprezowymi na telefon. Graj w Zakazane słowa, Czółko, Impostor, Sekrety, Państwa Miasta i Grę na P ze znajomymi. Stwórz lobby kodem PIN i baw się razem, na jednym lub wielu telefonach.';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE),
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
-      'Bifor — Gry imprezowe na telefon | Zakazane słowa, Czółko, Impostor i więcej',
+      'Bifor - gry imprezowe na telefon | Czółko, Zakazane, Impostor, Sekrety',
     template: '%s | Bifor'
   },
-  description: DESCRIPTION,
-  applicationName: 'Bifor',
-  generator: 'Next.js',
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
   category: 'games',
   keywords: [
     'gry imprezowe',
-    'gry na telefon',
-    'gry towarzyskie',
+    'gry imprezowe na telefon',
     'gry na imprezę',
     'gry na domówkę',
-    'zakazane słowa',
+    'gry ze znajomymi',
+    'gry towarzyskie',
+    'gry na before',
+    'gry imprezowe online',
+    'gry na jednym telefonie',
     'czółko',
+    'zakazane słowa',
     'impostor',
     'sekrety',
-    'państwa miasta',
-    'gry ze znajomymi',
-    'party games',
-    'gry multiplayer',
-    'gry online ze znajomymi',
-    'bifor',
-    'aplikacja imprezowa'
+    'państwa miasta online',
+    'kalambury na p',
+    'aplikacja z grami imprezowymi',
+    'bifor'
   ],
-  authors: [{ name: 'Bifor', url: SITE }],
-  creator: 'Bifor',
-  publisher: 'Bifor',
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   icons: {
     icon: '/logo.png',
     apple: '/logo.png'
   },
   alternates: {
-    canonical: '/'
+    canonical: '/',
+    languages: { 'pl-PL': SITE_URL }
   },
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: 'black-translucent'
+  },
+  formatDetection: { telephone: false },
   openGraph: {
     type: 'website',
     locale: 'pl_PL',
-    url: SITE,
-    siteName: 'Bifor',
-    title: 'Bifor — Gry imprezowe na telefon',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: 'Bifor - gry imprezowe na telefon',
     description:
-      'Zakazane słowa, Czółko, Impostor i więcej gier imprezowych w jednej aplikacji. Stwórz lobby, zaproś znajomych kodem PIN i grajcie razem.'
+      'Sześć gier imprezowych w jednej aplikacji: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P. Grajcie na jednym telefonie albo każdy na swoim - dołączacie kodem pokoju, bez zakładania konta.'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bifor — Gry imprezowe na telefon',
+    title: 'Bifor - gry imprezowe na telefon',
     description:
-      'Zakazane słowa, Czółko, Impostor i więcej gier imprezowych w jednej aplikacji.'
+      'Sześć gier imprezowych w jednej aplikacji. Graj ze znajomymi na jednym telefonie lub online, dołączając kodem pokoju.'
   },
   robots: {
     index: true,
@@ -85,44 +91,9 @@ export const viewport: Viewport = {
   initialScale: 1
 };
 
-const jsonLd = {
+const siteJsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': `${SITE}/#organization`,
-      name: 'Bifor',
-      url: SITE,
-      logo: `${SITE}/logo.png`,
-      sameAs: ['https://www.tiktok.com/@biforgames']
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE}/#website`,
-      url: SITE,
-      name: 'Bifor',
-      description: DESCRIPTION,
-      inLanguage: 'pl-PL',
-      publisher: { '@id': `${SITE}/#organization` }
-    },
-    {
-      '@type': 'MobileApplication',
-      '@id': `${SITE}/#app`,
-      name: 'Bifor',
-      description: DESCRIPTION,
-      applicationCategory: 'GameApplication',
-      operatingSystem: 'iOS, Android',
-      inLanguage: 'pl',
-      url: SITE,
-      publisher: { '@id': `${SITE}/#organization` },
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'PLN',
-        availability: 'https://schema.org/PreOrder'
-      }
-    }
-  ]
+  '@graph': [organizationNode, websiteNode, appNode]
 };
 
 export default function RootLayout({
@@ -133,10 +104,8 @@ export default function RootLayout({
   return (
     <html lang="pl" className={`${inter.variable} dark`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={siteJsonLd} />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
       </head>
       <body className="min-h-screen bg-background text-on-surface font-light antialiased">
         {children}
