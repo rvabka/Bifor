@@ -1,150 +1,243 @@
 'use client';
 
+/* eslint-disable @next/next/no-img-element */
+import { Fragment, useEffect, useRef } from 'react';
+import { GAMES } from '../lib/games';
+import { seeded, seededRange } from '../lib/rand';
 import { smoothScrollTo } from './scrollTo';
 
+const TITLE_LINES = [['Impreza', 'zaczyna', 'się'], ['tutaj.']];
+
+const SPARKS = Array.from({ length: 26 }, (_, i) => {
+  const duration = seededRange(i + 5, 9, 18, 2);
+  return {
+    left: seededRange(i + 1, 0, 100, 2),
+    delay: Number((-seeded(i + 11) * duration).toFixed(2)),
+    duration,
+    size: Math.round(seededRange(i + 17, 2, 4, 0)),
+    drift: seededRange(i + 29, -45, 45, 1),
+    warm: seeded(i + 37) > 0.45
+  };
+});
+
 export default function HeroSection() {
-  const scrollToNewsletter = () => smoothScrollTo('newsletter');
+  const auraRef = useRef<HTMLDivElement>(null);
+  const mascotRef = useRef<HTMLDivElement>(null);
+  const mascotLeftRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduced) return;
+
+    let raf = 0;
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+
+    const onMove = (e: PointerEvent) => {
+      tx = e.clientX / window.innerWidth - 0.5;
+      ty = e.clientY / window.innerHeight - 0.5;
+    };
+
+    const loop = () => {
+      cx += (tx - cx) * 0.06;
+      cy += (ty - cy) * 0.06;
+      if (auraRef.current) {
+        auraRef.current.style.transform = `translate3d(${(cx * 70).toFixed(1)}px, ${(cy * 46).toFixed(1)}px, 0)`;
+      }
+      if (mascotRef.current) {
+        mascotRef.current.style.transform = `translate3d(${(cx * -24).toFixed(1)}px, ${(cy * -14).toFixed(1)}px, 0)`;
+      }
+      if (mascotLeftRef.current) {
+        mascotLeftRef.current.style.transform = `translate3d(${(cx * 18).toFixed(1)}px, ${(cy * -10).toFixed(1)}px, 0)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+
+    window.addEventListener('pointermove', onMove, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
-    <section className="relative pt-28 pb-20 overflow-hidden min-h-screen flex flex-col items-center justify-center">
-      <div className="absolute inset-0 hero-gradient -z-10" />
+    <section className="relative flex min-h-svh flex-col overflow-hidden bg-background">
+      <div
+        ref={auraRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-[-15%] -z-10"
+        style={{
+          background:
+            'radial-gradient(40% 44% at 42% 44%, rgba(255,178,0,0.17), transparent 70%)'
+        }}
+      />
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 hidden h-svh overflow-hidden md:block"
+        className="pointer-events-none absolute inset-x-0 top-0 bottom-14 overflow-hidden"
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute bottom-0 left-0 h-[20vh] w-auto mix-blend-screen md:h-[34vh] lg:h-[40vh]"
-        >
-          <source src="/flying.mp4" type="video/mp4" />
-        </video>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute bottom-0 right-0 h-[20vh] w-auto mix-blend-screen md:h-[34vh] lg:h-[40vh]"
-        >
-          <source src="/dancing.mp4" type="video/mp4" />
-        </video>
+        {SPARKS.map((spark, i) => (
+          <span
+            key={i}
+            className="spark absolute bottom-0 block rounded-full"
+            style={
+              {
+                left: `${spark.left}%`,
+                width: spark.size,
+                height: spark.size,
+                backgroundColor: spark.warm ? '#FFB200' : '#ffffff',
+                animationDelay: `${spark.delay}s`,
+                animationDuration: `${spark.duration}s`,
+                '--drift': `${spark.drift}px`
+              } as React.CSSProperties
+            }
+          />
+        ))}
       </div>
 
-      <div className="max-w-[1440px] w-full mx-auto px-4 md:px-8 text-center space-y-6 sm:space-y-8 relative z-10">
-        <div className="space-y-4 relative">
-          <div className="animate-rise inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-highest border border-outline-variant/15 text-primary text-[0.7rem] uppercase tracking-[0.2em] font-medium mx-auto">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            Gry imprezowe • Wkrótce
-          </div>
-
-          <h1
-            className="animate-rise text-balance text-[3.25rem] sm:text-6xl md:text-[7rem] font-light tracking-tighter leading-[0.92] text-on-surface"
-            style={{ animationDelay: '0.08s' }}
-          >
-            Impreza zaczyna <br className="hidden sm:block" />
-            się <span className="text-primary font-normal">tutaj.</span>
-            <span className="mt-4 block text-base font-extralight tracking-normal text-on-surface-variant sm:mt-5 sm:text-lg md:text-xl">
-              Gry imprezowe na telefon dla ekipy od 2 do 10 osób
-            </span>
-          </h1>
-
-          <p
-            className="animate-rise text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto font-extralight leading-relaxed"
-            style={{ animationDelay: '0.16s' }}
-          >
-            Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P -
-            sześć gier w jednej aplikacji. Grajcie na jednym telefonie albo
-            każdy na swoim, dołączając do pokoju kodem.
-          </p>
-
+      <div
+        ref={mascotLeftRef}
+        aria-hidden
+        className="pointer-events-none absolute bottom-[68px] left-[2%] hidden h-[min(32vw,62svh)] lg:block"
+        style={{ willChange: 'transform' }}
+      >
+        <div className="mascot-float-slow relative h-full">
           <div
-            className="animate-rise flex flex-wrap justify-center gap-2 sm:gap-3"
-            style={{ animationDelay: '0.24s' }}
-          >
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] md:text-xs text-on-surface-variant font-light">
-              🎲 6 gier na start
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] md:text-xs text-on-surface-variant font-light">
-              📱 Na jednym lub wielu telefonach
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] md:text-xs text-on-surface-variant font-light">
-              ⚡ Start w 30 sekund
-            </span>
-          </div>
-
-          <div
-            className="animate-rise flex flex-wrap justify-center gap-3 sm:gap-4 pt-2"
-            style={{ animationDelay: '0.32s' }}
-          >
-            <div className="relative group">
-              <button
-                disabled
-                className="flex items-center gap-3 bg-white/60 text-black/50 px-5 py-3.5 rounded-full font-semibold text-sm shadow-lg cursor-not-allowed"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 384 512">
-                  <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-31.4-73.3-114.8-4.4-156.7zM289.1 80.3c21.4-25.8 33.2-59.3 29.8-94.5-31.4 1.4-62.4 20.7-82.6 44.2-18.6 21.4-33.8 55.4-29.4 89.2 33.7 2.6 63.8-15.6 82.2-38.9z" />
-                </svg>
-                App Store
-              </button>
-              <span className="absolute -top-2 -right-2 bg-primary text-on-primary text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                Wkrótce
-              </span>
-            </div>
-            <div className="relative group">
-              <button
-                disabled
-                className="flex items-center gap-3 bg-white/60 text-black/50 px-5 py-3.5 rounded-full font-semibold text-sm shadow-lg cursor-not-allowed"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 512 512">
-                  <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
-                </svg>
-                Google Play
-              </button>
-              <span className="absolute -top-2 -right-2 bg-primary text-on-primary text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                Wkrótce
-              </span>
-            </div>
-          </div>
+            aria-hidden
+            className="absolute inset-x-[-45%] bottom-[-4%] h-[26%] rounded-[50%]"
+            style={{
+              background:
+                'radial-gradient(closest-side, rgba(255,178,0,0.16), transparent 75%)'
+            }}
+          />
+          <img
+            src="/mascot/stance.webp"
+            alt=""
+            className="relative h-full w-auto max-w-none object-contain"
+            draggable={false}
+          />
         </div>
+      </div>
+
+      <div
+        ref={mascotRef}
+        aria-hidden
+        className="pointer-events-none absolute bottom-[68px] right-[2%] hidden h-[min(32vw,62svh)] lg:block"
+        style={{ willChange: 'transform' }}
+      >
+        <div className="mascot-float relative h-full">
+          <div
+            aria-hidden
+            className="absolute inset-x-[-40%] bottom-[-4%] h-[24%] rounded-[50%]"
+            style={{
+              background:
+                'radial-gradient(closest-side, rgba(255,178,0,0.20), transparent 75%)'
+            }}
+          />
+          <img
+            src="/mascot/wave.webp"
+            alt=""
+            className="relative h-full w-auto max-w-none object-contain"
+            draggable={false}
+          />
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 pb-12 pt-24 text-center">
+        <p className="animate-rise inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-on-surface-variant">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          Wkrótce na iOS i Androida
+        </p>
+
+        <h1 className="mt-6 text-[clamp(3.25rem,7vw,7.5rem)] font-light leading-[0.94] tracking-tighter">
+          {TITLE_LINES.map((line, li) => (
+            <Fragment key={line.join('-')}>
+              <span className="block">
+              {line.map((word, wi) => {
+                const order = TITLE_LINES.slice(0, li).flat().length + wi;
+                const accent = li === TITLE_LINES.length - 1;
+                return (
+                  <Fragment key={word}>
+                    <span
+                      className="animate-rise inline-block"
+                      style={{ animationDelay: `${0.08 + order * 0.07}s` }}
+                    >
+                      {accent ? (
+                        <span className="text-primary font-normal">{word}</span>
+                      ) : (
+                        word
+                      )}
+                    </span>
+                    {wi < line.length - 1 ? ' ' : null}
+                  </Fragment>
+                );
+              })}
+              </span>
+              {li < TITLE_LINES.length - 1 ? ' ' : null}
+            </Fragment>
+          ))}
+        </h1>
+
+        <p
+          className="animate-rise mt-7 max-w-2xl text-balance text-lg font-extralight leading-relaxed text-on-surface-variant sm:text-xl md:text-2xl"
+          style={{ animationDelay: '0.36s' }}
+        >
+          Gry na imprezę i domówkę: siedem gier imprezowych w jednej aplikacji, dla
+          ekipy od 2 do 10 osób.
+        </p>
 
         <div
-          className="animate-rise flex flex-col items-center gap-4 pt-2"
-          style={{ animationDelay: '0.4s' }}
+          className="animate-rise mt-9 flex flex-col items-center gap-4"
+          style={{ animationDelay: '0.44s' }}
         >
           <button
-            onClick={scrollToNewsletter}
-            className="group relative w-full max-w-sm sm:w-auto bg-primary text-on-primary px-6 sm:px-8 py-4 rounded-full font-semibold text-base sm:text-lg uppercase tracking-[0.1em] sm:tracking-[0.15em] hover:scale-105 hover:shadow-[0_0_60px_rgba(255,178,0,0.5)] active:scale-95 transition-all duration-300 cursor-pointer newsletter-pulse"
+            onClick={() => smoothScrollTo('newsletter')}
+            className="newsletter-pulse group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-11 py-5 text-lg font-semibold tracking-tight text-on-primary shadow-[0_0_50px_rgba(255,178,0,0.28)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_80px_rgba(255,178,0,0.5)] active:scale-[0.98]"
           >
-            <span className="relative z-10">🔥 Zapisz się - bądź pierwszy!</span>
+            Zapisz się na premierę
+            <svg
+              className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
-          <span className="text-xs text-on-surface-variant font-light">
-            Już <span className="text-primary font-medium">500+ osób</span> czeka
-            na premierę - dołącz do nich!
+          <span className="text-center text-[13px] font-light leading-snug text-on-surface-variant">
+            Bez planszy, bez kartek, bez tłumaczenia zasad.
           </span>
         </div>
+      </div>
 
-        <div className="hidden sm:flex flex-col items-center gap-2 pt-1">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-medium">
-            Przewiń w dół
-          </span>
-          <div className="scroll-bounce">
-            <svg
-              className="w-5 h-5 text-on-surface-variant"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-              />
-            </svg>
-          </div>
+      <div
+        aria-hidden
+        className="relative z-10 overflow-hidden border-t border-white/5 py-5"
+        style={{
+          maskImage:
+            'linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)',
+          WebkitMaskImage:
+            'linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)'
+        }}
+      >
+        <div className="marquee flex w-max gap-10 pr-10">
+          {[0, 1].map((pass) => (
+            <div key={pass} className="flex shrink-0 gap-10 pr-10">
+              {GAMES.map((game) => (
+                <span
+                  key={game.slug}
+                  className="whitespace-nowrap text-sm font-light uppercase tracking-[0.24em] text-on-surface-variant"
+                >
+                  {game.title}
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

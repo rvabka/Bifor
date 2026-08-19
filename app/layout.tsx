@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import JsonLd from './components/JsonLd';
 import { appNode, organizationNode, websiteNode } from './lib/jsonld';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
+import { META_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -14,11 +14,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      'Bifor - gry imprezowe na telefon | Czółko, Zakazane, Impostor, Sekrety',
+    default: 'Gry na imprezę i domówkę - Bifor, 7 gier imprezowych na telefon',
     template: '%s | Bifor'
   },
-  description: SITE_DESCRIPTION,
+  description: META_DESCRIPTION,
   applicationName: SITE_NAME,
   category: 'games',
   keywords: [
@@ -62,15 +61,15 @@ export const metadata: Metadata = {
     locale: 'pl_PL',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'Bifor - gry imprezowe na telefon',
+    title: 'Gry na imprezę i domówkę - Bifor',
     description:
-      'Sześć gier imprezowych w jednej aplikacji: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P. Grajcie na jednym telefonie albo każdy na swoim - dołączacie kodem pokoju, bez zakładania konta.'
+      'Siedem gier imprezowych w jednej aplikacji: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Grajcie na jednym telefonie albo każdy na swoim - dołączacie kodem pokoju, bez zakładania konta.'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bifor - gry imprezowe na telefon',
+    title: 'Gry na imprezę i domówkę - Bifor',
     description:
-      'Sześć gier imprezowych w jednej aplikacji. Graj ze znajomymi na jednym telefonie lub online, dołączając kodem pokoju.'
+      'Siedem gier imprezowych w jednej aplikacji. Graj ze znajomymi na jednym telefonie lub online, dołączając kodem pokoju.'
   },
   robots: {
     index: true,

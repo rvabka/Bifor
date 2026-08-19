@@ -476,6 +476,81 @@ export const GAMES: Game[] = [
           'Zasada dotyczy słów, więc mimika i gesty przechodzą - ale to właśnie słowa na P dają najwięcej śmiechu.'
       }
     ]
+  },
+  {
+    slug: 'szybka-trojka',
+    title: 'Szybka Trójka',
+    tagline: 'Wymień trzy rzeczy, zanim kulka doleci do końca.',
+    summary:
+      'Szybka Trójka to błyskawiczna gra na skojarzenia: słyszysz polecenie "wymień 3 rzeczy...", a kulka spadająca przez rurkę na ekranie odmierza Ci czas na trzy odpowiedzi na głos.',
+    intro: [
+      'Zasada jest banalnie prosta i właśnie dlatego działa na każdej imprezie: pytanie typu "wymień 3 zwierzęta na safari" albo "wymień 3 rzeczy, które chowasz przed rodzicami", a Ty masz odpowiedzieć na głos, zanim kulka dotrze do końca krętej rurki.',
+      'Telefon puszcza czas osoba, która czyta polecenie - nie Ty. Dzięki temu nie masz ani sekundy na spokojne myślenie, a reszta ekipy patrzy, jak kulka przyspiesza w ostatnim zakręcie.'
+    ],
+    genre: 'Gra imprezowa na skojarzenia i refleks pod presją czasu',
+    alsoKnownAs: ['gra w trójki', 'wymień 3 rzeczy', 'gra na czas ze znajomymi'],
+    players: '2-10 graczy',
+    minPlayers: 2,
+    maxPlayers: 10,
+    duration: '10-20 minut',
+    local: true,
+    online: true,
+    modeLabel: 'Na jednym telefonie lub każdy na swoim',
+    bestFor: 'szybkie tury między innymi grami, gdy ekipa chce czegoś na refleks',
+    art: '/games/trojka.webp',
+    glow: '#06B6D4',
+    keywords: [
+      'gra wymień 3 rzeczy',
+      'szybka trójka gra',
+      'gra na skojarzenia na telefon',
+      'gra imprezowa na czas'
+    ],
+    steps: [
+      {
+        name: 'Polecenie czyta sąsiad',
+        text: 'Osoba obok odpowiadającego czyta na głos "wymień 3 rzeczy..." - odpowiadający go jeszcze nie widzi.'
+      },
+      {
+        name: 'Puszczenie kulki startuje czas',
+        text: 'Czytający puszcza kulkę w rurce dopiero po przeczytaniu polecenia na głos.'
+      },
+      {
+        name: 'Trzy odpowiedzi na głos',
+        text: 'Odpowiadający wymienia trzy rzeczy zanim kulka doleci na dół krętej rurki.'
+      },
+      {
+        name: 'Host ocenia werdykt',
+        text: 'Host jednym tapnięciem potwierdza, czy padły trzy odpowiedzi, zanim kulka wylądowała.'
+      },
+      {
+        name: 'Przejęcie albo kolejna osoba',
+        text: 'Gdy się nie uda, to samo polecenie przejmuje następny gracz - bez powtarzania tego, co już padło.'
+      }
+    ],
+    scoring:
+      'Nie ma punktów za wynik liczbowy - gra liczy udane tury i przejęcia. Kto nie zdąży z trzema odpowiedziami, oddaje polecenie następnej osobie w kolejce.',
+    tips: [
+      'Odpowiadaj pierwszą rzeczą, która przyjdzie do głowy - zastanawianie się kosztuje najwięcej czasu.',
+      'Jako czytający nie zdradzaj tempa głosem - kulka i tak nie zwolni.',
+      'Dobra rozgrzewka przed cięższymi grami dedukcyjnymi w tym samym wieczorze.'
+    ],
+    faq: [
+      {
+        question: 'Ile osób potrzeba do Szybkiej Trójki?',
+        answer:
+          'Od 2 do 10 osób, zarówno na jednym telefonie podawanym z rąk do rąk, jak i online, gdzie każdy gra na swoim.'
+      },
+      {
+        question: 'Kto ocenia, czy odpowiedzi się zaliczają?',
+        answer:
+          'Host - jedno tapnięcie po wylądowaniu kulki. Reszta ekipy widzi w tym czasie ekran oczekiwania.'
+      },
+      {
+        question: 'Co się dzieje, gdy ktoś nie zdąży?',
+        answer:
+          'To samo polecenie przechodzi do następnego gracza w kolejce, bez powtarzania odpowiedzi, które już padły.'
+      }
+    ]
   }
 ];
 

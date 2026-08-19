@@ -2,98 +2,127 @@
 
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { GAMES, gamePath } from '../lib/games';
 
 const N = GAMES.length;
+const AUTOPLAY_MS = 3600;
+const HALF = N / 2;
+
+const wrapOffset = (i: number, pos: number) => {
+  const raw = i - pos;
+  return ((((raw + HALF) % N) + N) % N) - HALF;
+};
+
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 
 export default function GamesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const lastFRef = useRef(-1);
+  const posRef = useRef(0);
+  const targetRef = useRef(0);
+  const pausedRef = useRef(false);
+  const draggingRef = useRef(false);
+  const dragMovedRef = useRef(0);
+  const lastAdvanceRef = useRef(0);
   const [active, setActive] = useState(0);
-  const [dims, setDims] = useState({ cardW: 280, cardH: 350, spacing: 330 });
+  const [dims, setDims] = useState({ cardW: 260, cardH: 325, spacing: 300 });
 
   useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
     const calc = () => {
-      const stageH = stageRef.current?.clientHeight ?? window.innerHeight * 0.5;
-      let cardH = Math.min(440, Math.max(190, stageH * 0.82));
-      let cardW = cardH * 0.8;
-      const maxW = window.innerWidth * 0.72;
+      const stageH = el.clientHeight || 420;
+      const stageW = el.clientWidth || window.innerWidth;
+      let cardH = Math.min(500, Math.max(200, stageH * 0.9));
+      let cardW = cardH * 0.78;
+      const maxW = stageW * 0.66;
       if (cardW > maxW) {
         cardW = maxW;
-        cardH = cardW * 1.25;
+        cardH = cardW / 0.78;
       }
-      const spacing = Math.min(440, cardW * 1.18);
-      setDims({ cardW, cardH, spacing });
+      setDims({ cardW, cardH, spacing: Math.min(420, cardW * 1.12) });
     };
     calc();
-    window.addEventListener('resize', calc, { passive: true });
-    return () => window.removeEventListener('resize', calc);
+    const ro = new ResizeObserver(calc);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
+
+  const goTo = useCallback((next: number) => {
+    targetRef.current = next;
+    lastAdvanceRef.current = performance.now();
+  }, []);
+
+  const step = useCallback(
+    (dir: number) => goTo(Math.round(targetRef.current) + dir),
+    [goTo]
+  );
 
   useEffect(() => {
     let raf = 0;
-    // dims changed (e.g. resize) → force the next frame to recompute.
-    lastFRef.current = -1;
-    const update = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const dist = rect.height - vh;
-      const scrolled = Math.min(Math.max(-rect.top, 0), dist);
-      const p = dist > 0 ? scrolled / dist : 0;
-      const f = p * (N - 1);
+    let visible = false;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Skip redundant work when the position barely moved.
-      if (Math.abs(f - lastFRef.current) < 0.002) return;
-      lastFRef.current = f;
-
+    const paint = () => {
+      const pos = posRef.current;
       for (let i = 0; i < N; i++) {
         const card = cardRefs.current[i];
         if (!card) continue;
-        const off = i - f;
+        const off = wrapOffset(i, pos);
         const abs = Math.abs(off);
         const x = off * dims.spacing;
-        const ry = Math.max(-52, Math.min(52, -off * 40));
-        const tz = -Math.min(abs, 3) * 150;
-        const sc = Math.max(0.62, 1 - abs * 0.14);
-        card.style.transform = `translate(-50%, -50%) translateX(${x.toFixed(1)}px) translateZ(${tz.toFixed(1)}px) rotateY(${ry.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
-        card.style.opacity = String(Math.max(0.12, 1 - abs * 0.34));
+        const ry = Math.max(-46, Math.min(46, -off * 34));
+        const tz = -Math.min(abs, 3) * 170;
+        const sc = Math.max(0.6, 1 - abs * 0.13);
+        card.style.transform = `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, 0, ${tz.toFixed(1)}px) rotateY(${ry.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+        card.style.opacity = String(Math.max(0, 1 - abs * 0.36));
         card.style.zIndex = String(100 - Math.round(abs * 10));
+        card.style.pointerEvents = abs < 0.5 ? 'auto' : 'none';
+      }
+    };
+
+    const loop = (time: number) => {
+      if (
+        !reduced &&
+        !pausedRef.current &&
+        !draggingRef.current &&
+        time - lastAdvanceRef.current > AUTOPLAY_MS
+      ) {
+        lastAdvanceRef.current = time;
+        targetRef.current = Math.round(targetRef.current) + 1;
       }
 
-      const idx = Math.max(0, Math.min(N - 1, Math.round(f)));
+      const diff = targetRef.current - posRef.current;
+      if (Math.abs(diff) > 0.0005) {
+        posRef.current += diff * (draggingRef.current ? 1 : 0.09);
+      } else {
+        posRef.current = targetRef.current;
+      }
+
+      paint();
+
+      const idx = mod(Math.round(posRef.current), N);
       setActive((prev) => (prev === idx ? prev : idx));
-    };
-    // iOS coalesces scroll events during momentum scrolling, so an
-    // event-driven update runs in sparse bursts and the carousel stutters.
-    // A continuous rAF loop ticks once per rendered frame regardless of when
-    // scroll events fire, giving true refresh-rate motion. It runs only while
-    // the section is on screen (IntersectionObserver) to save battery.
-    const loop = () => {
-      update();
+
       raf = requestAnimationFrame(loop);
     };
 
-    let running = false;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !running) {
-          running = true;
-          lastFRef.current = -1;
-          loop();
-        } else if (!entry.isIntersecting && running) {
-          running = false;
+        if (entry.isIntersecting && !visible) {
+          visible = true;
+          lastAdvanceRef.current = performance.now();
+          raf = requestAnimationFrame(loop);
+        } else if (!entry.isIntersecting && visible) {
+          visible = false;
           cancelAnimationFrame(raf);
           raf = 0;
         }
       },
-      { rootMargin: '100px 0px' }
+      { rootMargin: '120px 0px' }
     );
-    const node = sectionRef.current;
+    const node = stageRef.current;
     if (node) io.observe(node);
     return () => {
       io.disconnect();
@@ -101,111 +130,188 @@ export default function GamesSection() {
     };
   }, [dims]);
 
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if ((e.target as HTMLElement).closest('button')) return;
+    draggingRef.current = true;
+    dragMovedRef.current = 0;
+    const startX = e.clientX;
+    const startPos = posRef.current;
+
+    const move = (ev: PointerEvent) => {
+      const dx = ev.clientX - startX;
+      dragMovedRef.current = Math.max(dragMovedRef.current, Math.abs(dx));
+      const next = startPos - dx / dims.spacing;
+      posRef.current = next;
+      targetRef.current = next;
+    };
+    const up = () => {
+      draggingRef.current = false;
+      targetRef.current = Math.round(posRef.current);
+      lastAdvanceRef.current = performance.now();
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+  };
+
   const g = GAMES[active];
 
   return (
     <section
       id="gry"
-      ref={sectionRef}
-      className="relative bg-background h-[300vh] md:h-[370vh]"
+      className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background py-14 sm:py-16"
     >
-      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
-        <div className="px-4 pt-20 text-center sm:pt-24 md:pt-28">
-          <h2 className="text-[2.25rem] font-light leading-none tracking-tight sm:text-4xl md:text-6xl">
-            Sześć <span className="text-primary font-normal">gier</span>, jeden
-            wieczór.
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl px-2 text-sm font-extralight text-on-surface-variant sm:mt-4 sm:text-base md:text-lg">
-            Poznaj ekipę, która rozkręci każdą imprezę. Każda gra gotowa w kilka
-            sekund - wystarczy telefon.
-          </p>
-        </div>
+      <div className="shrink-0 px-6 text-center">
+        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-on-surface-variant">
+          Biblioteka
+        </p>
+        <h2 className="mt-3 text-balance text-[2.25rem] font-light leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+          Siedem <span className="text-primary font-normal">gier</span>, jeden wieczór.
+        </h2>
+        <p className="mx-auto mt-3 max-w-md text-balance text-base font-extralight leading-relaxed text-on-surface-variant">
+          Przesuń, żeby poznać ekipę, która rozkręci każdą imprezę.
+        </p>
+      </div>
 
-        <div ref={stageRef} className="relative flex-1" style={{ perspective: 1500 }}>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 transition-[background] duration-500"
-            style={{
-              background: `radial-gradient(40% 50% at 50% 45%, ${g.glow}26, transparent 70%)`
-            }}
-          />
+      <div
+        ref={stageRef}
+        onPointerDown={onPointerDown}
+        onMouseEnter={() => {
+          pausedRef.current = true;
+        }}
+        onMouseLeave={() => {
+          pausedRef.current = false;
+          lastAdvanceRef.current = performance.now();
+        }}
+        className="relative my-5 min-h-[220px] flex-1 cursor-grab touch-pan-y select-none active:cursor-grabbing sm:my-6"
+        style={{ perspective: 1500 }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 transition-[background] duration-700"
+          style={{
+            background: `radial-gradient(42% 52% at 50% 50%, ${g.glow}24, transparent 70%)`
+          }}
+        />
 
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
-            {GAMES.map((game, i) => (
-              <div
-                key={game.title}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className="absolute left-1/2 top-1/2 overflow-hidden rounded-[2rem]"
-                style={{
-                  width: dims.cardW,
-                  height: dims.cardH,
-                  border: `1px solid ${game.glow}40`,
-                  backgroundColor: `${game.glow}10`,
-                  boxShadow: `0 30px 60px rgba(0,0,0,0.5), 0 0 40px ${game.glow}33`,
-                  willChange: 'transform, opacity'
-                }}
-              >
-                <Link
-                  href={gamePath(game.slug)}
-                  aria-label={`${game.title} - zasady gry i jak grać`}
-                  className="block h-full w-full"
-                >
-                  <img
-                    src={game.art}
-                    alt={`${game.title} - ${game.tagline}`}
-                    className="h-full w-full object-cover object-top"
-                    style={{ maxWidth: 'none' }}
-                    draggable={false}
-                  />
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="px-4 pb-10 text-center sm:pb-12 md:pb-16">
-          <div className="mx-auto min-h-40 max-w-lg sm:min-h-36">
-            <div key={active} className="animate-[fadeUp_0.5s_ease-out]">
-              <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
-                {String(active + 1).padStart(2, '0')} / 0{N}
-              </p>
-              <h3
-                className="mt-2 text-3xl font-light tracking-tight md:text-4xl"
-                style={{ color: g.glow }}
-              >
-                {g.title}
-              </h3>
-              <p className="mt-2 px-2 text-base font-extralight text-on-surface md:text-lg">
-                {g.tagline}
-              </p>
-              <p className="mt-1 text-sm font-light text-on-surface-variant">
-                {g.players} · {g.modeLabel}
-              </p>
+        <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+          {GAMES.map((game, i) => (
+            <div
+              key={game.slug}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+              className="absolute left-1/2 top-1/2 overflow-hidden rounded-[1.75rem]"
+              style={{
+                width: dims.cardW,
+                height: dims.cardH,
+                border: `1px solid ${game.glow}33`,
+                backgroundColor: `${game.glow}10`,
+                boxShadow: `0 30px 70px rgba(0,0,0,0.55), 0 0 44px ${game.glow}2e`,
+                willChange: 'transform, opacity'
+              }}
+            >
               <Link
-                href={gamePath(g.slug)}
-                className="mt-2 inline-block text-xs uppercase tracking-[0.2em] transition-opacity hover:opacity-70"
-                style={{ color: g.glow }}
+                href={gamePath(game.slug)}
+                aria-label={`${game.title} - zasady gry i jak grać`}
+                draggable={false}
+                onClick={(e) => {
+                  if (dragMovedRef.current > 8) e.preventDefault();
+                }}
+                className="block h-full w-full"
               >
-                Zasady i jak grać
+                <img
+                  src={game.art}
+                  alt={`${game.title} - ${game.tagline}`}
+                  className="h-full w-full object-cover object-top"
+                  style={{ maxWidth: 'none' }}
+                  draggable={false}
+                />
               </Link>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="mt-5 flex items-center justify-center gap-2">
-            {GAMES.map((game, i) => (
+        <button
+          type="button"
+          onClick={() => step(-1)}
+          aria-label="Poprzednia gra"
+          className="absolute left-2 top-1/2 z-[200] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/30 text-on-surface-variant backdrop-blur transition-colors hover:text-on-surface sm:left-6"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          onClick={() => step(1)}
+          aria-label="Następna gra"
+          className="absolute right-2 top-1/2 z-[200] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/30 text-on-surface-variant backdrop-blur transition-colors hover:text-on-surface sm:right-6"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="shrink-0 px-6 text-center">
+        <div className="mx-auto min-h-[8.5rem] max-w-lg" aria-live="polite">
+          <div key={active} className="animate-[fadeUp_0.45s_ease-out]">
+            <h3
+              className="text-[1.75rem] font-light tracking-tight md:text-4xl"
+              style={{ color: g.glow }}
+            >
+              {g.title}
+            </h3>
+            <p className="mt-2 text-base font-extralight text-on-surface md:text-lg">
+              {g.tagline}
+            </p>
+            <p className="mt-1 text-sm font-light text-on-surface-variant">
+              {g.players} · {g.modeLabel}
+            </p>
+            <Link
+              href={gamePath(g.slug)}
+              className="mt-2 inline-block text-xs uppercase tracking-[0.2em] transition-opacity hover:opacity-70"
+              style={{ color: g.glow }}
+            >
+              Zasady i jak grać
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-4 flex items-center justify-center gap-2">
+          {GAMES.map((game, i) => (
+            <button
+              key={game.slug}
+              type="button"
+              aria-label={game.title}
+              aria-current={i === active}
+              onClick={() =>
+                goTo(Math.round(targetRef.current) + wrapOffset(i, Math.round(targetRef.current)))
+              }
+              className="h-6 px-0.5"
+            >
               <span
-                key={game.title}
-                className="h-1.5 rounded-full transition-all duration-300"
+                className="block h-1.5 rounded-full transition-all duration-300"
                 style={{
-                  width: i === active ? 26 : 8,
+                  width: i === active ? 28 : 8,
                   backgroundColor: i === active ? game.glow : 'rgba(255,255,255,0.18)'
                 }}
               />
-            ))}
-          </div>
+            </button>
+          ))}
         </div>
+
+        <Link
+          href="/gry"
+          className="mt-4 inline-block text-xs font-light text-on-surface-variant transition-opacity hover:opacity-70"
+        >
+          Zobacz zasady i porównanie wszystkich 7 gier →
+        </Link>
       </div>
     </section>
   );

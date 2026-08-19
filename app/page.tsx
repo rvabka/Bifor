@@ -1,15 +1,16 @@
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
-import Character3DScroll from './components/Character3DScroll';
+import AssembleHero from './components/AssembleHero';
 import SocialProofSection from './components/SocialProofSection';
 import GamesSection from './components/GamesSection';
-import GamesIndexSection from './components/GamesIndexSection';
-import HowItWorksSection, { START_STEPS } from './components/HowItWorksSection';
+import HowItWorksSection from './components/HowItWorksSection';
+import AboutSection from './components/AboutSection';
 import FeaturesSection from './components/FeaturesSection';
 import NewsletterSection from './components/NewsletterSection';
 import Footer from './components/Footer';
 import JsonLd from './components/JsonLd';
 import { gamesItemListNode } from './lib/jsonld';
+import { START_STEPS } from './lib/steps';
 import { abs } from './lib/site';
 
 const homeJsonLd = {
@@ -21,9 +22,9 @@ const homeJsonLd = {
       '@id': `${abs('/')}#jak-zaczac`,
       name: 'Jak zacząć grać w gry imprezowe w aplikacji Bifor',
       description:
-        'Trzy kroki od pobrania aplikacji Bifor do pierwszej rundy gry imprezowej ze znajomymi.',
+        'Trzy kroki od otwarcia aplikacji Bifor do pierwszej rundy gry imprezowej ze znajomymi - w około 30 sekund.',
       inLanguage: 'pl-PL',
-      totalTime: 'PT1M',
+      totalTime: 'PT30S',
       tool: [{ '@type': 'HowToTool', name: 'Telefon z aplikacją Bifor' }],
       step: START_STEPS.map((step, i) => ({
         '@type': 'HowToStep',
@@ -43,12 +44,12 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
+        <AssembleHero />
         <SocialProofSection />
         <GamesSection />
-        <GamesIndexSection />
         <HowItWorksSection />
+        <AboutSection />
         <FeaturesSection />
-        <Character3DScroll />
         <NewsletterSection />
       </main>
       <Footer />

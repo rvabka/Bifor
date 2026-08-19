@@ -1,3 +1,8 @@
+import { GAMES } from '../lib/games';
+
+const gameNames = GAMES.map((g) => g.title);
+const GAME_LIST = `${gameNames.slice(0, -1).join(', ')} i ${gameNames[gameNames.length - 1]}`;
+
 export default function FeaturesSection() {
   return (
     <section className="py-12 sm:py-16 bg-background">
@@ -81,8 +86,7 @@ export default function FeaturesSection() {
                   Twoje ulubione gry
                 </h3>
                 <p className="text-on-surface-variant font-extralight text-lg md:text-xl leading-relaxed max-w-sm">
-                  Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na
-                  P. Wybierz grę, ustaw zasady i baw się po swojemu.
+                  {GAME_LIST}. Wybierz grę, ustaw zasady i baw się po swojemu.
                 </p>
               </div>
             </div>

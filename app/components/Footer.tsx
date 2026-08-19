@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="flex flex-col items-center gap-4 md:items-start">
             <Image src="/logo.png" alt="Bifor" width={120} height={40} className="h-10 w-auto" />
             <p className="max-w-xs text-center text-sm font-extralight leading-relaxed text-on-surface-variant md:text-left">
-              Bifor to aplikacja z grami imprezowymi na telefon. Sześć gier, jeden wieczór -
+              Bifor to aplikacja z grami imprezowymi na telefon. Siedem gier, jeden wieczór -
               graj na jednym telefonie albo każdy na swoim.
             </p>
           </div>

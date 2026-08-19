@@ -263,7 +263,7 @@ export default async function GamePage({ params }: Props) {
               Zagraj w {game.title} ze znajomymi
             </h2>
             <p className="mx-auto mt-3 max-w-md text-base font-extralight leading-relaxed text-on-surface-variant">
-              {game.title} to jedna z sześciu gier w aplikacji Bifor. Premiera na iOS i
+              {game.title} to jedna z siedmiu gier w aplikacji Bifor. Premiera na iOS i
               Android już wkrótce - zapisz się, żeby dostać powiadomienie pierwszego dnia.
             </p>
             <Link

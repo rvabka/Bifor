@@ -9,9 +9,9 @@ import { breadcrumbNode, faqNode, gamesItemListNode } from '../lib/jsonld';
 import { abs } from '../lib/site';
 
 export const metadata: Metadata = {
-  title: 'Gry imprezowe na telefon - lista 6 gier w aplikacji Bifor',
+  title: 'Gry na imprezę i domówkę - lista 7 gier imprezowych',
   description:
-    'Lista gier imprezowych na telefon w aplikacji Bifor: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P. Zasady, liczba graczy, czas rozgrywki i tryby - na jednym telefonie lub online ze znajomymi.',
+    'Lista gier imprezowych na telefon w aplikacji Bifor: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Zasady, liczba graczy, czas rozgrywki i tryby - na jednym telefonie lub online ze znajomymi.',
   keywords: [
     'gry imprezowe',
     'gry imprezowe na telefon',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: 'Bifor',
     title: 'Gry imprezowe na telefon - lista gier w aplikacji Bifor',
     description:
-      'Sześć gier imprezowych w jednej aplikacji: zasady, liczba graczy i tryby gry na jednym telefonie lub online.'
+      'Siedem gier imprezowych w jednej aplikacji: zasady, liczba graczy i tryby gry na jednym telefonie lub online.'
   }
 };
 
@@ -38,20 +38,20 @@ const CHOICES: { question: string; answer: string; slugs: string[] }[] = [
   {
     question: 'Jaka gra imprezowa dla dwóch osób?',
     answer:
-      'Czółko i Gra na P działają już w dwie osoby - jedna opisuje, druga zgaduje. Państwa Miasta w duecie zamieniają się w szybki pojedynek na czas.',
-    slugs: ['czolko', 'gra-na-p', 'panstwa-miasta']
+      'Czółko, Gra na P i Szybka Trójka działają już w dwie osoby - jedna opisuje albo odpowiada, druga zgaduje lub odmierza czas. Państwa Miasta w duecie zamieniają się w szybki pojedynek na czas.',
+    slugs: ['czolko', 'gra-na-p', 'szybka-trojka', 'panstwa-miasta']
   },
   {
     question: 'Jaka gra dla dużej ekipy, 8-10 osób?',
     answer:
-      'Zakazane dzieli grupę na drużyny, a Sekrety i Państwa Miasta obsługują do 10 graczy jednocześnie, więc nikt nie czeka na swoją kolej.',
-    slugs: ['zakazane', 'sekrety', 'panstwa-miasta']
+      'Zakazane dzieli grupę na drużyny, a Sekrety, Państwa Miasta i Szybka Trójka obsługują do 10 graczy jednocześnie, więc nikt nie czeka na swoją kolej.',
+    slugs: ['zakazane', 'sekrety', 'panstwa-miasta', 'szybka-trojka']
   },
   {
     question: 'Jaka gra, gdy mamy tylko jeden telefon?',
     answer:
-      'Czółko, Zakazane, Impostor i Gra na P mają tryb lokalny - telefon krąży po grupie i wystarczy jedno urządzenie na całą ekipę.',
-    slugs: ['czolko', 'impostor', 'gra-na-p']
+      'Czółko, Zakazane, Impostor, Gra na P i Szybka Trójka mają tryb lokalny - telefon krąży po grupie i wystarczy jedno urządzenie na całą ekipę.',
+    slugs: ['czolko', 'impostor', 'gra-na-p', 'szybka-trojka']
   },
   {
     question: 'Jaka gra na przełamanie lodów?',
@@ -62,14 +62,14 @@ const CHOICES: { question: string; answer: string; slugs: string[] }[] = [
   {
     question: 'Jaka gra bez internetu?',
     answer:
-      'Tryby lokalne z darmową kategorią haseł działają offline - dotyczy to Czółka, Zakazanego, Impostora i Gry na P. Sekrety i Państwa Miasta wymagają połączenia.',
-    slugs: ['czolko', 'zakazane', 'impostor', 'gra-na-p']
+      'Tryby lokalne z darmową kategorią haseł działają offline - dotyczy to Czółka, Zakazanego, Impostora, Gry na P i Szybkiej Trójki. Sekrety i Państwa Miasta wymagają połączenia.',
+    slugs: ['czolko', 'zakazane', 'impostor', 'gra-na-p', 'szybka-trojka']
   },
   {
     question: 'Jaka gra na krótko, gdy macie 10 minut?',
     answer:
-      'Czółko i Gra na P dają się rozegrać w dziesięć minut, bo rundy są krótkie i można je przerwać w dowolnym momencie.',
-    slugs: ['czolko', 'gra-na-p']
+      'Czółko, Gra na P i Szybka Trójka dają się rozegrać w dziesięć minut, bo rundy są krótkie i można je przerwać w dowolnym momencie.',
+    slugs: ['czolko', 'gra-na-p', 'szybka-trojka']
   }
 ];
 
@@ -77,7 +77,7 @@ const HUB_FAQ = [
   {
     question: 'Ile gier imprezowych jest w aplikacji Bifor?',
     answer:
-      'Sześć: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta oraz Gra na P. Każda ma własne zasady, liczbę graczy i tryby gry.'
+      'Siedem: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P oraz Szybka Trójka. Każda ma własne zasady, liczbę graczy i tryby gry.'
   },
   {
     question: 'Czy gry imprezowe w Bifor są darmowe?',
@@ -92,7 +92,7 @@ const HUB_FAQ = [
   {
     question: 'Ile osób może grać jednocześnie?',
     answer:
-      'Od 2 do 10 osób zależnie od gry. Czółko obsługuje 2-8 graczy, Impostor 3-8, Zakazane 4-10, Sekrety 3-10, Państwa Miasta 2-10, a Gra na P 2-10.'
+      'Od 2 do 10 osób zależnie od gry. Czółko obsługuje 2-8 graczy, Impostor 3-8, Zakazane 4-10, Sekrety 3-10, Państwa Miasta 2-10, Gra na P 2-10, a Szybka Trójka 2-10.'
   }
 ];
 
@@ -135,8 +135,8 @@ export default function GamesHubPage() {
               Gry imprezowe <span className="text-primary font-normal">na telefon</span>
             </h1>
             <p className="max-w-2xl text-lg font-extralight leading-relaxed text-on-surface sm:text-xl">
-              Bifor to aplikacja z sześcioma grami imprezowymi po polsku. Cztery z nich
-              zagrasz na jednym telefonie podawanym z ręki do ręki, wszystkie sześć w
+              Bifor to aplikacja z siedmioma grami imprezowymi po polsku. Pięć z nich
+              zagrasz na jednym telefonie podawanym z ręki do ręki, wszystkie siedem w
               trybie online, gdzie każdy gra na swoim. Bez planszy, bez kartek, bez
               tłumaczenia zasad przez pół godziny.
             </p>

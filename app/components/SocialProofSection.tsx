@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 
 const stats = [
   { value: 500, suffix: '+', label: 'Osób czeka na premierę', icon: '🔥' },
-  { value: 6, suffix: '', label: 'Gier na start', icon: '🎲' },
+  { value: 7, suffix: '', label: 'Gier na start', icon: '🎲' },
   { value: 30, suffix: 's', label: 'Do pierwszej rozgrywki', icon: '⚡' },
   { value: 0, suffix: '%', label: 'Rejestracji wymaganej', icon: '🚀' }
 ];
 
 function useCountUp(target: number, isVisible: boolean) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(target);
 
   useEffect(() => {
     if (!isVisible) return;

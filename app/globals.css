@@ -233,3 +233,110 @@ html {
     animation: none;
   }
 }
+
+/* Hero: seamless game-name ticker. The track holds two identical passes,
+   so shifting by exactly half its width loops without a visible seam. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  animation: marquee 34s linear infinite;
+}
+
+/* Hero mascot idle bob, layered under the pointer parallax on its parent. */
+@keyframes mascot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.mascot-float {
+  animation: mascot-float 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .mascot-float,
+  .newsletter-pulse,
+  .floating-element,
+  .floating-element-delayed,
+  .scroll-bounce {
+    animation: none;
+  }
+}
+
+@keyframes confetti-drop {
+  0% {
+    transform: translate3d(0, -40px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  84% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), 100svh, 0) rotate(420deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation-name: confetti-drop;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes spark-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), -78svh, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+.spark {
+  animation-name: spark-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
+
+.mascot-float-slow {
+  animation: mascot-float 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark,
+  .mascot-float-slow {
+    animation: none;
+  }
+}

@@ -2,17 +2,17 @@ export const faqs = [
   {
     question: 'Czym jest Bifor?',
     answer:
-      'Bifor to aplikacja mobilna na iOS i Androida z sześcioma grami imprezowymi po polsku: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta i Gra na P. Jest przeznaczona do grania w grupie znajomych, którzy są razem w jednym miejscu - na domówce, imprezie albo beforze.'
+      'Bifor to aplikacja mobilna na iOS i Androida z siedmioma grami imprezowymi po polsku: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Jest przeznaczona do grania w grupie znajomych, którzy są razem w jednym miejscu - na domówce, imprezie albo beforze.'
   },
   {
     question: 'Jakie gry są w Bifor?',
     answer:
-      'Sześć gier: Czółko (hasło na czole, 2-8 graczy), Zakazane (opisywanie hasła bez zakazanych słów, 4-10 graczy), Impostor (wykrywanie zdrajcy, 3-8 graczy), Sekrety (ice breaker z dziewięcioma typami rund, 3-10 graczy), Państwa Miasta (klasyczna gra na literę, 2-10 graczy) i Gra na P (opisywanie hasła wyłącznie słowami na literę P, 2-10 graczy).'
+      'Siedem gier: Czółko (hasło na czole, 2-8 graczy), Zakazane (opisywanie hasła bez zakazanych słów, 4-10 graczy), Impostor (wykrywanie zdrajcy, 3-8 graczy), Sekrety (ice breaker z dziewięcioma typami rund, 3-10 graczy), Państwa Miasta (klasyczna gra na literę, 2-10 graczy), Gra na P (opisywanie hasła wyłącznie słowami na literę P, 2-10 graczy) i Szybka Trójka (wymień 3 rzeczy zanim kulka doleci, 2-10 graczy).'
   },
   {
     question: 'Czy Bifor jest darmowy?',
     answer:
-      'Tak. Pełna rozgrywka we wszystkich sześciu grach jest darmowa - każda gra ma darmową kategorię haseł. Płatne są tylko dodatkowe paczki haseł, a w pokoju online wystarczy, że posiada je host: pozostali gracze korzystają z nich bez własnego zakupu.'
+      'Tak. Pełna rozgrywka we wszystkich siedmiu grach jest darmowa - każda gra ma darmową kategorię haseł. Płatne są tylko dodatkowe paczki haseł, a w pokoju online wystarczy, że posiada je host: pozostali gracze korzystają z nich bez własnego zakupu.'
   },
   {
     question: 'Ile osób może grać jednocześnie?',
@@ -67,7 +67,7 @@ export const faqs = [
   {
     question: 'Czym Bifor różni się od zwykłych gier imprezowych na telefon?',
     answer:
-      'Sześć gier w jednej aplikacji zamiast osobnej aplikacji na każdą zabawę, jeden wspólny pokój dla całego wieczoru, dwa tryby (jeden telefon albo każdy na swoim) i model, w którym płatne treści wnosi do pokoju host, a reszta gra za darmo.'
+      'Siedem gier w jednej aplikacji zamiast osobnej aplikacji na każdą zabawę, jeden wspólny pokój dla całego wieczoru, dwa tryby (jeden telefon albo każdy na swoim) i model, w którym płatne treści wnosi do pokoju host, a reszta gra za darmo.'
   },
   {
     question: 'Czy mogę zaproponować nową grę lub hasła?',

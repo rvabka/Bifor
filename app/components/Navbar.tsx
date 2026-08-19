@@ -17,11 +17,30 @@ export default function Navbar() {
   const pathname = usePathname();
   const onHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
+    let last = window.scrollY;
+    let ticking = false;
+
+    const read = () => {
+      ticking = false;
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > 160);
+        last = y;
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(read);
+    };
+
+    read();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -52,7 +71,9 @@ export default function Navbar() {
   return (
     <nav
       aria-label="Nawigacja główna"
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-[transform,background-color,border-color] duration-300 ease-out ${
+        hidden && !open ? '-translate-y-full' : 'translate-y-0'
+      } ${
         scrolled || open
           ? 'bg-background/80 backdrop-blur-xl border-b border-white/5'
           : 'border-b border-transparent'

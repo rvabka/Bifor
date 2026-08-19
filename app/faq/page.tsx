@@ -50,7 +50,7 @@ export default function FAQPage() {
               Pytania o konkretne gry
             </h2>
             <p className="mt-3 text-base font-extralight leading-relaxed text-on-surface-variant">
-              Zasady, punktacja i osobne FAQ każdej z sześciu gier znajdują się na jej
+              Zasady, punktacja i osobne FAQ każdej z siedmiu gier znajdują się na jej
               stronie.
             </p>
             <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">

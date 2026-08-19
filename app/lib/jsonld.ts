@@ -62,7 +62,7 @@ export const appNode = {
   author: { '@id': ORGANIZATION_ID },
   isAccessibleForFree: true,
   featureList: [
-    'Sześć gier imprezowych w jednej aplikacji',
+    'Siedem gier imprezowych w jednej aplikacji',
     'Tryb na jednym telefonie podawanym z ręki do ręki',
     'Tryb online z pokojem i kodem dla znajomych',
     'Dołączanie kodem pokoju lub kodem QR bez zakładania konta',
