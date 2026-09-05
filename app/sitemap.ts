@@ -14,6 +14,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [abs('/logo.png')]
     },
     { url: abs('/gry'), lastModified, changeFrequency: 'weekly', priority: 0.9 },
+    {
+      url: abs('/pobierz'),
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9
+    },
     ...GAMES.map((game) => ({
       url: abs(gamePath(game.slug)),
       lastModified,
