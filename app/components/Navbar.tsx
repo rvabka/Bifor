@@ -10,6 +10,7 @@ const SECTION_LINKS = [{ label: 'Jak to działa', id: 'jak-to-dziala' }];
 
 const PAGE_LINKS = [
   { label: 'Gry', href: '/gry' },
+  { label: 'Pobierz', href: '/pobierz' },
   { label: 'FAQ', href: '/faq' }
 ];
 
@@ -55,12 +56,6 @@ export default function Navbar() {
     // Wait for the menu overlay to close, then scroll to the section.
     if (onHome) requestAnimationFrame(() => smoothScrollTo(id));
     else window.location.href = `/#${id}`;
-  };
-
-  const goNewsletter = () => {
-    setOpen(false);
-    if (onHome) requestAnimationFrame(() => smoothScrollTo('newsletter'));
-    else window.location.href = '/#newsletter';
   };
 
   const goTop = () => {
@@ -110,12 +105,12 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={goNewsletter}
+          <Link
+            href="/pobierz"
             className="bg-primary text-on-primary px-5 md:px-6 py-2.5 rounded-full text-sm font-semibold tracking-tight hover:scale-105 hover:shadow-[0_0_30px_rgba(255,178,0,0.4)] active:scale-95 transition-all cursor-pointer"
           >
-            Zapisz się!
-          </button>
+            Pobierz
+          </Link>
           <button
             onClick={() => setOpen((o) => !o)}
             className="md:hidden flex h-10 w-10 items-center justify-center text-on-surface cursor-pointer transition-transform active:scale-90"

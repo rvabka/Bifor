@@ -24,7 +24,7 @@ export const KEY_FACTS: string[] = [
   'Podstawowa rozgrywka jest darmowa - każda gra ma darmową kategorię haseł.',
   'Płatne są tylko dodatkowe paczki haseł, a w pokoju wystarczy, że ma je host - reszta gra za darmo.',
   'Interfejs i wszystkie hasła są w języku polskim.',
-  'Platformy: iOS i Android. Premiera wkrótce, zapisy na powiadomienie o premierze na bifor.games.',
+  'Platformy: iOS i Android. Aplikacja jest dostępna w otwartej wersji beta - do pobrania na bifor.games/pobierz (iPhone przez TestFlight, Android bezpośrednio z pliku).',
   'Gry lokalne działają bez internetu; tryby online wymagają połączenia, ale gracze nie muszą być w tej samej sieci Wi-Fi.'
 ];
 

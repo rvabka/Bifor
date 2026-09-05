@@ -1,6 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link';
 import { Fragment, useEffect, useRef } from 'react';
 import { GAMES } from '../lib/games';
 import { seeded, seededRange } from '../lib/rand';
@@ -150,7 +151,7 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 pb-12 pt-24 text-center">
         <p className="animate-rise inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-on-surface-variant">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-          Wkrótce na iOS i Androida
+          Beta dostępna na iOS i Androida
         </p>
 
         <h1 className="mt-6 text-[clamp(3.25rem,7vw,7.5rem)] font-light leading-[0.94] tracking-tighter">
@@ -194,11 +195,11 @@ export default function HeroSection() {
           className="animate-rise mt-9 flex flex-col items-center gap-4"
           style={{ animationDelay: '0.44s' }}
         >
-          <button
-            onClick={() => smoothScrollTo('newsletter')}
+          <Link
+            href="/pobierz"
             className="newsletter-pulse group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-11 py-5 text-lg font-semibold tracking-tight text-on-primary shadow-[0_0_50px_rgba(255,178,0,0.28)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_80px_rgba(255,178,0,0.5)] active:scale-[0.98]"
           >
-            Zapisz się na premierę
+            Pobierz za darmo
             <svg
               className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
               viewBox="0 0 24 24"
@@ -208,10 +209,16 @@ export default function HeroSection() {
             >
               <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </button>
+          </Link>
           <span className="text-center text-[13px] font-light leading-snug text-on-surface-variant">
             Bez planszy, bez kartek, bez tłumaczenia zasad.
           </span>
+          <button
+            onClick={() => smoothScrollTo('newsletter')}
+            className="text-center text-[13px] font-light leading-snug text-on-surface-variant underline decoration-white/25 underline-offset-4 transition-colors hover:text-on-surface cursor-pointer"
+          >
+            Wolisz poczekać na premierę? Damy znać mailem.
+          </button>
         </div>
       </div>
 
