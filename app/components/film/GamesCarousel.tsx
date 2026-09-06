@@ -3,7 +3,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
-import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { GAMES, gamePath } from '../../lib/games';
 import { Section, SectionHead } from '../ui/Surface';
@@ -11,11 +10,20 @@ import { Section, SectionHead } from '../ui/Surface';
 export default function GamesCarousel() {
   /* Embla runs its own animation loop instead of leaning on CSS scroll-snap.
      The hand-rolled rail stuttered on slide changes because the browser was
-     enforcing a mandatory snap while a smooth scroll was still animating. */
-  const [emblaRef, embla] = useEmblaCarousel(
-    { align: 'start', containScroll: 'trimSnaps', dragFree: false, duration: 22 },
-    [WheelGesturesPlugin({ forceWheelAxis: 'x' })]
-  );
+     enforcing a mandatory snap while a smooth scroll was still animating.
+
+     Deliberately no wheel plugin: a trackpad emits small horizontal noise
+     while scrolling vertically, and anything that claims wheel events here
+     can grab the page mid-gesture and hand it back a moment later, which
+     reads as the page catching. Vertical scrolling is what everyone does on
+     this section - it does not get to be at risk for a horizontal shortcut.
+     Dragging, the arrows and touch swipe all still move the reel. */
+  const [emblaRef, embla] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps',
+    dragFree: false,
+    duration: 22
+  });
   const glowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [edges, setEdges] = useState({ start: true, end: false });
 
@@ -37,9 +45,13 @@ export default function GamesCarousel() {
 
   useEffect(() => {
     if (!embla) return;
-    onSelect();
+    /* Scheduled rather than called straight away: the first sync only needs
+       to land before paint, and running it in the effect body would set
+       state during the commit. */
+    const id = requestAnimationFrame(onSelect);
     embla.on('select', onSelect).on('reInit', onSelect);
     return () => {
+      cancelAnimationFrame(id);
       embla.off('select', onSelect).off('reInit', onSelect);
     };
   }, [embla, onSelect]);
@@ -89,7 +101,6 @@ export default function GamesCarousel() {
       <div
         className="relative mt-12 overflow-hidden md:mt-16"
         ref={emblaRef}
-        data-lenis-prevent
       >
         <div className="flex touch-pan-y px-6 sm:px-8">
           {GAMES.map((game) => (
