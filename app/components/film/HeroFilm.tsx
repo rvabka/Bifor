@@ -145,7 +145,7 @@ export default function HeroFilm() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to top, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.72) 26%, rgba(10,10,10,0.18) 52%, transparent 72%)'
+              'linear-gradient(to top, rgba(10,10,10,0.96) 0%, rgba(10,10,10,0.82) 30%, rgba(10,10,10,0.42) 52%, rgba(10,10,10,0.12) 68%, transparent 82%)'
           }}
         />
         <div
