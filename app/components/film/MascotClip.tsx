@@ -12,15 +12,18 @@ let cached: boolean | null = null;
 function canAnimate() {
   if (cached !== null) return cached;
   if (typeof window === 'undefined') return false;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ua = window.navigator.userAgent;
   const isSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua);
   const probe = document.createElement('video');
   cached =
-    !reduced &&
     !isSafari &&
     probe.canPlayType('video/webm; codecs="vp9"') === 'probably';
   return cached;
+}
+
+function prefersStill() {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 const subscribe = () => () => {};
@@ -30,7 +33,13 @@ const subscribe = () => () => {};
 const RATIO = '440 / 534';
 
 export default function MascotClip({ className = '' }: { className?: string }) {
-  const animated = useSyncExternalStore(subscribe, canAnimate, () => false);
+  const webm = useSyncExternalStore(subscribe, canAnimate, () => false);
+  const still = useSyncExternalStore(subscribe, prefersStill, () => false);
+  /* Safari plays VP9 but ignores its alpha channel, so it would paint the
+     keyed-out green. It gets an animated WebP instead - same cut-out, same
+     loop, just a codec it composites correctly. Nobody sits and looks at a
+     frozen dancer any more. */
+  const animated = webm && !still;
   const hostRef = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
 
@@ -57,7 +66,7 @@ export default function MascotClip({ className = '' }: { className?: string }) {
   if (!animated) {
     return (
       <img
-        src="/mascot-cheer.webp"
+        src={still ? '/mascot-cheer.webp' : '/mascot-cheer-anim.webp'}
         alt=""
         aria-hidden
         loading="lazy"

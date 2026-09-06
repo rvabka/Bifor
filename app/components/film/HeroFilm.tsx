@@ -6,7 +6,11 @@ import { createSequence, type SequenceHandle } from '../../lib/frameSequence';
 import { useReducedMotion } from '../useReducedMotion';
 
 const DESKTOP = { dir: '/film/wide', count: 61 };
-const MOBILE = { dir: '/film/tall', count: 61 };
+/* Fewer, smaller frames on phones is a memory decision, not a quality one:
+   61 frames at 810x1440 hold ~270 MB of decoded bitmap, which is past what
+   an iOS tab gets. Over its budget the system evicts images and the canvas
+   sticks on a stale frame - the film simply stops moving. */
+const MOBILE = { dir: '/film/tall', count: 41 };
 
 type Stage = {
   from: number;
