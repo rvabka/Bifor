@@ -26,7 +26,7 @@ export default function DownloadPage() {
 
       <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-12 text-center">
         <Link href="/" className="inline-block">
-          <img src="/logo.png" alt="Bifor" className="mx-auto h-11 w-auto" />
+          <img src="/logo.webp" alt="Bifor" className="mx-auto h-11 w-auto" />
         </Link>
 
         <div>

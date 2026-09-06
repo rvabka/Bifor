@@ -42,7 +42,7 @@ function ConfirmContent() {
   return (
     <main className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-8">
-        <img src="/logo.png" alt="Bifor" className="h-12 w-auto mx-auto" />
+        <img src="/logo.webp" alt="Bifor" className="h-12 w-auto mx-auto" />
         <div className="text-7xl">{content.icon}</div>
         <h1 className="text-4xl md:text-5xl font-light tracking-tight text-on-surface">
           {content.title}

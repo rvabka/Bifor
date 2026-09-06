@@ -106,122 +106,139 @@ export default function LightField() {
     let disposed = false;
     let cleanup: (() => void) | undefined;
 
-    void import('three').then((THREE) => {
-      if (disposed) return;
+    /* three is ~180 KB and this layer sits below the fold, so the module is
+       only fetched once the wash is actually within reach. Importing it on
+       mount put the whole library in the initial page load. */
+    const start = () => {
+      void import('three').then((THREE) => {
+        if (disposed) return;
 
-      let renderer: import('three').WebGLRenderer;
-      try {
-        renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'low-power' });
-      } catch {
-        return;
-      }
-
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-      host.appendChild(renderer.domElement);
-      renderer.domElement.style.width = '100%';
-      renderer.domElement.style.height = '100%';
-      renderer.domElement.style.display = 'block';
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.Camera();
-
-      const colors = GAMES.slice(0, 7).map((g) => new THREE.Color(g.glow));
-      while (colors.length < 7) colors.push(new THREE.Color('#FFB200'));
-
-      const uniforms = {
-        uTime: { value: 0 },
-        uRes: { value: new THREE.Vector2(1, 1) },
-        uPointer: { value: new THREE.Vector2(0, 0) },
-        uEnergy: { value: 0 },
-        uColor: { value: colors }
-      };
-
-      const mesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(2, 2),
-        new THREE.ShaderMaterial({
-          vertexShader: VERTEX,
-          fragmentShader: FRAGMENT,
-          uniforms,
-          depthTest: false,
-          depthWrite: false
-        })
-      );
-      mesh.frustumCulled = false;
-      scene.add(mesh);
-
-      let width = 0;
-      let height = 0;
-      const resize = () => {
-        const rect = host.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
-        if (width === 0 || height === 0) return;
-        renderer.setSize(width, height, false);
-        uniforms.uRes.value.set(width, height);
-      };
-      resize();
-
-      let targetPointer = { x: 0, y: 0 };
-      const onPointer = (e: PointerEvent) => {
-        targetPointer = {
-          x: e.clientX / window.innerWidth - 0.5,
-          y: 0.5 - e.clientY / window.innerHeight
-        };
-      };
-
-      let lastScroll = window.scrollY;
-      let energy = 0;
-      const onScroll = () => {
-        const delta = Math.abs(window.scrollY - lastScroll);
-        lastScroll = window.scrollY;
-        energy = Math.min(1, energy + delta * 0.004);
-      };
-
-      let raf = 0;
-      let visible = true;
-      const clock = new THREE.Clock();
-      let painted = false;
-
-      const frame = () => {
-        raf = requestAnimationFrame(frame);
-        if (!visible || width === 0) return;
-        uniforms.uTime.value = clock.getElapsedTime();
-        energy *= 0.94;
-        uniforms.uEnergy.value += (energy - uniforms.uEnergy.value) * 0.08;
-        uniforms.uPointer.value.x += (targetPointer.x - uniforms.uPointer.value.x) * 0.04;
-        uniforms.uPointer.value.y += (targetPointer.y - uniforms.uPointer.value.y) * 0.04;
-        renderer.render(scene, camera);
-        if (!painted) {
-          painted = true;
-          setReady(true);
+        let renderer: import('three').WebGLRenderer;
+        try {
+          renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'low-power' });
+        } catch {
+          return;
         }
-      };
 
-      const io = new IntersectionObserver(([entry]) => {
-        visible = entry.isIntersecting;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        host.appendChild(renderer.domElement);
+        renderer.domElement.style.width = '100%';
+        renderer.domElement.style.height = '100%';
+        renderer.domElement.style.display = 'block';
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.Camera();
+
+        const colors = GAMES.slice(0, 7).map((g) => new THREE.Color(g.glow));
+        while (colors.length < 7) colors.push(new THREE.Color('#FFB200'));
+
+        const uniforms = {
+          uTime: { value: 0 },
+          uRes: { value: new THREE.Vector2(1, 1) },
+          uPointer: { value: new THREE.Vector2(0, 0) },
+          uEnergy: { value: 0 },
+          uColor: { value: colors }
+        };
+
+        const mesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(2, 2),
+          new THREE.ShaderMaterial({
+            vertexShader: VERTEX,
+            fragmentShader: FRAGMENT,
+            uniforms,
+            depthTest: false,
+            depthWrite: false
+          })
+        );
+        mesh.frustumCulled = false;
+        scene.add(mesh);
+
+        let width = 0;
+        let height = 0;
+        const resize = () => {
+          const rect = host.getBoundingClientRect();
+          width = rect.width;
+          height = rect.height;
+          if (width === 0 || height === 0) return;
+          renderer.setSize(width, height, false);
+          uniforms.uRes.value.set(width, height);
+        };
+        resize();
+
+        let targetPointer = { x: 0, y: 0 };
+        const onPointer = (e: PointerEvent) => {
+          targetPointer = {
+            x: e.clientX / window.innerWidth - 0.5,
+            y: 0.5 - e.clientY / window.innerHeight
+          };
+        };
+
+        let lastScroll = window.scrollY;
+        let energy = 0;
+        const onScroll = () => {
+          const delta = Math.abs(window.scrollY - lastScroll);
+          lastScroll = window.scrollY;
+          energy = Math.min(1, energy + delta * 0.004);
+        };
+
+        let raf = 0;
+        let visible = true;
+        const clock = new THREE.Clock();
+        let painted = false;
+
+        const frame = () => {
+          raf = requestAnimationFrame(frame);
+          if (!visible || width === 0) return;
+          uniforms.uTime.value = clock.getElapsedTime();
+          energy *= 0.94;
+          uniforms.uEnergy.value += (energy - uniforms.uEnergy.value) * 0.08;
+          uniforms.uPointer.value.x += (targetPointer.x - uniforms.uPointer.value.x) * 0.04;
+          uniforms.uPointer.value.y += (targetPointer.y - uniforms.uPointer.value.y) * 0.04;
+          renderer.render(scene, camera);
+          if (!painted) {
+            painted = true;
+            setReady(true);
+          }
+        };
+
+        const io = new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+        });
+        io.observe(host);
+        const ro = new ResizeObserver(resize);
+        ro.observe(host);
+        window.addEventListener('pointermove', onPointer, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
+        raf = requestAnimationFrame(frame);
+
+        cleanup = () => {
+          cancelAnimationFrame(raf);
+          io.disconnect();
+          ro.disconnect();
+          window.removeEventListener('pointermove', onPointer);
+          window.removeEventListener('scroll', onScroll);
+          mesh.geometry.dispose();
+          (mesh.material as import('three').ShaderMaterial).dispose();
+          renderer.dispose();
+          renderer.domElement.remove();
+        };
       });
-      io.observe(host);
-      const ro = new ResizeObserver(resize);
-      ro.observe(host);
-      window.addEventListener('pointermove', onPointer, { passive: true });
-      window.addEventListener('scroll', onScroll, { passive: true });
-      raf = requestAnimationFrame(frame);
+    };
 
-      cleanup = () => {
-        cancelAnimationFrame(raf);
-        io.disconnect();
-        ro.disconnect();
-        window.removeEventListener('pointermove', onPointer);
-        window.removeEventListener('scroll', onScroll);
-        mesh.geometry.dispose();
-        (mesh.material as import('three').ShaderMaterial).dispose();
-        renderer.dispose();
-        renderer.domElement.remove();
-      };
-    });
+    const arm = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          arm.disconnect();
+          start();
+        }
+      },
+      { rootMargin: '20% 0px' }
+    );
+    arm.observe(host);
 
     return () => {
       disposed = true;
+      arm.disconnect();
       cleanup?.();
     };
   }, [reduced]);

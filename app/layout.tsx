@@ -1,22 +1,32 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Montserrat } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import JsonLd from './components/JsonLd';
 import SmoothScroll from './components/SmoothScroll';
 import { appNode, organizationNode, websiteNode } from './lib/jsonld';
 import { META_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
 
-const inter = Inter({
+/* Both faces are self-hosted variable fonts cut down to Latin + Latin
+   Extended-A, which is every glyph Polish (and the rest of Central Europe)
+   needs. Google's own subsetting splits latin from latin-ext, so a Polish
+   page always pulled two files per family - 232 KB of which the extended
+   file alone carried Vietnamese and phonetic glyphs nothing here renders.
+   One file per family, 87 KB together. Inter keeps its full weight axis;
+   Montserrat is the display face and only ever runs at 700 and 800. */
+const inter = localFont({
+  src: './fonts/inter-latin.woff2',
   variable: '--font-inter',
-  subsets: ['latin', 'latin-ext'],
-  display: 'swap'
+  weight: '100 900',
+  display: 'swap',
+  adjustFontFallback: 'Arial'
 });
 
-const montserrat = Montserrat({
+const montserrat = localFont({
+  src: './fonts/montserrat-latin.woff2',
   variable: '--font-montserrat',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['700', '800'],
-  display: 'swap'
+  weight: '700 800',
+  display: 'swap',
+  adjustFontFallback: 'Arial'
 });
 
 export const metadata: Metadata = {
