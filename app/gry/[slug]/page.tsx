@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import JsonLd from '../../components/JsonLd';
+import PageShell, { PageHero, Prose } from '../../components/ui/PageShell';
+import { Card, Section, SectionHead } from '../../components/ui/Surface';
 import { GAMES, gamePath, getGame } from '../../lib/games';
 import {
   breadcrumbNode,
@@ -77,26 +77,24 @@ export default async function GamePage({ params }: Props) {
     { label: 'Tryb gry', value: game.modeLabel },
     { label: 'Typ gry', value: game.genre },
     { label: 'Cena', value: 'Darmowa podstawowa kategoria haseł' },
-    { label: 'Platformy', value: 'iOS i Android (premiera wkrótce)' }
+    { label: 'Platformy', value: 'iOS i Android (otwarta beta)' }
   ];
 
   return (
     <>
       <JsonLd data={jsonLd} />
-      <Navbar />
-
-      <main className="min-h-screen bg-background pt-28 pb-24">
-        <div className="mx-auto max-w-3xl px-4 md:px-8">
-          <nav aria-label="Ścieżka nawigacji" className="text-xs text-on-surface-variant">
+      <PageShell>
+        <PageHero eyebrow={game.genre} title={game.title} lead={game.summary}>
+          <nav aria-label="Ścieżka nawigacji" className="mt-10 text-xs text-on-surface-variant">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
-                <Link href="/" className="hover:text-primary transition-colors">
+                <Link href="/" className="transition-colors hover:text-primary">
                   Strona główna
                 </Link>
               </li>
               <li aria-hidden>/</li>
               <li>
-                <Link href="/gry" className="hover:text-primary transition-colors">
+                <Link href="/gry" className="transition-colors hover:text-primary">
                   Gry imprezowe
                 </Link>
               </li>
@@ -106,217 +104,172 @@ export default async function GamePage({ params }: Props) {
               </li>
             </ol>
           </nav>
+        </PageHero>
 
-          <header className="mt-8 flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:gap-10">
-            <div
-              className="w-full max-w-[240px] shrink-0 overflow-hidden rounded-[1.75rem] border"
-              style={{
-                borderColor: `${game.glow}40`,
-                backgroundColor: `${game.glow}10`,
-                boxShadow: `0 30px 60px rgba(0,0,0,0.5), 0 0 60px ${game.glow}26`
-              }}
-            >
+        <Section>
+          <div className="grid gap-6 md:grid-cols-[minmax(0,22rem)_1fr] md:items-start">
+            <Card accent={game.glow}>
               <Image
                 src={game.art}
                 alt={`${game.title} - gra imprezowa w aplikacji Bifor`}
                 width={800}
                 height={1071}
                 priority
-                sizes="(max-width: 640px) 240px, 240px"
+                sizes="(max-width: 768px) 100vw, 352px"
                 className="h-auto w-full"
               />
-            </div>
+            </Card>
 
-            <div className="space-y-4 text-center sm:text-left">
-              <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-on-surface-variant">
-                {game.genre}
-              </p>
-              <h1
-                className="text-[2.75rem] font-light leading-none tracking-tight sm:text-5xl md:text-6xl"
-                style={{ color: game.glow, textShadow: `0 0 40px ${game.glow}59` }}
-              >
-                {game.title}
-              </h1>
-              <p className="text-lg font-extralight leading-relaxed text-on-surface sm:text-xl">
-                {game.summary}
-              </p>
+            <div>
+              <h2 className="sr-only">Najważniejsze informacje o grze {game.title}</h2>
+              <dl className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                {facts.map((fact) => (
+                  <Card key={fact.label} className="p-5 sm:p-6">
+                    <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-on-surface-variant">
+                      {fact.label}
+                    </dt>
+                    <dd className="font-display mt-2 text-base font-bold text-on-surface">
+                      {fact.value}
+                    </dd>
+                  </Card>
+                ))}
+              </dl>
             </div>
-          </header>
+          </div>
+        </Section>
 
-          <section aria-labelledby="fakty" className="mt-12">
-            <h2 id="fakty" className="sr-only">
-              Najważniejsze informacje o grze {game.title}
-            </h2>
-            <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-white/5 bg-white/5 sm:grid-cols-2">
-              {facts.map((fact) => (
-                <div key={fact.label} className="bg-background p-5">
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
-                    {fact.label}
-                  </dt>
-                  <dd className="mt-1.5 text-base font-light text-on-surface">
-                    {fact.value}
-                  </dd>
-                </div>
+        <Section id="na-czym-polega">
+          <SectionHead eyebrow="Zasady" title={`Na czym polega ${game.title}?`} />
+          <div className="mt-10">
+            <Prose>
+              {game.intro.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
-            </dl>
-          </section>
+              <p>Najlepiej sprawdza się jako {game.bestFor}.</p>
+            </Prose>
+          </div>
+        </Section>
 
-          <section aria-labelledby="na-czym-polega" className="mt-14 space-y-4">
-            <h2
-              id="na-czym-polega"
-              className="text-3xl font-light tracking-tight sm:text-4xl"
-            >
-              Na czym polega {game.title}?
-            </h2>
-            {game.intro.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 24)}
-                className="text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg"
-              >
-                {paragraph}
-              </p>
-            ))}
-            <p className="text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg">
-              Najlepiej sprawdza się jako {game.bestFor}.
-            </p>
-          </section>
-
-          <section aria-labelledby="jak-grac" className="mt-14 space-y-6">
-            <h2 id="jak-grac" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Jak grać w {game.title} - krok po kroku
-            </h2>
-            <ol className="space-y-4">
-              {game.steps.map((step, i) => (
-                <li
-                  key={step.name}
-                  id={`krok-${i + 1}`}
-                  className="flex gap-4 rounded-2xl border border-white/5 p-5"
-                >
+        <Section id="jak-grac">
+          <SectionHead eyebrow="Krok po kroku" title={`Jak grać w ${game.title}`} />
+          <ol className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {game.steps.map((step, i) => (
+              <Card key={step.name} as="li" className="p-6 sm:p-7">
+                <div id={`krok-${i + 1}`} className="flex gap-5">
                   <span
-                    className="mt-0.5 text-2xl font-light tabular-nums"
+                    className="font-display text-2xl font-extrabold tabular-nums leading-none"
                     style={{ color: game.glow }}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <div className="space-y-1.5">
-                    <h3 className="text-lg font-light tracking-tight">{step.name}</h3>
-                    <p className="text-sm font-extralight leading-relaxed text-on-surface-variant sm:text-base">
+                  <div>
+                    <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
+                      {step.name}
+                    </h3>
+                    <p className="mt-2 text-pretty text-sm leading-relaxed text-on-surface-variant">
                       {step.text}
                     </p>
                   </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section aria-labelledby="punktacja" className="mt-14 space-y-4">
-            <h2 id="punktacja" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Punktacja w grze {game.title}
-            </h2>
-            <p className="text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg">
-              {game.scoring}
-            </p>
-          </section>
-
-          <section aria-labelledby="wskazowki" className="mt-14 space-y-4">
-            <h2 id="wskazowki" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Wskazówki i taktyka
-            </h2>
-            <ul className="space-y-3">
-              {game.tips.map((tip) => (
-                <li
-                  key={tip.slice(0, 24)}
-                  className="flex gap-3 text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg"
-                >
-                  <span aria-hidden style={{ color: game.glow }}>
-                    -
-                  </span>
-                  {tip}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section aria-labelledby="faq-gry" className="mt-14 space-y-6">
-            <h2 id="faq-gry" className="text-3xl font-light tracking-tight sm:text-4xl">
-              {game.title} - najczęstsze pytania
-            </h2>
-            <div className="space-y-6">
-              {game.faq.map((item) => (
-                <div key={item.question} className="space-y-2">
-                  <h3 className="text-lg font-light tracking-tight text-on-surface">
-                    {item.question}
-                  </h3>
-                  <p className="text-base font-extralight leading-relaxed text-on-surface-variant">
-                    {item.answer}
-                  </p>
                 </div>
-              ))}
-            </div>
-          </section>
+              </Card>
+            ))}
+          </ol>
+        </Section>
 
-          <section
-            aria-labelledby="cta"
-            className="mt-16 rounded-[2rem] border border-white/5 bg-surface-container p-8 text-center sm:p-10"
-          >
-            <h2 id="cta" className="text-2xl font-light tracking-tight sm:text-3xl">
+        <Section id="punktacja">
+          <SectionHead eyebrow="Punkty" title={`Punktacja w grze ${game.title}`} />
+          <div className="mt-10">
+            <Prose>
+              <p>{game.scoring}</p>
+            </Prose>
+          </div>
+        </Section>
+
+        <Section id="wskazowki">
+          <SectionHead eyebrow="Taktyka" title="Wskazówki i taktyka" />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {game.tips.map((tip) => (
+              <Card key={tip.slice(0, 24)} as="li" className="p-6 sm:p-7">
+                <p className="text-pretty text-sm leading-relaxed text-on-surface-variant sm:text-base">
+                  {tip}
+                </p>
+              </Card>
+            ))}
+          </ul>
+        </Section>
+
+        <Section id="faq-gry">
+          <SectionHead eyebrow="FAQ" title={`${game.title} - najczęstsze pytania`} />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {game.faq.map((item) => (
+              <Card key={item.question} as="li" className="p-6 sm:p-7">
+                <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
+                  {item.question}
+                </h3>
+                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
+                  {item.answer}
+                </p>
+              </Card>
+            ))}
+          </ul>
+        </Section>
+
+        <Section id="cta">
+          <Card accent={game.glow} className="px-6 py-14 text-center sm:px-12 sm:py-16">
+            <h2 className="font-display text-balance text-[clamp(1.75rem,4.5vw,2.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
               Zagraj w {game.title} ze znajomymi
             </h2>
-            <p className="mx-auto mt-3 max-w-md text-base font-extralight leading-relaxed text-on-surface-variant">
-              {game.title} to jedna z siedmiu gier w aplikacji Bifor. Premiera na iOS i
-              Android już wkrótce - zapisz się, żeby dostać powiadomienie pierwszego dnia.
+            <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
+              {game.title} to jedna z siedmiu gier w aplikacji Bifor. Otwarta beta na
+              iOS i Androida jest już do pobrania, a podstawowa rozgrywka jest darmowa.
             </p>
             <Link
-              href="/#newsletter"
-              className="mt-6 inline-block rounded-full bg-primary px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-on-primary transition-transform hover:scale-105 active:scale-95"
+              href="/pobierz"
+              className="mt-9 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-primary px-9 text-base font-semibold text-on-primary shadow-[0_20px_60px_-25px_rgba(255,178,0,0.7)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Zapisz się na premierę
+              Pobierz za darmo
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
-          </section>
+          </Card>
+        </Section>
 
-          <section aria-labelledby="inne-gry" className="mt-16 space-y-6">
-            <h2 id="inne-gry" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Pozostałe gry imprezowe w Bifor
-            </h2>
-            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {others.map((other) => (
-                <li key={other.slug}>
-                  <Link
-                    href={gamePath(other.slug)}
-                    className="block rounded-2xl border border-white/5 p-5 transition-colors hover:border-white/15"
+        <Section id="inne-gry">
+          <SectionHead eyebrow="Reszta biblioteki" title="Pozostałe gry imprezowe w Bifor" />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-3">
+            {others.map((other) => (
+              <Card key={other.slug} as="li" accent={other.glow}>
+                <Link href={gamePath(other.slug)} className="block p-6 sm:p-7">
+                  <span
+                    className="font-display block text-xl font-bold tracking-[-0.02em]"
+                    style={{ color: other.glow }}
                   >
-                    <span
-                      className="text-xl font-light tracking-tight"
-                      style={{ color: other.glow }}
-                    >
-                      {other.title}
-                    </span>
-                    <span className="mt-1.5 block text-sm font-extralight leading-relaxed text-on-surface-variant">
-                      {other.tagline}
-                    </span>
-                    <span className="mt-2 block text-xs text-on-surface-variant">
-                      {other.players} · {other.modeLabel}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <p className="text-sm font-extralight text-on-surface-variant">
-              Zobacz też{' '}
-              <Link href="/gry" className="text-primary hover:underline">
-                pełną listę gier imprezowych na telefon
-              </Link>{' '}
-              oraz{' '}
-              <Link href="/faq" className="text-primary hover:underline">
-                odpowiedzi na najczęstsze pytania
-              </Link>
-              .
-            </p>
-          </section>
-        </div>
-      </main>
-
-      <Footer />
+                    {other.title}
+                  </span>
+                  <span className="mt-2 block text-pretty text-sm leading-relaxed text-on-surface-variant">
+                    {other.tagline}
+                  </span>
+                  <span className="mt-5 block border-t border-white/[0.07] pt-4 text-xs text-on-surface-variant">
+                    {other.players} - {other.modeLabel}
+                  </span>
+                </Link>
+              </Card>
+            ))}
+          </ul>
+          <p className="mt-8 text-sm text-on-surface-variant">
+            Zobacz też{' '}
+            <Link href="/gry" className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">
+              pełną listę gier imprezowych na telefon
+            </Link>{' '}
+            oraz{' '}
+            <Link href="/faq" className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">
+              odpowiedzi na najczęstsze pytania
+            </Link>
+            .
+          </p>
+        </Section>
+      </PageShell>
     </>
   );
 }

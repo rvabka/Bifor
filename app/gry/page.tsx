@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import JsonLd from '../components/JsonLd';
+import PageShell, { PageHero, Prose } from '../components/ui/PageShell';
+import { Card, Section, SectionHead } from '../components/ui/Surface';
 import { GAMES, gamePath } from '../lib/games';
 import { breadcrumbNode, faqNode, gamesItemListNode } from '../lib/jsonld';
 import { abs } from '../lib/site';
@@ -112,14 +112,29 @@ export default function GamesHubPage() {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <Navbar />
-
-      <main className="min-h-screen bg-background pt-28 pb-24">
-        <div className="mx-auto max-w-4xl px-4 md:px-8">
-          <nav aria-label="Ścieżka nawigacji" className="text-xs text-on-surface-variant">
+      <PageShell>
+        <PageHero
+          eyebrow="Biblioteka"
+          title="Gry imprezowe na telefon"
+          lead={
+            <>
+              <p>
+                Bifor to aplikacja z siedmioma grami imprezowymi po polsku. Pięć z
+                nich zagrasz na jednym telefonie podawanym z ręki do ręki, wszystkie
+                siedem w trybie online, gdzie każdy gra na swoim. Bez planszy, bez
+                kartek, bez tłumaczenia zasad przez pół godziny.
+              </p>
+              <p className="mt-4 text-base">
+                Poniżej znajdziesz listę gier z zasadami, liczbą graczy i czasem
+                rozgrywki, a niżej podpowiedź, którą grę wybrać w konkretnej sytuacji.
+              </p>
+            </>
+          }
+        >
+          <nav aria-label="Ścieżka nawigacji" className="mt-10 text-xs text-on-surface-variant">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
-                <Link href="/" className="hover:text-primary transition-colors">
+                <Link href="/" className="transition-colors hover:text-primary">
                   Strona główna
                 </Link>
               </li>
@@ -129,133 +144,98 @@ export default function GamesHubPage() {
               </li>
             </ol>
           </nav>
+        </PageHero>
 
-          <header className="mt-8 space-y-5">
-            <h1 className="text-balance text-[2.75rem] font-light leading-[1.02] tracking-tight sm:text-6xl">
-              Gry imprezowe <span className="text-primary font-normal">na telefon</span>
-            </h1>
-            <p className="max-w-2xl text-lg font-extralight leading-relaxed text-on-surface sm:text-xl">
-              Bifor to aplikacja z siedmioma grami imprezowymi po polsku. Pięć z nich
-              zagrasz na jednym telefonie podawanym z ręki do ręki, wszystkie siedem w
-              trybie online, gdzie każdy gra na swoim. Bez planszy, bez kartek, bez
-              tłumaczenia zasad przez pół godziny.
-            </p>
-            <p className="max-w-2xl text-base font-extralight leading-relaxed text-on-surface-variant">
-              Poniżej znajdziesz listę gier z zasadami, liczbą graczy i czasem rozgrywki,
-              a niżej podpowiedź, którą grę wybrać w konkretnej sytuacji.
-            </p>
-          </header>
+        <Section id="lista-gier">
+          <SectionHead eyebrow="Siedem gier" title="Lista gier w aplikacji Bifor" />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {GAMES.map((game) => (
+              <Card key={game.slug} as="li" accent={game.glow}>
+                <Link href={gamePath(game.slug)} className="flex h-full gap-5 p-5 sm:gap-6 sm:p-6">
+                  <Image
+                    src={game.art}
+                    alt={`${game.title} - ${game.tagline}`}
+                    width={800}
+                    height={1071}
+                    sizes="128px"
+                    className="h-auto w-24 shrink-0 self-start rounded-[1.15rem] sm:w-28"
+                  />
+                  <span className="block">
+                    <span
+                      className="font-display block text-xl font-bold tracking-[-0.02em] sm:text-2xl"
+                      style={{ color: game.glow }}
+                    >
+                      {game.title}
+                    </span>
+                    <span className="mt-2 block text-sm leading-relaxed text-on-surface">
+                      {game.tagline}
+                    </span>
+                    <span className="mt-4 block text-xs leading-relaxed text-on-surface-variant">
+                      {game.players} - {game.duration}
+                      <br />
+                      {game.modeLabel}
+                    </span>
+                  </span>
+                </Link>
+              </Card>
+            ))}
+          </ul>
+        </Section>
 
-          <section aria-labelledby="lista-gier" className="mt-14 space-y-6">
-            <h2 id="lista-gier" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Lista gier w aplikacji Bifor
-            </h2>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {GAMES.map((game) => (
-                <li key={game.slug}>
-                  <Link
-                    href={gamePath(game.slug)}
-                    className="flex h-full gap-4 overflow-hidden rounded-[1.75rem] border p-4 transition-colors"
-                    style={{
-                      borderColor: `${game.glow}33`,
-                      backgroundColor: `${game.glow}0d`
-                    }}
-                  >
-                    <Image
-                      src={game.art}
-                      alt={`${game.title} - ${game.tagline}`}
-                      width={800}
-                      height={1071}
-                      sizes="112px"
-                      className="h-auto w-24 shrink-0 self-start rounded-2xl sm:w-28"
-                    />
-                    <div className="space-y-1.5">
-                      <h3
-                        className="text-xl font-light tracking-tight"
-                        style={{ color: game.glow }}
-                      >
+        <Section id="porownanie">
+          <SectionHead eyebrow="Zestawienie" title="Porównanie gier" />
+          <Card className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+              <caption className="sr-only">
+                Porównanie siedmiu gier imprezowych w aplikacji Bifor pod kątem liczby
+                graczy, czasu rozgrywki i trybów
+              </caption>
+              <thead>
+                <tr className="border-b border-white/[0.07] text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+                  <th scope="col" className="p-4 font-semibold">Gra</th>
+                  <th scope="col" className="p-4 font-semibold">Typ</th>
+                  <th scope="col" className="p-4 font-semibold">Gracze</th>
+                  <th scope="col" className="p-4 font-semibold">Czas</th>
+                  <th scope="col" className="p-4 font-semibold">Jeden telefon</th>
+                  <th scope="col" className="p-4 font-semibold">Online</th>
+                </tr>
+              </thead>
+              <tbody className="text-on-surface-variant">
+                {GAMES.map((game) => (
+                  <tr key={game.slug} className="border-b border-white/[0.05] last:border-0">
+                    <th scope="row" className="p-4 font-semibold" style={{ color: game.glow }}>
+                      <Link href={gamePath(game.slug)} className="hover:underline">
                         {game.title}
-                      </h3>
-                      <p className="text-sm font-extralight leading-relaxed text-on-surface">
-                        {game.tagline}
-                      </p>
-                      <p className="text-xs leading-relaxed text-on-surface-variant">
-                        {game.players} · {game.duration}
-                        <br />
-                        {game.modeLabel}
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section aria-labelledby="porownanie" className="mt-16 space-y-6">
-            <h2 id="porownanie" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Porównanie gier
-            </h2>
-            <div className="overflow-x-auto rounded-3xl border border-white/5">
-              <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-                <caption className="sr-only">
-                  Porównanie sześciu gier imprezowych w aplikacji Bifor pod kątem liczby
-                  graczy, czasu rozgrywki i trybów
-                </caption>
-                <thead>
-                  <tr className="border-b border-white/5 text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
-                    <th scope="col" className="p-4 font-medium">
-                      Gra
+                      </Link>
                     </th>
-                    <th scope="col" className="p-4 font-medium">
-                      Typ
-                    </th>
-                    <th scope="col" className="p-4 font-medium">
-                      Gracze
-                    </th>
-                    <th scope="col" className="p-4 font-medium">
-                      Czas
-                    </th>
-                    <th scope="col" className="p-4 font-medium">
-                      Jeden telefon
-                    </th>
-                    <th scope="col" className="p-4 font-medium">
-                      Online
-                    </th>
+                    <td className="p-4">{game.genre}</td>
+                    <td className="whitespace-nowrap p-4">{game.players}</td>
+                    <td className="whitespace-nowrap p-4">{game.duration}</td>
+                    <td className="p-4">{game.local ? 'Tak' : 'Nie'}</td>
+                    <td className="p-4">{game.online ? 'Tak' : 'Nie'}</td>
                   </tr>
-                </thead>
-                <tbody className="font-extralight text-on-surface-variant">
-                  {GAMES.map((game) => (
-                    <tr key={game.slug} className="border-b border-white/5 last:border-0">
-                      <th scope="row" className="p-4 font-light" style={{ color: game.glow }}>
-                        <Link href={gamePath(game.slug)} className="hover:underline">
-                          {game.title}
-                        </Link>
-                      </th>
-                      <td className="p-4">{game.genre}</td>
-                      <td className="p-4 whitespace-nowrap">{game.players}</td>
-                      <td className="p-4 whitespace-nowrap">{game.duration}</td>
-                      <td className="p-4">{game.local ? 'Tak' : 'Nie'}</td>
-                      <td className="p-4">{game.online ? 'Tak' : 'Nie'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
+                ))}
+              </tbody>
+            </table>
+          </Card>
+        </Section>
 
-          <section aria-labelledby="ktora-gra" className="mt-16 space-y-8">
-            <h2 id="ktora-gra" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Którą grę wybrać?
-            </h2>
+        <Section id="ktora-gra">
+          <SectionHead
+            eyebrow="Podpowiedź"
+            title="Którą grę wybrać?"
+            lead="Sześć typowych sytuacji i gry, które sprawdzają się w każdej z nich."
+          />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
             {CHOICES.map((choice) => (
-              <div key={choice.question} className="space-y-2">
-                <h3 className="text-lg font-light tracking-tight text-on-surface">
+              <Card key={choice.question} as="li" className="p-6 sm:p-7">
+                <h3 className="font-display text-lg font-bold tracking-[-0.01em] sm:text-xl">
                   {choice.question}
                 </h3>
-                <p className="text-base font-extralight leading-relaxed text-on-surface-variant">
+                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
                   {choice.answer}
                 </p>
-                <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                <p className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.07] pt-4 text-[13px] font-semibold">
                   {choice.slugs.map((slug) => {
                     const game = GAMES.find((g) => g.slug === slug);
                     if (!game) return null;
@@ -266,79 +246,85 @@ export default function GamesHubPage() {
                         className="hover:underline"
                         style={{ color: game.glow }}
                       >
-                        Zasady: {game.title}
+                        {game.title}
                       </Link>
                     );
                   })}
                 </p>
-              </div>
+              </Card>
             ))}
-          </section>
+          </ul>
+        </Section>
 
-          <section aria-labelledby="tryby" className="mt-16 space-y-4">
-            <h2 id="tryby" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Na jednym telefonie czy każdy na swoim?
-            </h2>
-            <p className="text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg">
-              W trybie lokalnym wystarczy jedno urządzenie - telefon krąży po grupie, a
-              każdy widzi swoją część gry, gdy przyjdzie jego kolej. To najszybszy sposób,
-              żeby zacząć, i jedyny, który działa bez internetu.
-            </p>
-            <p className="text-base font-extralight leading-relaxed text-on-surface-variant sm:text-lg">
-              W trybie online host tworzy pokój, a reszta dołącza kodem pokoju lub kodem
-              QR. Każdy widzi na swoim ekranie tylko to, co powinien - dzięki temu możliwe
-              są anonimowe odpowiedzi, ukryte role i jednoczesne pisanie. Gracze nie muszą
-              być w tej samej sieci Wi-Fi, wystarczy internet.
-            </p>
-          </section>
+        <Section id="tryby">
+          <SectionHead eyebrow="Dwa tryby" title="Na jednym telefonie czy każdy na swoim?" />
+          <div className="mt-10">
+            <Prose>
+              <p>
+                W trybie lokalnym wystarczy jedno urządzenie - telefon krąży po grupie,
+                a każdy widzi swoją część gry, gdy przyjdzie jego kolej. To najszybszy
+                sposób, żeby zacząć, i jedyny, który działa bez internetu.
+              </p>
+              <p>
+                W trybie online host tworzy pokój, a reszta dołącza kodem pokoju lub
+                kodem QR. Każdy widzi na swoim ekranie tylko to, co powinien - dzięki
+                temu możliwe są anonimowe odpowiedzi, ukryte role i jednoczesne pisanie.
+                Gracze nie muszą być w tej samej sieci Wi-Fi, wystarczy internet.
+              </p>
+            </Prose>
+          </div>
+        </Section>
 
-          <section aria-labelledby="hub-faq" className="mt-16 space-y-6">
-            <h2 id="hub-faq" className="text-3xl font-light tracking-tight sm:text-4xl">
-              Najczęstsze pytania o gry imprezowe w Bifor
-            </h2>
-            <div className="space-y-6">
-              {HUB_FAQ.map((item) => (
-                <div key={item.question} className="space-y-2">
-                  <h3 className="text-lg font-light tracking-tight text-on-surface">
-                    {item.question}
-                  </h3>
-                  <p className="text-base font-extralight leading-relaxed text-on-surface-variant">
-                    {item.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm font-extralight text-on-surface-variant">
-              Więcej odpowiedzi znajdziesz w{' '}
-              <Link href="/faq" className="text-primary hover:underline">
-                sekcji FAQ
-              </Link>
-              .
-            </p>
-          </section>
+        <Section id="hub-faq">
+          <SectionHead
+            eyebrow="FAQ"
+            title="Najczęstsze pytania o gry imprezowe w Bifor"
+          />
+          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {HUB_FAQ.map((item) => (
+              <Card key={item.question} as="li" className="p-6 sm:p-7">
+                <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
+                  {item.question}
+                </h3>
+                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
+                  {item.answer}
+                </p>
+              </Card>
+            ))}
+          </ul>
+          <p className="mt-8 text-sm text-on-surface-variant">
+            Więcej odpowiedzi znajdziesz w{' '}
+            <Link
+              href="/faq"
+              className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+            >
+              sekcji FAQ
+            </Link>
+            .
+          </p>
+        </Section>
 
-          <section
-            aria-labelledby="hub-cta"
-            className="mt-16 rounded-[2rem] border border-white/5 bg-surface-container p-8 text-center sm:p-10"
-          >
-            <h2 id="hub-cta" className="text-2xl font-light tracking-tight sm:text-3xl">
-              Bifor - premiera wkrótce
+        <Section id="hub-cta">
+          <Card accent="#FFB200" className="px-6 py-14 text-center sm:px-12 sm:py-16">
+            <h2 className="font-display text-balance text-[clamp(1.75rem,4.5vw,2.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
+              Otwarta beta na iOS i Androida
             </h2>
-            <p className="mx-auto mt-3 max-w-md text-base font-extralight leading-relaxed text-on-surface-variant">
-              Aplikacja trafi na App Store i Google Play. Zapisz się, żeby dostać
-              powiadomienie w dniu premiery.
+            <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
+              Wszystkie siedem gier jest już do pobrania. Podstawowa rozgrywka jest
+              darmowa, bez zakładania konta.
             </p>
             <Link
-              href="/#newsletter"
-              className="mt-6 inline-block rounded-full bg-primary px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-on-primary transition-transform hover:scale-105 active:scale-95"
+              href="/pobierz"
+              className="mt-9 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-primary px-9 text-base font-semibold text-on-primary shadow-[0_20px_60px_-25px_rgba(255,178,0,0.7)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Zapisz się na premierę
+              Pobierz za darmo
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
-          </section>
-        </div>
-      </main>
-
-      <Footer />
+          </Card>
+        </Section>
+      </PageShell>
     </>
   );
 }

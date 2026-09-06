@@ -1,7 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 
 import { SITE_URL } from '../lib/site';
+import Link from 'next/link';
 import DownloadPanel from './DownloadPanel';
+import AmbientWash from '../components/ui/AmbientWash';
 
 export const metadata: Metadata = {
   title: 'Pobierz Bifor - beta na iOS i Androida',
@@ -18,45 +21,46 @@ export const metadata: Metadata = {
 
 export default function DownloadPage() {
   return (
-    <main className="min-h-screen bg-background px-5 py-16 sm:py-24">
-      <div className="max-w-2xl mx-auto flex flex-col items-center text-center gap-10">
-        <a href="/" className="inline-block">
-          <img src="/logo.png" alt="Bifor" className="h-11 w-auto mx-auto" />
-        </a>
+    <main className="relative min-h-screen overflow-hidden bg-background px-6 py-20 sm:py-28">
+      <AmbientWash />
 
-        <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-[0.2em] uppercase">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+      <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-12 text-center">
+        <Link href="/" className="inline-block">
+          <img src="/logo.png" alt="Bifor" className="mx-auto h-11 w-auto" />
+        </Link>
+
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
             Otwarte testy
-          </div>
-          <h1 className="text-balance text-[2.5rem] sm:text-6xl font-light tracking-tight leading-[1.05]">
-            Pobierz <span className="text-primary font-normal">Bifor</span>
+          </p>
+          <h1 className="font-display mt-5 text-balance text-[clamp(2.5rem,7vw,4.5rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
+            Pobierz Bifor
           </h1>
-          <p className="text-on-surface-variant text-lg font-extralight leading-relaxed max-w-lg mx-auto">
-            Siedem gier imprezowych po polsku, za darmo. Wersja testowa, więc
-            coś może jeszcze zgrzytnąć - i właśnie o tym chcemy usłyszeć.
+          <p className="mx-auto mt-6 max-w-lg text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg">
+            Siedem gier imprezowych po polsku, za darmo. Wersja testowa, więc coś
+            może jeszcze zgrzytnąć - i właśnie o tym chcemy usłyszeć.
           </p>
         </div>
 
         <DownloadPanel />
 
-        <p className="text-on-surface-variant text-sm font-extralight max-w-md">
+        <p className="max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant">
           Coś nie działa albo apka się wysypała? Napisz na{' '}
           <a
             href="mailto:kontakt@bifor.games"
-            className="text-primary hover:underline"
+            className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
           >
             kontakt@bifor.games
           </a>
           . Każde zgłoszenie z bety realnie zmienia to, co trafi do premiery.
         </p>
 
-        <a
+        <Link
           href="/"
-          className="text-on-surface-variant text-sm font-light hover:text-on-surface transition-colors"
+          className="text-sm text-on-surface-variant transition-colors hover:text-on-surface"
         >
           Wróć na stronę główną
-        </a>
+        </Link>
       </div>
     </main>
   );

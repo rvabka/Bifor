@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, type FormEvent } from 'react';
+import { Card } from './ui/Surface';
 
 declare global {
   interface Window {
@@ -93,9 +94,7 @@ export default function NewsletterSection() {
 
       if (res.ok) {
         setStatus('success');
-        setMessage(
-          'Sprawdź swoją skrzynkę e-mail i kliknij link potwierdzający! 📧'
-        );
+        setMessage('Sprawdź skrzynkę i kliknij link potwierdzający.');
         setEmail('');
         setFirstName('');
       } else {
@@ -113,92 +112,84 @@ export default function NewsletterSection() {
     }
   };
 
+  const sent = status === 'success';
+
   return (
-    <section id="newsletter" className="py-12 sm:py-16 bg-background">
-      <div className="max-w-[1440px] mx-auto md:px-8">
-        <div className="reveal bg-surface-container-lowest p-7 sm:p-12 md:p-24 rounded-[2.5rem] sm:rounded-[3rem] md:rounded-[4rem] border-2 border-primary/20 flex flex-col items-center text-center gap-10 sm:gap-16 relative overflow-hidden newsletter-glow">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/15 blur-[100px] rounded-full animate-pulse" />
-          <div
-            className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full animate-pulse"
-            style={{ animationDelay: '1s' }}
-          />
-
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute bottom-0 -right-2 md:-right-6 w-32 md:w-80 pointer-events-none mix-blend-screen z-20 hidden md:block"
-          >
-            <source src="/bboy.mp4" type="video/mp4" />
-          </video>
-
-          <div className="max-w-2xl relative z-10 space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-[0.2em] uppercase mx-auto">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Limitowane miejsca
-            </div>
-            <h2 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
-              Nie przegap{' '}
-              <span className="text-primary font-normal">premiery</span>
-            </h2>
-            <p className="text-on-surface-variant text-lg sm:text-xl font-extralight leading-relaxed max-w-xl mx-auto">
-              Zapisz się teraz, aby uzyskać wczesny dostęp do aplikacji,
-              ekskluzywne gry i wpływ na to, co stworzymy dalej.
+    <section id="newsletter" className="relative px-6 py-20 sm:px-8 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <Card accent="#FFB200" className="px-6 py-12 sm:px-12 sm:py-16 md:px-16 md:py-20">
+          <div className="relative mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
+              Wczesny dostęp
             </p>
-            <div className="flex items-center justify-center gap-4 text-[11px] sm:text-xs text-primary font-medium tracking-[0.2em] uppercase">
-              <span>✨ Wczesny dostęp + ekskluzywne bonusy ✨</span>
-            </div>
-          </div>
+            <h2 className="font-display mt-4 text-balance text-[clamp(2rem,5.5vw,3.25rem)] font-extrabold leading-[0.96] tracking-[-0.03em]">
+              Bądź pierwszy przy nowych grach.
+            </h2>
+            <p className="mx-auto mt-5 max-w-lg text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg">
+              Aplikacja jest już do pobrania. Napiszemy, gdy dojdzie nowa gra, nowa
+              paczka haseł albo gdy wyjdziemy z bety. Zero spamu.
+            </p>
 
-          <form
-            onSubmit={handleSubmit}
-            className="w-full max-w-md relative z-10 flex flex-col gap-6 sm:gap-8 items-center"
-          >
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
-                className="w-full bg-transparent border-0 border-b border-white/20 py-4 sm:py-6 px-0 text-xl sm:text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
-                placeholder="Twoje imię"
-                required
-                disabled={status === 'loading'}
-              />
-            </div>
-            <div className="relative w-full">
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full bg-transparent border-0 border-b border-white/20 py-4 sm:py-6 px-0 text-xl sm:text-2xl font-light text-on-surface placeholder:text-on-surface-variant focus:ring-0 focus:outline-none focus:border-primary transition-all duration-500 text-center"
-                placeholder="Twój adres e-mail"
-                required
-                disabled={status === 'loading'}
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="mx-auto mt-10 max-w-xl text-left">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="block">
+                  <span className="sr-only">Imię</span>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="h-14 w-full rounded-2xl border border-white/[0.09] bg-white/[0.04] px-5 text-base text-on-surface transition-colors placeholder:text-on-surface-variant focus:border-primary/60 focus:bg-white/[0.06] focus:outline-none"
+                    placeholder="Imię"
+                    autoComplete="given-name"
+                    required
+                    disabled={status === 'loading'}
+                  />
+                </label>
+                <label className="block">
+                  <span className="sr-only">Adres e-mail</span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-14 w-full rounded-2xl border border-white/[0.09] bg-white/[0.04] px-5 text-base text-on-surface transition-colors placeholder:text-on-surface-variant focus:border-primary/60 focus:bg-white/[0.06] focus:outline-none"
+                    placeholder="Adres e-mail"
+                    autoComplete="email"
+                    required
+                    disabled={status === 'loading'}
+                  />
+                </label>
+              </div>
 
-            <div ref={turnstileRef} className="flex justify-center" />
+              <div ref={turnstileRef} className="mt-4 flex justify-center [&>*]:mx-auto" />
 
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              className="w-full max-w-xs bg-primary text-on-primary py-5 sm:py-6 rounded-2xl font-bold text-lg hover:shadow-[0_0_60px_rgba(255,178,0,0.4)] transition-all uppercase tracking-[0.1em] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-105 active:scale-95 newsletter-pulse"
-            >
-              {status === 'loading' ? 'Wysyłanie...' : '🔥 Zaczynamy'}
-            </button>
+              <button
+                type="submit"
+                disabled={status === 'loading' || sent}
+                className="mt-4 inline-flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-semibold text-on-primary shadow-[0_20px_60px_-25px_rgba(255,178,0,0.7)] transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {status === 'loading'
+                  ? 'Wysyłanie...'
+                  : sent
+                    ? 'Zapisane'
+                    : 'Zapisz mnie'}
+                {status === 'idle' || status === 'error' ? (
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                    <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : null}
+              </button>
 
-            {message && (
               <p
-                className={`text-sm font-light ${
-                  status === 'success' ? 'text-primary' : 'text-error'
+                role="status"
+                className={`mt-4 min-h-[1.25rem] text-center text-sm ${
+                  status === 'error' ? 'text-error' : 'text-on-surface-variant'
                 }`}
               >
-                {message}
+                {message || 'Adres zostaje u nas. Wypisujesz się jednym kliknięciem.'}
               </p>
-            )}
-          </form>
-        </div>
+            </form>
+          </div>
+        </Card>
       </div>
     </section>
   );

@@ -7,40 +7,40 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-16 sm:py-24 bg-background">
-      <div className="max-w-3xl mx-auto px-4 md:px-8">
-        <div className="reveal text-center space-y-4 mb-10 sm:mb-16">
-          <h1 className="text-balance text-[2.75rem] sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.02] sm:leading-none">
-            Pytania i{' '}
-            <span className="text-primary font-normal">odpowiedzi</span>
-          </h1>
-          <p className="mx-auto max-w-xl text-on-surface-variant text-base sm:text-lg font-extralight leading-relaxed">
-            Najczęściej zadawane pytania o Bifor - aplikację z grami imprezowymi na
-            telefon. Znajdziesz tu informacje o liczbie graczy, trybach gry, cenie i
-            premierze.
-          </p>
-        </div>
+    <section id="faq" className="px-6 pb-4 pt-32 sm:px-8 md:pt-40">
+      <div className="mx-auto max-w-3xl">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
+          Pomoc
+        </p>
+        <h1 className="font-display mt-5 text-balance text-[clamp(2.25rem,6.5vw,4.25rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
+          Pytania i odpowiedzi
+        </h1>
+        <p className="mt-6 max-w-[44rem] text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg">
+          Najczęściej zadawane pytania o Bifor - aplikację z grami imprezowymi na
+          telefon. Znajdziesz tu informacje o liczbie graczy, trybach gry, cenie i
+          premierze.
+        </p>
 
-        <div className="space-y-3">
+        <ul className="mt-12 space-y-3 md:mt-16">
           {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="reveal border border-white/5 rounded-2xl overflow-hidden transition-colors hover:border-white/10"
+            <li
+              key={faq.question}
+              className="overflow-hidden rounded-[1.25rem] border border-white/[0.07] bg-[#0f0f12] transition-colors hover:border-white/[0.13]"
             >
-              <h2 className="text-base md:text-lg font-light tracking-tight">
+              <h2 className="font-display text-base font-bold tracking-[-0.01em] md:text-lg">
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   aria-expanded={openIndex === i}
-                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 md:p-8 text-left cursor-pointer group active:bg-white/5 transition-colors"
+                  className="flex w-full cursor-pointer items-center justify-between gap-4 p-5 text-left transition-colors active:bg-white/[0.03] sm:p-6"
                 >
                   <span className="pr-4">{faq.question}</span>
                   <svg
-                    className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${
+                    className={`h-5 w-5 shrink-0 text-primary transition-transform duration-300 ${
                       openIndex === i ? 'rotate-45' : ''
                     }`}
                     fill="none"
                     viewBox="0 0 24 24"
-                    strokeWidth={1.5}
+                    strokeWidth={2}
                     stroke="currentColor"
                   >
                     <path
@@ -59,14 +59,14 @@ export default function FAQSection() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="px-5 sm:px-6 md:px-8 pb-5 sm:pb-6 md:pb-8 text-sm sm:text-base text-on-surface-variant font-extralight leading-relaxed">
+                  <p className="px-5 pb-5 text-pretty text-sm leading-relaxed text-on-surface-variant sm:px-6 sm:pb-6 sm:text-base">
                     {faq.answer}
                   </p>
                 </div>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

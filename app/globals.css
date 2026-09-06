@@ -2,9 +2,9 @@
 
 @theme inline {
   /* Surface & Background */
-  --color-background: #0e0e0e;
-  --color-surface: #0e0e0e;
-  --color-surface-dim: #0e0e0e;
+  --color-background: #0a0a0a;
+  --color-surface: #0a0a0a;
+  --color-surface-dim: #0a0a0a;
   --color-surface-bright: #2c2c2c;
   --color-surface-variant: #262626;
   --color-surface-container: #1a1919;
@@ -70,6 +70,7 @@
 
   /* Font */
   --font-sans: var(--font-inter);
+  --font-display: var(--font-montserrat);
 
   /* Border radius */
   --radius-lg: 0.5rem;
@@ -79,6 +80,14 @@
 }
 
 /* Custom utilities */
+
+/* Headlines carry the app's typeface so the site and the product read as
+   one brand; body copy stays on Inter for long-form legibility. */
+.font-display {
+  font-family: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+  font-feature-settings: 'ss01';
+}
+
 
 /* Remove the grey tap flash on mobile + smooth out touch */
 * {

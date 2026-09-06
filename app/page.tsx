@@ -1,12 +1,12 @@
 import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import AssembleHero from './components/AssembleHero';
-import SocialProofSection from './components/SocialProofSection';
-import GamesSection from './components/GamesSection';
-import HowItWorksSection from './components/HowItWorksSection';
-import AboutSection from './components/AboutSection';
-import FeaturesSection from './components/FeaturesSection';
+import HeroFilm from './components/film/HeroFilm';
+import GamesCarousel from './components/film/GamesCarousel';
+import StepsCards from './components/film/StepsCards';
+import ModesCards from './components/film/ModesCards';
+import CloserSection from './components/film/CloserSection';
 import NewsletterSection from './components/NewsletterSection';
+import GlassShowcase from './components/film/GlassShowcase';
+import LightField from './components/three/LightField';
 import Footer from './components/Footer';
 import JsonLd from './components/JsonLd';
 import { gamesItemListNode } from './lib/jsonld';
@@ -43,14 +43,27 @@ export default function Home() {
       <JsonLd data={homeJsonLd} />
       <Navbar />
       <main>
-        <HeroSection />
-        <AssembleHero />
-        <SocialProofSection />
-        <GamesSection />
-        <HowItWorksSection />
-        <AboutSection />
-        <FeaturesSection />
-        <NewsletterSection />
+        <HeroFilm />
+        <GlassShowcase />
+
+        <div className="relative">
+          {/* One shader lit in the seven game colours ties every section below
+              the showcase together; it sticks to the viewport so the canvas
+              stays one screen tall instead of spanning the whole document. */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="sticky top-0 h-svh">
+              <LightField />
+            </div>
+          </div>
+
+          <div className="relative z-10">
+            <GamesCarousel />
+            <StepsCards />
+            <ModesCards />
+            <CloserSection />
+            <NewsletterSection />
+          </div>
+        </div>
       </main>
       <Footer />
     </>

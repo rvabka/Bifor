@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import JsonLd from './components/JsonLd';
+import SmoothScroll from './components/SmoothScroll';
 import { appNode, organizationNode, websiteNode } from './lib/jsonld';
 import { META_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin', 'latin-ext'],
+  display: 'swap'
+});
+
+const montserrat = Montserrat({
+  variable: '--font-montserrat',
+  subsets: ['latin', 'latin-ext'],
+  weight: ['700', '800'],
   display: 'swap'
 });
 
@@ -85,7 +93,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0e0e0e',
+  themeColor: '#0a0a0a',
   width: 'device-width',
   initialScale: 1
 };
@@ -101,12 +109,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${inter.variable} dark`}>
+    <html lang="pl" className={`${inter.variable} ${montserrat.variable} dark`}>
       <head>
         <JsonLd data={siteJsonLd} />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
       </head>
-      <body className="min-h-screen bg-background text-on-surface font-light antialiased">
+      <body className="min-h-screen bg-background text-on-surface antialiased">
+        <SmoothScroll />
         {children}
       </body>
     </html>
