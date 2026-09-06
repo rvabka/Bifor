@@ -25,6 +25,10 @@ function canAnimate() {
 
 const subscribe = () => () => {};
 
+/* The clip and its still share one intrinsic ratio; declaring it means the
+   box holds its height before either has loaded, so nothing below shifts. */
+const RATIO = '440 / 534';
+
 export default function MascotClip({ className = '' }: { className?: string }) {
   const animated = useSyncExternalStore(subscribe, canAnimate, () => false);
   const hostRef = useRef<HTMLDivElement>(null);
@@ -57,13 +61,16 @@ export default function MascotClip({ className = '' }: { className?: string }) {
         alt=""
         aria-hidden
         loading="lazy"
+        width={440}
+        height={534}
         className={className}
+        style={{ aspectRatio: RATIO, height: 'auto' }}
       />
     );
   }
 
   return (
-    <div ref={hostRef} className={className}>
+    <div ref={hostRef} className={className} style={{ aspectRatio: RATIO }}>
       {near ? (
         <video
           autoPlay
@@ -81,6 +88,8 @@ export default function MascotClip({ className = '' }: { className?: string }) {
           alt=""
           aria-hidden
           loading="lazy"
+          width={440}
+          height={534}
           className="h-full w-full object-contain"
         />
       )}

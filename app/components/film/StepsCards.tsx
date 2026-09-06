@@ -48,11 +48,16 @@ export default function StepsCards() {
                   className="block w-[11rem] overflow-hidden rounded-[1.4rem] border border-white/[0.09] sm:w-[12rem]"
                   style={{ boxShadow: `0 30px 80px -45px ${step.tint}` }}
                 >
+                  {/* Intrinsic size given up front: without it the image has
+                      no height until it decodes, the section grows by ~400px
+                      mid-scroll and the page lurches under the reader. */}
                   <img
                     src={step.shot}
                     alt=""
                     loading="lazy"
-                    className="block w-full"
+                    width={560}
+                    height={1216}
+                    className="block h-auto w-full"
                   />
                 </span>
               ) : (

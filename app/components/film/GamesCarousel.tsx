@@ -58,7 +58,15 @@ export default function GamesCarousel() {
 
   return (
     <Section id="gry" className="!px-0">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-1/4 h-[36rem]">
+      {/* Seven full-width gradient layers repainted on every scroll frame is
+          a lot of fill for decoration. Each one is promoted to its own
+          compositor layer so scrolling moves them instead of redrawing them,
+          and paint is contained so nothing outside is invalidated. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-1/4 h-[36rem]"
+        style={{ contain: 'paint' }}
+      >
         {GAMES.map((game, i) => (
           <div
             key={game.slug}
@@ -68,6 +76,8 @@ export default function GamesCarousel() {
             className="absolute inset-0 transition-opacity duration-700 ease-out"
             style={{
               opacity: i === 0 ? 1 : 0,
+              willChange: 'opacity',
+              transform: 'translateZ(0)',
               background: `radial-gradient(46% 42% at 50% 40%, ${game.glow}1c, transparent 70%)`
             }}
           />
