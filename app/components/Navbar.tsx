@@ -17,7 +17,6 @@ const PAGE_LINKS = [
 export default function Navbar() {
   const pathname = usePathname();
   const onHome = pathname === '/';
-  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -28,7 +27,6 @@ export default function Navbar() {
     const read = () => {
       ticking = false;
       const y = window.scrollY;
-      setScrolled(y > 20);
       if (Math.abs(y - last) > 6) {
         setHidden(y > last && y > 160);
         last = y;
@@ -66,10 +64,14 @@ export default function Navbar() {
   return (
     <nav
       aria-label="Nawigacja główna"
+      /* The bar stays transparent while scrolling - a background that switches
+         in at a scroll threshold reads as the header flickering between two
+         designs. The open mobile menu is the one exception: its panel below is
+         opaque, so a see-through row above it would look broken. */
       className={`fixed top-0 left-0 w-full z-50 transition-[transform,background-color,border-color] duration-300 ease-out ${
         hidden && !open ? '-translate-y-full' : 'translate-y-0'
       } ${
-        scrolled || open
+        open
           ? 'bg-background/80 backdrop-blur-xl border-b border-white/5'
           : 'border-b border-transparent'
       }`}
