@@ -3,21 +3,30 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
-let cached: boolean | null = null;
+type Clip = { src: string; type: string } | null;
 
-/* The clip is a VP9 WebM carrying a real alpha channel. Chromium and Firefox
-   composite that alpha; Safari plays the same file but ignores it and would
-   paint the keyed-out green, so it gets a cut-out still instead. There is no
-   feature query for "VP9 alpha", hence the explicit engine check. */
-function canAnimate() {
-  if (cached !== null) return cached;
-  if (typeof window === 'undefined') return false;
+let cached: Clip | undefined;
+
+/* The mascot is a cut-out, so it needs a real alpha channel, and the two
+   engines disagree on how to carry one. Chromium and Firefox composite the
+   alpha in a VP9 WebM; Safari plays that file but ignores its alpha and would
+   paint the keyed-out green, so it gets HEVC-with-alpha in a MOV - Apple's own
+   format for transparent video. Both run at 24 fps. There is no feature query
+   for "VP9 alpha", hence the explicit engine check. */
+function pickClip(): Clip {
+  if (cached !== undefined) return cached;
+  if (typeof window === 'undefined') return null;
   const ua = window.navigator.userAgent;
   const isSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua);
   const probe = document.createElement('video');
-  cached =
-    !isSafari &&
-    probe.canPlayType('video/webm; codecs="vp9"') === 'probably';
+
+  if (!isSafari && probe.canPlayType('video/webm; codecs="vp9"') === 'probably') {
+    cached = { src: '/mascot-cheer.webm', type: 'video/webm' };
+  } else if (isSafari && probe.canPlayType('video/quicktime') !== '') {
+    cached = { src: '/mascot-cheer.mov', type: 'video/quicktime' };
+  } else {
+    cached = null;
+  }
   return cached;
 }
 
@@ -31,15 +40,12 @@ const subscribe = () => () => {};
 /* The clip and its still share one intrinsic ratio; declaring it means the
    box holds its height before either has loaded, so nothing below shifts. */
 const RATIO = '440 / 534';
+const STILL = '/mascot-cheer.webp';
 
 export default function MascotClip({ className = '' }: { className?: string }) {
-  const webm = useSyncExternalStore(subscribe, canAnimate, () => false);
+  const clip = useSyncExternalStore(subscribe, pickClip, () => null);
   const still = useSyncExternalStore(subscribe, prefersStill, () => false);
-  /* Safari plays VP9 but ignores its alpha channel, so it would paint the
-     keyed-out green. It gets an animated WebP instead - same cut-out, same
-     loop, just a codec it composites correctly. Nobody sits and looks at a
-     frozen dancer any more. */
-  const animated = webm && !still;
+  const animated = clip !== null && !still;
   const hostRef = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
 
@@ -66,7 +72,7 @@ export default function MascotClip({ className = '' }: { className?: string }) {
   if (!animated) {
     return (
       <img
-        src={still ? '/mascot-cheer.webp' : '/mascot-cheer-anim.webp'}
+        src={STILL}
         alt=""
         aria-hidden
         loading="lazy"
@@ -81,19 +87,22 @@ export default function MascotClip({ className = '' }: { className?: string }) {
   return (
     <div ref={hostRef} className={className} style={{ aspectRatio: RATIO }}>
       {near ? (
+        /* poster carries the still through a failed or slow load, so the
+           block is never an empty hole. */
         <video
           autoPlay
           loop
           muted
           playsInline
+          poster={STILL}
           aria-hidden
           className="h-full w-full object-contain"
         >
-          <source src="/mascot-cheer.webm" type="video/webm" />
+          <source src={clip.src} type={clip.type} />
         </video>
       ) : (
         <img
-          src="/mascot-cheer.webp"
+          src={STILL}
           alt=""
           aria-hidden
           loading="lazy"
