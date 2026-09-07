@@ -307,11 +307,12 @@ export default function GamesHubPage() {
         <Section id="hub-cta">
           <Card accent="#FFB200" className="px-6 py-14 text-center sm:px-12 sm:py-16">
             <h2 className="font-display text-balance text-[clamp(1.75rem,4.5vw,2.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
-              Otwarta beta na iOS i Androida
+              Otwarta beta na iPhone
             </h2>
             <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
-              Wszystkie siedem gier jest już do pobrania. Podstawowa rozgrywka jest
-              darmowa, bez zakładania konta.
+              Wszystkie siedem gier jest już do pobrania, a podstawowa rozgrywka
+              jest darmowa, bez zakładania konta. Wersja na Androida czeka na
+              wejście do Google Play.
             </p>
             <Link
               href="/pobierz"

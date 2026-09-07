@@ -28,7 +28,7 @@ export default function CloserSection() {
                 Zbierzcie ekipę. Resztę robi apka.
               </h2>
               <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg md:mx-0">
-                Siedem gier imprezowych po polsku, otwarta beta na iOS i Androida.
+                Siedem gier imprezowych po polsku, otwarta beta na iPhone.
                 Podstawowa rozgrywka jest darmowa, a w pokoju wystarczy, że paczki
                 haseł ma host.
               </p>

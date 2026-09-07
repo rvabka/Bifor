@@ -21,7 +21,7 @@ export function buildLlmsTxt() {
 > ${SITE_DESCRIPTION}
 
 Motto: "${TAGLINE}"
-Język: polski. Strona: ${SITE_URL}. Platformy: iOS i Android (otwarta beta, do pobrania na bifor.games/pobierz).
+Język: polski. Strona: ${SITE_URL}. Platformy: iOS i Android (otwarta beta do pobrania na iPhone: bifor.games/pobierz; wersja na Androida czeka na Google Play).
 
 ## Czym jest Bifor
 
@@ -75,7 +75,7 @@ Strona: ${SITE_URL}
 Kontakt: ${CONTACT_EMAIL}
 Język produktu: polski
 Platformy: iOS i Android
-Status: otwarta beta do pobrania na bifor.games/pobierz; na stronie działa też zapis na powiadomienie o premierze
+Status: otwarta beta na iPhone, do pobrania przez TestFlight na bifor.games/pobierz; wersja na Androida czeka na wejście do Google Play, na tej samej stronie działa zapis na powiadomienie o starcie
 Cena: aplikacja darmowa, opcjonalne płatne paczki haseł
 
 ## 1. Czym dokładnie jest Bifor

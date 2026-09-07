@@ -10,7 +10,7 @@ import { Card } from '../components/ui/Surface';
 import { androidPaused } from '../lib/download';
 
 export const metadata: Metadata = {
-  title: 'Pobierz Bifor - beta na iOS i Androida',
+  title: 'Pobierz Bifor - beta na iPhone, Android wkrótce',
   description:
     'Zainstaluj Bifor w wersji beta. Siedem gier imprezowych po polsku, za darmo - na iPhone przez TestFlight, a na Androida damy znać, gdy wejdziemy do Google Play.',
   alternates: { canonical: `${SITE_URL}/pobierz` },

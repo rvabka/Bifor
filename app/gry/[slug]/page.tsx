@@ -77,7 +77,7 @@ export default async function GamePage({ params }: Props) {
     { label: 'Tryb gry', value: game.modeLabel },
     { label: 'Typ gry', value: game.genre },
     { label: 'Cena', value: 'Darmowa podstawowa kategoria haseł' },
-    { label: 'Platformy', value: 'iOS i Android (otwarta beta)' }
+    { label: 'Platformy', value: 'iPhone (otwarta beta), Android wkrótce' }
   ];
 
   return (
@@ -221,7 +221,8 @@ export default async function GamePage({ params }: Props) {
             </h2>
             <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
               {game.title} to jedna z siedmiu gier w aplikacji Bifor. Otwarta beta na
-              iOS i Androida jest już do pobrania, a podstawowa rozgrywka jest darmowa.
+              iPhone jest już do pobrania, a podstawowa rozgrywka jest darmowa.
+              Wersja na Androida czeka na wejście do Google Play.
             </p>
             <Link
               href="/pobierz"
