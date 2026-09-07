@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from 'react';
 
-import { androidViaPlay, hasIosBuild, TESTFLIGHT_URL } from '../lib/download';
+import { androidPaused, androidViaPlay, hasIosBuild, TESTFLIGHT_URL } from '../lib/download';
 
 type Platform = 'ios' | 'android' | null;
 
@@ -77,7 +77,10 @@ export default function DownloadPanel() {
           </span>
         )}
 
-        <a href="/pobierz/android" className={`${tile} ${androidPrimary ? on : off}`}>
+        <a
+          href={androidPaused ? '#powiadom' : '/pobierz/android'}
+          className={`${tile} ${androidPrimary ? on : off}`}
+        >
           <AndroidMark />
           <span className="font-display text-base font-extrabold tracking-[-0.01em] sm:text-lg">
             Android
@@ -85,7 +88,13 @@ export default function DownloadPanel() {
           <span
             className={`text-[11px] font-medium ${androidPrimary ? 'text-on-primary/70' : 'text-on-surface-variant'}`}
           >
-            {androidPrimary ? 'Twój telefon' : androidViaPlay ? 'przez Google Play' : 'plik APK'}
+            {androidPaused
+              ? 'wkrótce w Google Play'
+              : androidPrimary
+                ? 'Twój telefon'
+                : androidViaPlay
+                  ? 'przez Google Play'
+                  : 'plik APK'}
           </span>
         </a>
       </div>
@@ -94,12 +103,14 @@ export default function DownloadPanel() {
         <p className="text-pretty text-sm leading-relaxed text-on-surface-variant">
           Na iPhonie instalacja idzie przez TestFlight, oficjalną aplikację Apple
           do testów - App Store zaproponuje ją po kliknięciu.{' '}
-          {androidViaPlay
-            ? 'Na Androidzie wszystko idzie przez Google Play.'
-            : 'Na Androidzie na czas testów instalujesz plik bezpośrednio, z pominięciem sklepu.'}
+          {androidPaused
+            ? 'Wersja na Androida czeka na wejście do Google Play - zostaw adres niżej, damy znać tego samego dnia.'
+            : androidViaPlay
+              ? 'Na Androidzie wszystko idzie przez Google Play.'
+              : 'Na Androidzie na czas testów instalujesz plik bezpośrednio, z pominięciem sklepu.'}
         </p>
 
-        {!androidViaPlay && (
+        {!androidViaPlay && !androidPaused && (
           <>
             <p className="text-pretty text-sm leading-relaxed text-on-surface-variant">
               Otwierasz to z TikToka albo Instagrama? Wybierz w menu{' '}

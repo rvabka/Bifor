@@ -26,3 +26,18 @@ export const PLAY_URL: string | null = null;
 export const androidTarget = PLAY_URL ?? ANDROID_APK_URL;
 export const androidViaPlay = PLAY_URL !== null;
 export const hasIosBuild = TESTFLIGHT_URL.length > 0;
+
+// Android nie ma PUBLICZNEGO kanalu, dopoki apka nie wejdzie do Google Play. APK
+// zostaje w tym pliku, bo nadal wysylamy go pojedynczym osobom, ale strona go nie
+// podaje z dwoch powodow: instalacja z pliku nie liczy sie do wymaganych przez
+// Google 12 testerow na kanale zamknietym (a od nich zalezy dostep do produkcji),
+// i kosztuje ostrzezenia Play Protect plus pytania na kontakt@. Zamiast tego kafel
+// Androida zbiera zapisy na powiadomienie.
+//
+// Wpisanie PLAY_URL wyzej odwraca to samo: przycisk wraca do roli przycisku,
+// blok z zapisem znika, redirect /pobierz/android znowu prowadzi do instalacji.
+export const androidPaused = PLAY_URL === null;
+
+// Kotwica bloku z zapisem na /pobierz. Trzymana tu, bo wskazuje na nia takze
+// redirect /pobierz/android, czyli adres uzywany w mailach i w bio na TikToku.
+export const ANDROID_NOTIFY_ANCHOR = '/pobierz#powiadom';

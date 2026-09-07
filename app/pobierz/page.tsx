@@ -5,16 +5,19 @@ import { SITE_URL } from '../lib/site';
 import Link from 'next/link';
 import DownloadPanel from './DownloadPanel';
 import AmbientWash from '../components/ui/AmbientWash';
+import NewsletterForm from '../components/NewsletterForm';
+import { Card } from '../components/ui/Surface';
+import { androidPaused } from '../lib/download';
 
 export const metadata: Metadata = {
   title: 'Pobierz Bifor - beta na iOS i Androida',
   description:
-    'Zainstaluj Bifor w wersji beta. Siedem gier imprezowych po polsku, za darmo - na iPhone przez TestFlight, na Androida bezpośrednio z pliku.',
+    'Zainstaluj Bifor w wersji beta. Siedem gier imprezowych po polsku, za darmo - na iPhone przez TestFlight, a na Androida damy znać, gdy wejdziemy do Google Play.',
   alternates: { canonical: `${SITE_URL}/pobierz` },
   openGraph: {
     title: 'Pobierz Bifor - beta',
     description:
-      'Siedem gier imprezowych po polsku. Zainstaluj wersję beta na iPhone lub Androida.',
+      'Siedem gier imprezowych po polsku. Zainstaluj wersję beta na iPhone albo zapisz się po wersję na Androida.',
     url: `${SITE_URL}/pobierz`
   }
 };
@@ -43,6 +46,29 @@ export default function DownloadPage() {
         </div>
 
         <DownloadPanel />
+
+        {androidPaused && (
+          <section id="powiadom" className="w-full scroll-mt-24">
+          <Card accent="#FFB200" className="px-6 py-10 text-center sm:px-10 sm:py-12">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
+              Android
+            </p>
+            <h2 className="font-display mt-4 text-balance text-[clamp(1.6rem,4.5vw,2.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em]">
+              Damy znać, gdy wejdziemy do Google Play.
+            </h2>
+            <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant sm:text-base">
+              Kończymy testy wymagane przez Google przed publikacją. Zostaw adres,
+              a dostaniesz jedną wiadomość w dniu, w którym Bifor pojawi się w
+              sklepie. Nic poza tym.
+            </p>
+
+            <NewsletterForm
+              submitLabel="Powiadom mnie"
+              idleNote="Jedna wiadomość o starcie na Androidzie. Wypisujesz się jednym kliknięciem."
+            />
+          </Card>
+          </section>
+        )}
 
         <p className="max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant">
           Coś nie działa albo apka się wysypała? Napisz na{' '}
