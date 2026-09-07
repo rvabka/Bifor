@@ -9,23 +9,35 @@ let cached: Clip | undefined;
 
 /* The mascot is a cut-out, so it needs a real alpha channel, and the two
    engines disagree on how to carry one. Chromium and Firefox composite the
-   alpha in a VP9 WebM; Safari plays that file but ignores its alpha and would
+   alpha in a VP9 WebM; WebKit plays that file but ignores its alpha and would
    paint the keyed-out green, so it gets HEVC-with-alpha in a MOV - Apple's own
    format for transparent video. Both run at 24 fps. There is no feature query
-   for "VP9 alpha", hence the explicit engine check. */
+   for "VP9 alpha", hence the explicit engine check.
+
+   The branch is on the ENGINE, not the brand: every browser on iOS is WebKit
+   underneath, so Chrome and Firefox there need the MOV just as much as Safari
+   does. Branching on the Safari user agent alone dropped them into neither
+   arm and left them with a frozen still. */
 function pickClip(): Clip {
   if (cached !== undefined) return cached;
   if (typeof window === 'undefined') return null;
-  const ua = window.navigator.userAgent;
-  const isSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua);
+  const nav = window.navigator;
+  const ua = nav.userAgent;
+  // iPadOS reports itself as a Mac, so the user agent alone is not enough.
+  const iOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && nav.maxTouchPoints > 1);
+  const desktopSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua);
   const probe = document.createElement('video');
 
-  if (!isSafari && probe.canPlayType('video/webm; codecs="vp9"') === 'probably') {
-    cached = { src: '/mascot-cheer.webm', type: 'video/webm' };
-  } else if (isSafari && probe.canPlayType('video/quicktime') !== '') {
-    cached = { src: '/mascot-cheer.mov', type: 'video/quicktime' };
+  if (iOS || desktopSafari) {
+    cached =
+      probe.canPlayType('video/quicktime') !== ''
+        ? { src: '/mascot-cheer.mov', type: 'video/quicktime' }
+        : null;
   } else {
-    cached = null;
+    cached =
+      probe.canPlayType('video/webm; codecs="vp9"') === 'probably'
+        ? { src: '/mascot-cheer.webm', type: 'video/webm' }
+        : null;
   }
   return cached;
 }
