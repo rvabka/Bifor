@@ -30,7 +30,7 @@ const statusMessages: Record<
     icon: '😔',
     title: 'Coś poszło nie tak',
     description:
-      'Nie udało się potwierdzić zapisu. Spróbuj ponownie później lub napisz do nas na kontakt@bifor.games.'
+      'Nie udało się potwierdzić zapisu. Spróbuj ponownie później lub napisz do nas na contact@bifor.games.'
   }
 };
 

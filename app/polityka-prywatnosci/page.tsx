@@ -36,10 +36,10 @@ export default function PrivacyPolicyPage() {
             &quot;Administrator&quot;). W sprawach związanych z ochroną danych
             osobowych możesz skontaktować się z nami pod adresem e-mail:{' '}
             <a
-              href="mailto:kontakt@bifor.games"
+              href="mailto:contact@bifor.games"
               className="text-primary hover:underline"
             >
-              kontakt@bifor.games
+              contact@bifor.games
             </a>
             .
           </p>
@@ -270,10 +270,10 @@ export default function PrivacyPolicyPage() {
             danymi. Jeśli jesteś rodzicem lub opiekunem i sądzisz, że dziecko
             przekazało nam swoje dane, napisz na{' '}
             <a
-              href="mailto:kontakt@bifor.games"
+              href="mailto:contact@bifor.games"
               className="text-primary hover:underline"
             >
-              kontakt@bifor.games
+              contact@bifor.games
             </a>
             .
           </p>
@@ -293,10 +293,10 @@ export default function PrivacyPolicyPage() {
             → Konto → Usuń konto. Aby zrealizować pozostałe prawa (w tym dostęp do
             danych i ich przeniesienie), napisz na{' '}
             <a
-              href="mailto:kontakt@bifor.games"
+              href="mailto:contact@bifor.games"
               className="text-primary hover:underline"
             >
-              kontakt@bifor.games
+              contact@bifor.games
             </a>
             .
           </p>

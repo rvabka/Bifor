@@ -26,10 +26,10 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 function Mail() {
   return (
     <a
-      href="mailto:kontakt@bifor.games"
+      href="mailto:contact@bifor.games"
       className="text-primary hover:underline"
     >
-      kontakt@bifor.games
+      contact@bifor.games
     </a>
   );
 }

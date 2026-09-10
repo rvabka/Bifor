@@ -72,6 +72,6 @@ export const faqs = [
   {
     question: 'Czy mogę zaproponować nową grę lub hasła?',
     answer:
-      'Tak. Zapisz się do newslettera albo napisz na kontakt@bifor.games - propozycje graczy trafiają na listę rzeczy do zrobienia przy kolejnych aktualizacjach.'
+      'Tak. Zapisz się do newslettera albo napisz na contact@bifor.games - propozycje graczy trafiają na listę rzeczy do zrobienia przy kolejnych aktualizacjach.'
   }
 ];

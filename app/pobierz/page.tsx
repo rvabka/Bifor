@@ -73,10 +73,10 @@ export default function DownloadPage() {
         <p className="max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant">
           Coś nie działa albo apka się wysypała? Napisz na{' '}
           <a
-            href="mailto:kontakt@bifor.games"
+            href="mailto:contact@bifor.games"
             className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
           >
-            kontakt@bifor.games
+            contact@bifor.games
           </a>
           . Każde zgłoszenie z bety realnie zmienia to, co trafi do premiery.
         </p>

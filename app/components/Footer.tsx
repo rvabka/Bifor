@@ -62,10 +62,10 @@ export default function Footer() {
               ))}
               <li>
                 <a
-                  href="mailto:kontakt@bifor.games"
+                  href="mailto:contact@bifor.games"
                   className="text-sm font-extralight text-on-surface-variant transition-colors hover:text-primary"
                 >
-                  kontakt@bifor.games
+                  contact@bifor.games
                 </a>
               </li>
             </ul>

@@ -69,10 +69,10 @@ export default function FAQPage() {
           <p className="mt-10 text-sm text-on-surface-variant">
             Nie znalazłeś odpowiedzi? Napisz na{' '}
             <a
-              href="mailto:kontakt@bifor.games"
+              href="mailto:contact@bifor.games"
               className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
             >
-              kontakt@bifor.games
+              contact@bifor.games
             </a>
             .
           </p>

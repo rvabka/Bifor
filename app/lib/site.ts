@@ -1,6 +1,6 @@
 export const SITE_URL = 'https://bifor.games';
 export const SITE_NAME = 'Bifor';
-export const CONTACT_EMAIL = 'kontakt@bifor.games';
+export const CONTACT_EMAIL = 'contact@bifor.games';
 export const TIKTOK_URL = 'https://www.tiktok.com/@biforgames';
 export const PLAY_STORE_ID = 'com.bifor.app';
 

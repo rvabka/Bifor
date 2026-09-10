@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     { url: abs('/faq'), lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: abs('/terms'), lastModified, changeFrequency: 'yearly', priority: 0.3 },
+    { url: abs('/usun-konto'), lastModified, changeFrequency: 'yearly', priority: 0.3 },
     {
       url: abs('/polityka-prywatnosci'),
       lastModified,
