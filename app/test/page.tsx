@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 export const metadata: Metadata = {
   title: 'Testy beta Bifor',
   description:
-    'Dołącz do testów beta aplikacji Bifor na Androida. Dwa kroki: zapisz się do grupy testerów i włącz testy w Google Play.',
+    'Dołącz do testów beta aplikacji Bifor na Androida. Trzy kroki, około minuty.',
   alternates: { canonical: '/test' },
   robots: { index: false, follow: false }
 };
@@ -14,134 +14,160 @@ const GROUP_URL = 'https://groups.google.com/g/bifor-testy';
 const OPT_IN_URL = 'https://play.google.com/apps/testing/com.bifor.app';
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.bifor.app';
 
-const P_CLASS = 'text-pretty leading-relaxed text-on-surface-variant';
+const BUTTON =
+  'mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-4 font-display text-base font-extrabold transition-transform duration-200 hover:scale-[1.02] active:scale-[0.99] sm:w-auto';
+const BUTTON_ON = `${BUTTON} border border-primary/50 bg-primary text-on-primary shadow-[0_24px_70px_-30px_rgba(255,178,0,0.9)]`;
+const BUTTON_OFF = `${BUTTON} border border-white/[0.14] bg-white/[0.05] text-on-surface hover:border-white/30`;
 
-const BUTTON_CLASS =
-  'inline-flex items-center justify-center rounded-[1.25rem] border border-primary/50 bg-primary px-6 py-4 font-display text-base font-extrabold text-on-primary shadow-[0_24px_70px_-30px_rgba(255,178,0,0.9)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.99]';
-
-function Step({
-  number,
-  title,
-  children
-}: {
-  number: number;
-  title: string;
-  children: ReactNode;
-}) {
+function Arrow() {
   return (
-    <li className="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
-      <div className="flex items-baseline gap-4">
-        <span className="font-display text-2xl font-extrabold text-primary">{number}</span>
-        <h2 className="text-xl font-light tracking-tight sm:text-2xl">{title}</h2>
-      </div>
-      <div className="mt-4 space-y-5 sm:pl-10">{children}</div>
-    </li>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth={2.2}
+      stroke="currentColor"
+      className="h-4 w-4"
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 12h15m0 0-6-6m6 6-6 6" />
+    </svg>
   );
 }
 
-function Mail() {
+function Step({
+  n,
+  title,
+  lead,
+  last,
+  children
+}: {
+  n: number;
+  title: string;
+  lead: string;
+  last?: boolean;
+  children?: ReactNode;
+}) {
   return (
-    <a href="mailto:contact@bifor.games" className="text-primary hover:underline">
-      contact@bifor.games
-    </a>
+    <li className={`relative pl-16 ${last ? '' : 'pb-12'}`}>
+      {!last && (
+        <span
+          aria-hidden
+          className="absolute top-14 bottom-0 left-[1.4375rem] w-px bg-gradient-to-b from-white/20 to-white/[0.04]"
+        />
+      )}
+      <span
+        aria-hidden
+        className="border-primary/40 bg-primary/[0.12] text-primary font-display absolute top-0 left-0 flex h-12 w-12 items-center justify-center rounded-full border text-xl font-extrabold"
+      >
+        {n}
+      </span>
+      <h2 className="pt-1.5 text-xl font-normal tracking-tight sm:text-2xl">{title}</h2>
+      <p className="text-on-surface-variant mt-2 leading-relaxed">{lead}</p>
+      {children}
+    </li>
   );
 }
 
 export default function TestPage() {
   return (
-    <main className="bg-background text-on-surface min-h-screen px-4 py-32 md:px-8">
-      <div className="mx-auto max-w-2xl space-y-12">
-        <div className="space-y-4">
-          <Link
-            href="/"
-            className="text-primary inline-flex items-center gap-2 text-sm hover:underline"
+    <main className="bg-background text-on-surface min-h-screen px-4 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-xl">
+        <Link
+          href="/"
+          className="text-on-surface-variant hover:text-on-surface inline-flex items-center gap-2 text-sm transition-colors"
+        >
+          ← Strona główna
+        </Link>
+
+        <h1 className="mt-6 text-4xl font-light tracking-tight md:text-5xl">
+          Testy beta na Androida
+        </h1>
+        <p className="text-on-surface-variant mt-3 text-lg leading-relaxed">
+          Trzy kroki, około minuty. Potem Bifor działa jak każda inna aplikacja ze Sklepu Play.
+        </p>
+
+        <div className="border-primary/25 bg-primary/[0.07] mt-8 rounded-2xl border p-5">
+          <p className="text-sm leading-relaxed">
+            <strong className="font-semibold">
+              Wszędzie to samo konto Google, co w Sklepie Play na telefonie.
+            </strong>{' '}
+            <span className="text-on-surface-variant">
+              To jedyna rzecz, która potrafi tu nie zadziałać.
+            </span>
+          </p>
+        </div>
+
+        <ol className="mt-14">
+          <Step
+            n={1}
+            title="Dołącz do grupy"
+            lead="Wchodzisz od razu, nikt niczego nie zatwierdza. Nie dostaniesz z niej żadnych wiadomości."
           >
-            ← Strona główna
-          </Link>
-          <h1 className="text-4xl font-light tracking-tight md:text-5xl">Testy beta Bifor</h1>
-          <p className={P_CLASS}>
-            Bifor jest w fazie testów na Androidzie. Poniżej dwa kroki, po których aplikacja
-            pojawi się u Ciebie w Google Play jak każda inna. Zajmuje to około minuty.
-          </p>
-        </div>
-
-        <div className="rounded-[1.25rem] border border-primary/25 bg-primary/[0.06] p-5">
-          <p className="text-sm leading-relaxed text-on-surface">
-            <strong className="font-semibold">Użyj tego samego konta Google</strong>, na którym
-            masz zalogowany Sklep Play w telefonie. To jedyna rzecz, która potrafi tu nie
-            zadziałać: jeśli zapiszesz się z innego adresu, Play nie rozpozna Cię jako testera
-            i zobaczysz komunikat, że aplikacja jest niedostępna.
-          </p>
-        </div>
-
-        <ol className="space-y-6">
-          <Step number={1} title="Zapisz się do grupy testerów">
-            <p className={P_CLASS}>
-              Kliknij <strong className="font-normal text-on-surface">Dołącz do grupy</strong>.
-              Nikt niczego nie zatwierdza, wchodzisz od razu. Grupa służy nam wyłącznie za listę
-              testerów, nie dostaniesz z niej żadnych wiadomości.
-            </p>
-            <a
-              href={GROUP_URL}
-              target="_blank"
-              rel="noreferrer"
-              className={`${BUTTON_CLASS} w-full sm:w-auto`}
-            >
-              Dołącz do grupy
+            <a href={GROUP_URL} target="_blank" rel="noreferrer" className={BUTTON_ON}>
+              Dołącz do grupy <Arrow />
             </a>
           </Step>
 
-          <Step number={2} title="Włącz testy">
-            <p className={P_CLASS}>
-              Na stronie, która się otworzy, kliknij{' '}
-              <strong className="font-normal text-on-surface">Zostań testerem</strong>. Zrób to
-              dopiero po kroku pierwszym, bo strona sprawdza, czy jesteś już w grupie.
-            </p>
-            <a
-              href={OPT_IN_URL}
-              target="_blank"
-              rel="noreferrer"
-              className={`${BUTTON_CLASS} w-full sm:w-auto`}
-            >
-              Zostań testerem
+          <Step
+            n={2}
+            title="Zostań testerem"
+            lead="Na stronie Google Play kliknij przycisk, żeby dołączyć do testu. Dopiero po kroku 1."
+          >
+            <a href={OPT_IN_URL} target="_blank" rel="noreferrer" className={BUTTON_ON}>
+              Zostań testerem <Arrow />
             </a>
+            <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+              <p className="text-on-surface-variant text-xs tracking-wide uppercase">
+                Udało się, gdy zobaczysz
+              </p>
+              <p className="mt-3 inline-block rounded-md bg-[#d7f5dd] px-3 py-2 font-sans text-sm text-[#0b3d1b]">
+                You are a tester.
+              </p>
+            </div>
           </Step>
 
-          <Step number={3} title="Pobierz z Google Play">
-            <p className={P_CLASS}>
-              Otwórz{' '}
-              <a
-                href={PLAY_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="text-primary hover:underline"
-              >
-                Bifor w Google Play
-              </a>{' '}
-              na telefonie i zainstaluj. Aktualizacje przychodzą potem same, tak jak przy
-              zwykłych aplikacjach.
-            </p>
-            <p className="text-sm leading-relaxed text-on-surface-variant">
-              Jeśli Play twierdzi, że aplikacja jest niedostępna, odczekaj kilka minut i odśwież.
-              Czasem chwilę trwa, zanim Google skojarzy Twoje konto z testem.
-            </p>
+          <Step
+            n={3}
+            title="Zainstaluj"
+            lead="Otwórz Bifora w Sklepie Play na telefonie i pobierz. Aktualizacje przychodzą potem same."
+            last
+          >
+            <a href={PLAY_URL} target="_blank" rel="noreferrer" className={BUTTON_OFF}>
+              Otwórz w Google Play <Arrow />
+            </a>
           </Step>
         </ol>
 
-        <section className="space-y-4 border-t border-white/[0.08] pt-10">
-          <h2 className="text-2xl font-light tracking-tight">Coś nie działa?</h2>
-          <p className={P_CLASS}>
-            Napisz na <Mail />. To wersja testowa, więc zgłoszenia są dokładnie tym, po co ona
-            istnieje. Przydaje się model telefonu i to, co dokładnie zrobiłeś przed błędem.
+        <details className="mt-14 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+          <summary className="text-primary cursor-pointer list-none text-sm font-semibold marker:hidden">
+            Play pisze, że aplikacja jest niedostępna
+          </summary>
+          <ul className="text-on-surface-variant mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed">
+            <li>Sprawdź, czy w Sklepie Play jesteś na tym samym koncie, którym przeszedłeś kroki 1 i 2.</li>
+            <li>Odczekaj kilka minut. Google potrzebuje chwili, żeby skojarzyć konto z testem.</li>
+            <li>
+              Jeśli dalej nic: Ustawienia telefonu → Aplikacje → Sklep Play → Pamięć → Wyczyść pamięć
+              podręczną, potem otwórz link jeszcze raz.
+            </li>
+          </ul>
+        </details>
+
+        <div className="text-on-surface-variant mt-10 space-y-3 border-t border-white/[0.08] pt-10 text-sm leading-relaxed">
+          <p>
+            Coś nie działa albo masz uwagi - pisz na{' '}
+            <a href="mailto:contact@bifor.games" className="text-primary hover:underline">
+              contact@bifor.games
+            </a>
+            . Po to jest ta wersja. Przydaje się model telefonu i co robiłeś przed błędem.
           </p>
-          <p className={P_CLASS}>
-            Na iPhone aplikacja jeszcze nie jest dostępna publicznie.{' '}
+          <p>
+            iPhone jeszcze nie ruszył.{' '}
             <Link href="/pobierz" className="text-primary hover:underline">
               Zostaw adres
             </Link>
-            , a damy znać, gdy ruszy.
+            , damy znać.
           </p>
-        </section>
+        </div>
       </div>
     </main>
   );

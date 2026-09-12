@@ -76,6 +76,29 @@ export default function Navbar() {
           : 'border-b border-transparent'
       }`}
     >
+      <Link
+        href="/test"
+        className="group border-primary/20 bg-primary/[0.12] flex items-center justify-center gap-2 border-b px-4 py-2.5 text-center backdrop-blur-xl"
+      >
+        <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" aria-hidden />
+        <span className="text-primary text-[13px] font-semibold tracking-tight">
+          Trwają testy beta na Androida
+        </span>
+        <span className="text-primary/70 hidden text-[13px] font-light sm:inline">
+          - dołącz i zagraj pierwszy
+        </span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth={2.2}
+          stroke="currentColor"
+          className="text-primary h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
+          aria-hidden
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 12h15m0 0-6-6m6 6-6 6" />
+        </svg>
+      </Link>
+
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
         <button
           onClick={goTop}
