@@ -1,15 +1,14 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GAMES } from '../../lib/games';
 import { useReducedMotion } from '../useReducedMotion';
 
-/* WebGL, drei and three are a heavy payload for one section, so the scene is
-   split out. It is fetched on the first scroll rather than when the section
-   comes into view - by then the visitor is on their way here and the module
-   has three screens of hero to land in, instead of arriving late and leaving
-   the copy on black. */
+/* WebGL, drei and postprocessing are a heavy payload for one section, so the
+   scene is split out. Until it lands the block is just type on black, which
+   is why it is fetched on the first scroll and armed a viewport and a half
+   out rather than at the edge of the section. */
 const GlassSlabs = dynamic(() => import('../three/GlassSlabs'), { ssr: false });
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
@@ -22,18 +21,12 @@ export default function GlassShowcase() {
   const progress = useRef(0);
   const [armed, setArmed] = useState(false);
   const [active, setActive] = useState(false);
-  const [ready, setReady] = useState(false);
   const reduced = useReducedMotion();
-
-  const onReady = useCallback(() => setReady(true), []);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || reduced) return;
 
-    /* Armed a viewport and a half out. Mounting as the section crossed the
-       edge meant the chunk only started downloading once it was already
-       needed. */
     const arm = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -48,8 +41,9 @@ export default function GlassShowcase() {
     arm.observe(section);
     live.observe(section);
 
-    /* Warmed on the first scroll, on idle: someone who bounces off the hero
-       never pays for a library they will not see. */
+    /* Warmed on the first scroll, on idle: the module then has three screens
+       of hero to land in instead of starting to download once the section is
+       already needed. Someone who bounces off the hero still pays nothing. */
     let idle = 0;
     const warm = () => {
       const load = () => void import('../three/GlassSlabs');
@@ -104,16 +98,8 @@ export default function GlassShowcase() {
     >
       <div className="sticky top-0 flex h-svh items-center overflow-hidden bg-[#0a0a0a]">
         {armed ? (
-          <div
-            className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: ready ? 1 : 0 }}
-          >
-            <GlassSlabs
-              progress={progress}
-              active={active}
-              ready={ready}
-              onReady={onReady}
-            />
+          <div className="absolute inset-0">
+            <GlassSlabs progress={progress} active={active} />
           </div>
         ) : null}
 
