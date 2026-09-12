@@ -1,6 +1,6 @@
 'use client';
 
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer, PerformanceMonitor, RoundedBox } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -147,28 +147,16 @@ function FirstFrame({ onReady }: { onReady: () => void }) {
   return null;
 }
 
-function ContextGuard({ onLost }: { onLost: () => void }) {
-  const canvas = useThree((state) => state.gl.domElement);
-  useEffect(() => {
-    const handle = () => onLost();
-    canvas.addEventListener('webglcontextlost', handle);
-    return () => canvas.removeEventListener('webglcontextlost', handle);
-  }, [canvas, onLost]);
-  return null;
-}
-
 export default function GlassSlabs({
   progress,
   active,
   ready,
-  onReady,
-  onBail
+  onReady
 }: {
   progress: Progress;
   active: boolean;
   ready: boolean;
   onReady: () => void;
-  onBail: () => void;
 }) {
   const halo = useHaloTexture();
   const [dpr, setDpr] = useState(1.25);
@@ -188,15 +176,10 @@ export default function GlassSlabs({
       style={{ pointerEvents: 'none' }}
       onCreated={({ gl }) => gl.setClearAlpha(0)}
     >
-      {/* One bad patch drops resolution, a second gives up and hands the
-          section back to the static slabs - nobody gets a stuttering page. */}
-      <PerformanceMonitor
-        flipflops={2}
-        onDecline={() => setDpr(1)}
-        onFallback={onBail}
-      />
+      {/* Rather than guess at device capability, the scene watches its own
+          frame rate and drops resolution on machines that cannot hold it. */}
+      <PerformanceMonitor onDecline={() => setDpr(1)} />
       <FirstFrame onReady={onReady} />
-      <ContextGuard onLost={onBail} />
 
       <ambientLight intensity={0.6} />
 

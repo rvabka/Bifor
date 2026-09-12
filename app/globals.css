@@ -349,27 +349,3 @@ html {
     animation: none;
   }
 }
-
-/* Idle drift for the static showcase slabs. The transform lives on an inner
-   element so it never fights the placement transform on its parent. */
-@keyframes slab-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, calc(var(--slab-lift, 14px) * -1), 0);
-  }
-}
-
-.slab-drift {
-  animation: slab-drift var(--slab-duration, 11s) ease-in-out infinite;
-  animation-delay: var(--slab-delay, 0s);
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .slab-drift {
-    animation: none;
-  }
-}
