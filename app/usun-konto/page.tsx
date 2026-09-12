@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageShell from '../components/ui/PageShell';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
@@ -32,7 +33,8 @@ function Mail() {
 
 export default function DeleteAccountPage() {
   return (
-    <main className="min-h-screen bg-background text-on-surface px-4 py-32 md:px-8">
+    <PageShell>
+      <div className="px-4 pt-32 pb-24 md:px-8 md:pt-40">
       <div className="mx-auto max-w-3xl space-y-12">
         <div className="space-y-4">
           <Link
@@ -137,6 +139,7 @@ export default function DeleteAccountPage() {
           </p>
         </Section>
       </div>
-    </main>
+    </div>
+    </PageShell>
   );
 }

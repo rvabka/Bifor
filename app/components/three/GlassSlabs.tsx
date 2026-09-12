@@ -1,9 +1,8 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Lightformer, PerformanceMonitor, RoundedBox } from '@react-three/drei';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GAMES } from '../../lib/games';
 
@@ -12,18 +11,45 @@ type Progress = { current: number };
 const SPAN = 15.5;
 const COUNT = GAMES.length;
 
+/* One radial sprite shared by every halo. Bloom used to do this job, but a
+   full-screen composer pass cost more than the rest of the scene put together
+   and dragged in the whole postprocessing library - a third of the download
+   for this section - to blur seven small rectangles. */
+function useHaloTexture() {
+  return useMemo(() => {
+    const size = 128;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(0.35, 'rgba(255,255,255,0.42)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, size, size);
+    }
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }, []);
+}
+
 function Slab({
   index,
   color,
+  halo,
   progress
 }: {
   index: number;
   color: string;
+  halo: THREE.Texture;
   progress: Progress;
 }) {
   const group = useRef<THREE.Group>(null);
   const seed = index * 2.39996;
-  const screen = new THREE.Color(color).multiplyScalar(1.9);
+  const screen = useMemo(() => new THREE.Color(color).multiplyScalar(1.9), [color]);
 
   useFrame((state) => {
     const g = group.current;
@@ -47,7 +73,7 @@ function Slab({
 
   return (
     <group ref={group}>
-      <RoundedBox args={[0.9, 1.86, 0.1]} radius={0.1} smoothness={5}>
+      <RoundedBox args={[0.9, 1.86, 0.1]} radius={0.1} smoothness={4}>
         <meshPhysicalMaterial
           color="#0f1014"
           roughness={0.08}
@@ -60,13 +86,36 @@ function Slab({
         />
       </RoundedBox>
       {/* The screen is a thin emissive plate just in front of the glass, so
-          the colour reads as light coming through it rather than paint on it.
-          It is pushed past full brightness on purpose: bloom then has
-          something to catch, and on machines where bloom gets dropped the
-          slabs still read as lit rather than as dark plastic. */}
+          the colour reads as light coming through it rather than paint on it. */}
       <mesh position={[0, 0, 0.058]}>
         <planeGeometry args={[0.7, 1.58]} />
         <meshBasicMaterial color={screen} toneMapped={false} />
+      </mesh>
+      {/* Two additive sprites stand in for the bloom: a tight bleed over the
+          bezel and a wide wash into the black around it. */}
+      <mesh position={[0, 0, 0.07]}>
+        <planeGeometry args={[1.5, 2.6]} />
+        <meshBasicMaterial
+          map={halo}
+          color={color}
+          transparent
+          opacity={0.5}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[0, 0, 0.075]}>
+        <planeGeometry args={[3.6, 4.6]} />
+        <meshBasicMaterial
+          map={halo}
+          color={color}
+          transparent
+          opacity={0.22}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          toneMapped={false}
+        />
       </mesh>
     </group>
   );
@@ -86,61 +135,82 @@ function Rig({ progress }: { progress: Progress }) {
   return null;
 }
 
+/* The cross-fade waits for pixels, not for the module: a mounted canvas that
+   has not drawn yet is still a black hole, and shader compilation plus the
+   environment pass land a few frames after React is done. */
+function FirstFrame({ onReady }: { onReady: () => void }) {
+  const drawn = useRef(0);
+  useFrame(() => {
+    drawn.current += 1;
+    if (drawn.current === 3) onReady();
+  });
+  return null;
+}
+
+function ContextGuard({ onLost }: { onLost: () => void }) {
+  const canvas = useThree((state) => state.gl.domElement);
+  useEffect(() => {
+    const handle = () => onLost();
+    canvas.addEventListener('webglcontextlost', handle);
+    return () => canvas.removeEventListener('webglcontextlost', handle);
+  }, [canvas, onLost]);
+  return null;
+}
+
 export default function GlassSlabs({
   progress,
-  active
+  active,
+  ready,
+  onReady,
+  onBail
 }: {
   progress: Progress;
   active: boolean;
+  ready: boolean;
+  onReady: () => void;
+  onBail: () => void;
 }) {
-  /* Bloom is what makes the glass read as lit, but it is also the single
-     most expensive thing here. Rather than guess at device capability, the
-     scene watches its own frame rate and drops the effect on machines that
-     cannot hold it - nobody gets a stuttering page for a highlight. */
-  const [rich, setRich] = useState(true);
+  const halo = useHaloTexture();
+  const [dpr, setDpr] = useState(1.25);
+
+  useEffect(() => () => halo.dispose(), [halo]);
 
   return (
     <Canvas
       /* Off-screen the loop stops completely. Left running, this scene held
-         the whole page at 7 fps - including the carousel two sections down. */
-      frameloop={active ? 'always' : 'never'}
-      dpr={[1, 1.25]}
+         the whole page at 7 fps - including the carousel two sections down.
+         Until the first frames are out it runs regardless, otherwise a canvas
+         armed just before the section scrolls in never draws at all. */
+      frameloop={active || !ready ? 'always' : 'never'}
+      dpr={dpr}
       gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
       camera={{ position: [0, 0, 2.6], fov: 46 }}
       style={{ pointerEvents: 'none' }}
+      onCreated={({ gl }) => gl.setClearAlpha(0)}
     >
-      <PerformanceMonitor onDecline={() => setRich(false)} />
-      <color attach="background" args={['#0a0a0a']} />
+      {/* One bad patch drops resolution, a second gives up and hands the
+          section back to the static slabs - nobody gets a stuttering page. */}
+      <PerformanceMonitor
+        flipflops={2}
+        onDecline={() => setDpr(1)}
+        onFallback={onBail}
+      />
+      <FirstFrame onReady={onReady} />
+      <ContextGuard onLost={onBail} />
+
       <ambientLight intensity={0.6} />
 
-      <Environment resolution={128}>
+      <Environment resolution={64}>
         <Lightformer intensity={2.2} position={[0, 3, 2]} scale={[6, 2, 1]} />
         <Lightformer intensity={1.1} position={[-4, 0, 1]} scale={[2, 6, 1]} />
         <Lightformer intensity={1.1} position={[4, 0, 1]} scale={[2, 6, 1]} />
       </Environment>
 
       {GAMES.map((game, i) => (
-        <Slab key={game.slug} index={i} color={game.glow} progress={progress} />
+        <Slab key={game.slug} index={i} color={game.glow} halo={halo} progress={progress} />
       ))}
 
       <Rig progress={progress} />
-
-      {/* The composer was the whole cost of this section: 12 fps with it,
-          60 without. Multisampling ran 8x MSAA on a full-size target, and the
-          vignette duplicated a CSS scrim already sitting over the canvas.
-          Bloom stays - it is the reason the glass reads as lit - but at a
-          third of the resolution, where nobody can tell. */}
-      {rich ? (
-        <EffectComposer enableNormalPass={false} multisampling={0}>
-          <Bloom
-            intensity={1.6}
-            luminanceThreshold={0.22}
-            luminanceSmoothing={0.5}
-            mipmapBlur
-            resolutionScale={0.35}
-          />
-        </EffectComposer>
-      ) : null}
     </Canvas>
   );
 }

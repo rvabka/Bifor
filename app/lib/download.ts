@@ -20,23 +20,27 @@ export const ANDROID_APK_URL =
   'https://github.com/rvabka/Bifor/releases/latest/download/bifor-beta.apk';
 
 // Gdy Android przejdzie na Google Play: wpisz adres sklepu. Strona i redirect
-// przelacza sie same, instrukcja o "nieznanych zrodlach" znika.
+// przelacza sie same, a caly blok o testach zamknietych znika.
 export const PLAY_URL: string | null = null;
 
-export const androidTarget = PLAY_URL ?? ANDROID_APK_URL;
+// Android jest w Google Play, ale na kanale ZAMKNIETYM - zeby zainstalowac,
+// trzeba najpierw dolaczyc do grupy testerow i wlaczyc test. Tych dwoch krokow
+// nie da sie skrocic do jednego linku (taka jest konstrukcja testu zamknietego),
+// wiec strona /test prowadzi przez nie po kolei i to ona jest celem przycisku.
+// Po uzyskaniu dostepu do produkcji: ustaw PLAY_URL wyzej i wyzeruj to ponizej.
+export const BETA_TEST_PATH: string | null = '/test';
+
+export const androidTarget = PLAY_URL ?? BETA_TEST_PATH ?? ANDROID_APK_URL;
 export const androidViaPlay = PLAY_URL !== null;
+export const androidViaBetaTest = PLAY_URL === null && BETA_TEST_PATH !== null;
 export const hasIosBuild = TESTFLIGHT_URL.length > 0;
 
-// Android nie ma PUBLICZNEGO kanalu, dopoki apka nie wejdzie do Google Play. APK
-// zostaje w tym pliku, bo nadal wysylamy go pojedynczym osobom, ale strona go nie
-// podaje z dwoch powodow: instalacja z pliku nie liczy sie do wymaganych przez
-// Google 12 testerow na kanale zamknietym (a od nich zalezy dostep do produkcji),
-// i kosztuje ostrzezenia Play Protect plus pytania na kontakt@. Zamiast tego kafel
-// Androida zbiera zapisy na powiadomienie.
-//
-// Wpisanie PLAY_URL wyzej odwraca to samo: przycisk wraca do roli przycisku,
-// blok z zapisem znika, redirect /pobierz/android znowu prowadzi do instalacji.
-export const androidPaused = PLAY_URL === null;
+// Brak JAKIEGOKOLWIEK publicznego kanalu na Androida. Wtedy - i tylko wtedy -
+// kafel Androida przestaje byc przyciskiem i zbiera zapisy na powiadomienie.
+// APK zostaje w tym pliku, bo nadal wysylamy go pojedynczym osobom, ale strona
+// go nie podaje: instalacja z pliku nie liczy sie do wymaganych przez Google
+// 12 testerow, a kosztuje ostrzezenia Play Protect i pytania na kontakt@.
+export const androidPaused = PLAY_URL === null && BETA_TEST_PATH === null;
 
 // Kotwica bloku z zapisem na /pobierz. Trzymana tu, bo wskazuje na nia takze
 // redirect /pobierz/android, czyli adres uzywany w mailach i w bio na TikToku.

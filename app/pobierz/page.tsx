@@ -1,45 +1,38 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { SITE_URL } from '../lib/site';
-import Link from 'next/link';
 import DownloadPanel from './DownloadPanel';
-import AmbientWash from '../components/ui/AmbientWash';
+import PageShell from '../components/ui/PageShell';
 import NewsletterForm from '../components/NewsletterForm';
 import { Card } from '../components/ui/Surface';
-import { androidPaused } from '../lib/download';
+import { androidPaused, androidViaBetaTest } from '../lib/download';
 
 export const metadata: Metadata = {
-  title: 'Pobierz Bifor - beta na iPhone, Android wkrótce',
+  title: 'Pobierz Bifor - beta na iPhone i Androida',
   description:
-    'Zainstaluj Bifor w wersji beta. Siedem gier imprezowych po polsku, za darmo - na iPhone przez TestFlight, a na Androida damy znać, gdy wejdziemy do Google Play.',
+    'Zainstaluj Bifor w wersji beta. Siedem gier imprezowych po polsku, za darmo - na iPhone przez TestFlight, na Androida przez testy w Google Play.',
   alternates: { canonical: `${SITE_URL}/pobierz` },
   openGraph: {
     title: 'Pobierz Bifor - beta',
     description:
-      'Siedem gier imprezowych po polsku. Zainstaluj wersję beta na iPhone albo zapisz się po wersję na Androida.',
+      'Siedem gier imprezowych po polsku. Zainstaluj wersję beta na iPhone albo Androida.',
     url: `${SITE_URL}/pobierz`
   }
 };
 
 export default function DownloadPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-6 py-20 sm:py-28">
-      <AmbientWash />
-
-      <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-12 text-center">
-        <Link href="/" className="inline-block">
-          <img src="/logo.webp" alt="Bifor" className="mx-auto h-11 w-auto" />
-        </Link>
-
+    <PageShell>
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-12 px-6 pt-32 pb-24 text-center md:pt-40">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
-            Otwarte testy
+          <p className="text-primary text-[11px] font-semibold tracking-[0.3em] uppercase">
+            Wersja testowa
           </p>
-          <h1 className="font-display mt-5 text-balance text-[clamp(2.5rem,7vw,4.5rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
+          <h1 className="font-display mt-5 text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance">
             Pobierz Bifor
           </h1>
-          <p className="mx-auto mt-6 max-w-lg text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg">
+          <p className="text-on-surface-variant mx-auto mt-6 max-w-lg text-base leading-relaxed text-pretty sm:text-lg">
             Siedem gier imprezowych po polsku, za darmo. Wersja testowa, więc coś
             może jeszcze zgrzytnąć - i właśnie o tym chcemy usłyszeć.
           </p>
@@ -47,47 +40,59 @@ export default function DownloadPage() {
 
         <DownloadPanel />
 
-        {androidPaused && (
-          <section id="powiadom" className="w-full scroll-mt-24">
-          <Card accent="#FFB200" className="px-6 py-10 text-center sm:px-10 sm:py-12">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
+        {androidViaBetaTest && (
+          <Card accent="#3DDC84" className="px-6 py-10 text-center sm:px-10 sm:py-12">
+            <p className="text-[11px] font-semibold tracking-[0.3em] text-[#3DDC84] uppercase">
               Android
             </p>
-            <h2 className="font-display mt-4 text-balance text-[clamp(1.6rem,4.5vw,2.4rem)] font-extrabold leading-[1.02] tracking-[-0.03em]">
-              Damy znać, gdy wejdziemy do Google Play.
+            <h2 className="font-display mt-4 text-[clamp(1.6rem,4.5vw,2.4rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance">
+              Trzy kroki i grasz.
             </h2>
-            <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant sm:text-base">
-              Kończymy testy wymagane przez Google przed publikacją. Zostaw adres,
-              a dostaniesz jedną wiadomość w dniu, w którym Bifor pojawi się w
-              sklepie. Nic poza tym.
+            <p className="text-on-surface-variant mx-auto mt-4 max-w-md text-sm leading-relaxed text-pretty sm:text-base">
+              Bifor jest już w Google Play, ale na czas testów wpuszczamy przez
+              listę testerów. Zapisujesz się sam, w minutę, bez czekania na zgodę.
+              Prowadzimy przez to krok po kroku.
+            </p>
+            <Link
+              href="/test"
+              className="bg-primary text-on-primary font-display mt-8 inline-flex items-center justify-center rounded-2xl px-7 py-4 text-base font-extrabold transition-transform duration-200 hover:scale-[1.02] active:scale-[0.99]"
+            >
+              Jak dołączyć do testów
+            </Link>
+          </Card>
+        )}
+
+        <section id="powiadom" className="w-full scroll-mt-32">
+          <Card className="px-6 py-9 text-center sm:px-10">
+            <h2 className="text-xl font-normal tracking-tight sm:text-2xl">
+              {androidPaused
+                ? 'Damy znać, gdy wejdziemy do Google Play.'
+                : 'Wolisz poczekać na zwykłą wersję?'}
+            </h2>
+            <p className="text-on-surface-variant mx-auto mt-3 max-w-md text-sm leading-relaxed text-pretty">
+              {androidPaused
+                ? 'Kończymy testy wymagane przez Google przed publikacją. Zostaw adres, a dostaniesz jedną wiadomość w dniu, w którym Bifor pojawi się w sklepie.'
+                : 'Za kilka tygodni Bifor będzie w Google Play normalnie, bez zapisywania się na nic. Zostaw adres, a dostaniesz jedną wiadomość tego dnia.'}
             </p>
 
             <NewsletterForm
               submitLabel="Powiadom mnie"
-              idleNote="Jedna wiadomość o starcie na Androidzie. Wypisujesz się jednym kliknięciem."
+              idleNote="Jedna wiadomość o premierze. Wypisujesz się jednym kliknięciem."
             />
           </Card>
-          </section>
-        )}
+        </section>
 
-        <p className="max-w-md text-pretty text-sm leading-relaxed text-on-surface-variant">
+        <p className="text-on-surface-variant max-w-md text-sm leading-relaxed text-pretty">
           Coś nie działa albo apka się wysypała? Napisz na{' '}
           <a
             href="mailto:contact@bifor.games"
-            className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+            className="text-primary decoration-primary/40 hover:decoration-primary underline underline-offset-4"
           >
             contact@bifor.games
           </a>
           . Każde zgłoszenie z bety realnie zmienia to, co trafi do premiery.
         </p>
-
-        <Link
-          href="/"
-          className="text-sm text-on-surface-variant transition-colors hover:text-on-surface"
-        >
-          Wróć na stronę główną
-        </Link>
       </div>
-    </main>
+    </PageShell>
   );
 }

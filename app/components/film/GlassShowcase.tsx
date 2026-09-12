@@ -1,16 +1,46 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { GAMES } from '../../lib/games';
 import { useReducedMotion } from '../useReducedMotion';
+import ShowcaseSlabs from './ShowcaseSlabs';
 
-/* WebGL, drei and postprocessing are a heavy payload for one section, so the
-   scene is split out and only fetched on the client once the section is in
-   reach. Until then the block is just type on black. */
+/* three, drei and fiber are ~280 KB gzipped for this one section, so the
+   scene is split out and only fetched where it will actually pay off. The
+   slabs themselves are always on screen as plain DOM underneath; WebGL just
+   cross-fades over them once it has drawn a frame. */
 const GlassSlabs = dynamic(() => import('../three/GlassSlabs'), { ssr: false });
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+
+type Connection = { effectiveType?: string; saveData?: boolean };
+
+/* Phones and low-core machines are exactly where the canvas used to arrive
+   late or not at all, and they are the ones the static slabs serve best. */
+function scenePaysOff() {
+  if (!window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches) return false;
+  if ((navigator.hardwareConcurrency ?? 4) < 4) return false;
+
+  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  if (memory !== undefined && memory < 4) return false;
+
+  const connection = (navigator as Navigator & { connection?: Connection }).connection;
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType && !connection.effectiveType.includes('4g')) return false;
+
+  /* A probe context costs a millisecond and rules out the machines where the
+     canvas would mount, fail silently and leave a black band. */
+  try {
+    const probe = document.createElement('canvas');
+    const gl = probe.getContext('webgl2') ?? probe.getContext('webgl');
+    if (!gl) return false;
+    (gl.getExtension('WEBGL_lose_context') as WEBGL_lose_context | null)?.loseContext();
+  } catch {
+    return false;
+  }
+  return true;
+}
 
 export default function GlassShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,12 +50,30 @@ export default function GlassShowcase() {
   const progress = useRef(0);
   const [armed, setArmed] = useState(false);
   const [active, setActive] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [bailed, setBailed] = useState(false);
   const reduced = useReducedMotion();
+
+  const wanted = !reduced && !bailed;
+  const onReady = useCallback(() => setReady(true), []);
+  const onBail = useCallback(() => {
+    setBailed(true);
+    setReady(false);
+    setArmed(false);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || reduced) return;
+    if (!section || !wanted) return;
+    if (!scenePaysOff()) {
+      setBailed(true);
+      return;
+    }
 
+    /* Armed a viewport and a half out, then warmed again on idle: the chunk
+       used to start downloading as the section came into view, which on
+       anything but a fast link meant staring at the copy on black until it
+       landed. */
     const arm = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -33,17 +81,34 @@ export default function GlassShowcase() {
           arm.disconnect();
         }
       },
-      { rootMargin: '15% 0px' }
+      { rootMargin: '150% 0px' }
     );
     /* Separate from arming: the scene must also stop once it scrolls away. */
     const live = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting));
     arm.observe(section);
     live.observe(section);
+
+    /* Warmed on the first scroll rather than on load: by then the visitor is
+       on their way here, but someone who bounces off the hero never pays for
+       a library they will not see. */
+    let idle = 0;
+    const warm = () => {
+      const load = () => void import('../three/GlassSlabs');
+      idle = window.requestIdleCallback
+        ? window.requestIdleCallback(load, { timeout: 4000 })
+        : window.setTimeout(load, 400);
+    };
+    window.addEventListener('scroll', warm, { passive: true, once: true });
+
     return () => {
       arm.disconnect();
       live.disconnect();
+      window.removeEventListener('scroll', warm);
+      if (!idle) return;
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
+      else window.clearTimeout(idle);
     };
-  }, [reduced]);
+  }, [wanted]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -79,9 +144,27 @@ export default function GlassShowcase() {
       aria-label="Siedem gier Bifor"
     >
       <div className="sticky top-0 flex h-svh items-center overflow-hidden bg-[#0a0a0a]">
-        {armed ? (
-          <div className="absolute inset-0">
-            <GlassSlabs progress={progress} active={active} />
+        {/* Held back a little on narrow screens, where the slabs crowd the
+            copy instead of framing it. */}
+        <div
+          className="absolute inset-0 opacity-65 transition-opacity duration-700 lg:opacity-100"
+          style={ready ? { opacity: 0 } : undefined}
+        >
+          <ShowcaseSlabs />
+        </div>
+
+        {armed && wanted ? (
+          <div
+            className="absolute inset-0 transition-opacity duration-700"
+            style={{ opacity: ready ? 1 : 0 }}
+          >
+            <GlassSlabs
+              progress={progress}
+              active={active}
+              ready={ready}
+              onReady={onReady}
+              onBail={onBail}
+            />
           </div>
         ) : null}
 

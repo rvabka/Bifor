@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import PageShell from '../components/ui/PageShell';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
@@ -70,16 +71,9 @@ function Step({
 
 export default function TestPage() {
   return (
-    <main className="bg-background text-on-surface min-h-screen px-4 py-24 md:px-8 md:py-32">
-      <div className="mx-auto max-w-xl">
-        <Link
-          href="/"
-          className="text-on-surface-variant hover:text-on-surface inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          ← Strona główna
-        </Link>
-
-        <h1 className="mt-6 text-4xl font-light tracking-tight md:text-5xl">
+    <PageShell>
+      <div className="mx-auto max-w-xl px-4 pt-32 pb-24 md:px-8 md:pt-40">
+        <h1 className="text-4xl font-light tracking-tight md:text-5xl">
           Testy beta na Androida
         </h1>
         <p className="text-on-surface-variant mt-3 text-lg leading-relaxed">
@@ -161,14 +155,15 @@ export default function TestPage() {
             . Po to jest ta wersja. Przydaje się model telefonu i co robiłeś przed błędem.
           </p>
           <p>
-            iPhone jeszcze nie ruszył.{' '}
+            Masz iPhone'a? Tam instalacja idzie przez TestFlight, bez grupy i bez
+            zapisów -{' '}
             <Link href="/pobierz" className="text-primary hover:underline">
-              Zostaw adres
+              pobierz stąd
             </Link>
-            , damy znać.
+            .
           </p>
         </div>
       </div>
-    </main>
+    </PageShell>
   );
 }

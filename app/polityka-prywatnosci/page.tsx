@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageShell from '../components/ui/PageShell';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-background text-on-surface py-32 px-4 md:px-8">
+    <PageShell>
+      <div className="px-4 pt-32 pb-24 md:px-8 md:pt-40">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="space-y-4">
           <Link
@@ -325,6 +327,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </section>
       </div>
-    </main>
+    </div>
+    </PageShell>
   );
 }
