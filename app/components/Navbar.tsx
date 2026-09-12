@@ -80,7 +80,6 @@ export default function Navbar() {
         href="/test"
         className="group border-primary/20 bg-primary/[0.12] flex items-center justify-center gap-2 border-b px-4 py-2.5 text-center backdrop-blur-xl"
       >
-        <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" aria-hidden />
         <span className="text-primary text-[13px] font-semibold tracking-tight">
           Trwają testy beta na Androida
         </span>
