@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { GAMES } from '../../lib/games';
 import { useReducedMotion } from '../useReducedMotion';
 
@@ -21,7 +21,17 @@ export default function GlassShowcase() {
   const progress = useRef(0);
   const [armed, setArmed] = useState(false);
   const [active, setActive] = useState(false);
+  const [ready, setReady] = useState(false);
+  /* One remount recovers a lost WebGL context. Past that the driver is gone
+     and retrying would only spin. */
+  const [attempt, setAttempt] = useState(0);
   const reduced = useReducedMotion();
+
+  const onReady = useCallback(() => setReady(true), []);
+  const onLost = useCallback(() => {
+    setReady(false);
+    setAttempt((n) => (n === 0 ? 1 : n));
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -98,8 +108,20 @@ export default function GlassShowcase() {
     >
       <div className="sticky top-0 flex h-svh items-center overflow-hidden bg-[#0a0a0a]">
         {armed ? (
-          <div className="absolute inset-0">
-            <GlassSlabs progress={progress} active={active} />
+          /* Revealed on the first drawn frame rather than on mount, so the
+             section never shows the blank canvas that precedes it. */
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{ opacity: ready ? 1 : 0 }}
+          >
+            <GlassSlabs
+              key={attempt}
+              progress={progress}
+              active={active}
+              ready={ready}
+              onReady={onReady}
+              onLost={attempt === 0 ? onLost : undefined}
+            />
           </div>
         ) : null}
 

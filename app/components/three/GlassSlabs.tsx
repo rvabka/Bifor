@@ -1,9 +1,9 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Lightformer, PerformanceMonitor, RoundedBox } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GAMES } from '../../lib/games';
 
@@ -86,12 +86,43 @@ function Rig({ progress }: { progress: Progress }) {
   return null;
 }
 
+/* The section waits for pixels, not for the module. A canvas that has mounted
+   but not drawn is still a black rectangle: shader compilation and the
+   environment pass land a few frames after React is done with it. */
+function FirstFrame({ onReady }: { onReady: () => void }) {
+  const drawn = useRef(0);
+  useFrame(() => {
+    drawn.current += 1;
+    if (drawn.current === 3) onReady();
+  });
+  return null;
+}
+
+/* A dropped context (tab backgrounded for a long time, GPU reset, driver
+   hiccup) leaves a canvas painted black that never recovers on its own. The
+   parent answers this by remounting, which builds a fresh context. */
+function ContextGuard({ onLost }: { onLost: () => void }) {
+  const canvas = useThree((state) => state.gl.domElement);
+  useEffect(() => {
+    const handle = () => onLost();
+    canvas.addEventListener('webglcontextlost', handle);
+    return () => canvas.removeEventListener('webglcontextlost', handle);
+  }, [canvas, onLost]);
+  return null;
+}
+
 export default function GlassSlabs({
   progress,
-  active
+  active,
+  ready,
+  onReady,
+  onLost
 }: {
   progress: Progress;
   active: boolean;
+  ready: boolean;
+  onReady: () => void;
+  onLost?: () => void;
 }) {
   /* Bloom is what makes the glass read as lit, but it is also the single
      most expensive thing here. Rather than guess at device capability, the
@@ -102,14 +133,20 @@ export default function GlassSlabs({
   return (
     <Canvas
       /* Off-screen the loop stops completely. Left running, this scene held
-         the whole page at 7 fps - including the carousel two sections down. */
-      frameloop={active ? 'always' : 'never'}
+         the whole page at 7 fps - including the carousel two sections down.
+         The exception is the handful of frames before the first one lands:
+         the canvas is armed a viewport and a half out, so without this it
+         would sit mounted and undrawn until it scrolled in, and the shaders
+         would compile in front of the visitor instead of ahead of them. */
+      frameloop={active || !ready ? 'always' : 'never'}
       dpr={[1, 1.25]}
       gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
       camera={{ position: [0, 0, 2.6], fov: 46 }}
       style={{ pointerEvents: 'none' }}
     >
       <PerformanceMonitor onDecline={() => setRich(false)} />
+      <FirstFrame onReady={onReady} />
+      {onLost ? <ContextGuard onLost={onLost} /> : null}
       <color attach="background" args={['#0a0a0a']} />
       <ambientLight intensity={0.6} />
 
