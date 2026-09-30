@@ -3,7 +3,10 @@
     "details": [
       {
         "appID": "799BGSX76W.com.bifor.app",
-        "paths": ["/auth/*"]
+        "paths": [
+          "/auth/*",
+          "/room/*"
+        ]
       }
     ]
   }
