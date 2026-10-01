@@ -148,8 +148,8 @@ export default function PrivacyPolicyPage() {
               uruchomione gry, utworzone pokoje) powiązane z losowym
               identyfikatorem, a po zalogowaniu z identyfikatorem konta. Nie
               przekazujemy adresu e-mail ani pseudonimu, a ustalanie lokalizacji
-              na podstawie adresu IP jest wyłączone. Zbieranie możesz wyłączyć w
-              Aplikacji: Ustawienia → Aplikacja → Anonimowe statystyki.
+              na podstawie adresu IP jest wyłączone. Zbieranie wyłączysz w
+              Aplikacji przełącznikiem statystyk w Ustawienia → Aplikacja.
             </li>
             <li>
               <strong className="font-normal text-on-surface">

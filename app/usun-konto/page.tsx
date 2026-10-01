@@ -67,6 +67,12 @@ export default function DeleteAccountPage() {
               przypadkowym usunięciem.
             </li>
           </ul>
+          <p className={P_CLASS}>
+            <strong className="font-normal">Usunięcie konta nie anuluje subskrypcji BIFOR+.</strong>{' '}
+            Jeśli ją masz, anuluj ją w ustawieniach konta sklepu - na iPhonie w Ustawienia →
+            Twoje imię → Subskrypcje, na Androidzie w Google Play → Profil → Płatności i
+            subskrypcje → Subskrypcje. Inaczej sklep będzie ją dalej odnawiał.
+          </p>
         </Section>
 
         <Section title="Jeśli nie masz dostępu do aplikacji">
@@ -86,8 +92,8 @@ export default function DeleteAccountPage() {
             <li>konto i adres e-mail;</li>
             <li>profil gracza, czyli nick i wybrany awatar;</li>
             <li>statystyki i osiągnięcia;</li>
-            <li>pokoje gry, których byłeś gospodarzem, razem z ich zawartością;</li>
-            <li>zakupy i dostęp do pakietów premium;</li>
+            <li>pokoje gry, które prowadzisz jako gospodarz, razem z ich zawartością;</li>
+            <li>zapis dostępu do BIFOR+ i pakietów premium;</li>
             <li>token powiadomień push i ustawienia powiadomień;</li>
             <li>listę zablokowanych graczy.</li>
           </ul>
@@ -96,26 +102,31 @@ export default function DeleteAccountPage() {
         <Section title="Co zostaje i na jak długo">
           <ul className={UL_CLASS}>
             <li>
-              <strong className="font-normal">Zgłoszenia moderacyjne</strong> - jeśli zgłosiłeś
-              kogoś lub zostałeś zgłoszony, samo zgłoszenie zostaje, ale zostaje
-              odłączone od Twojego konta i przestaje wskazywać konkretną osobę. Trzymamy je,
-              żeby móc reagować na nadużycia.
+              <strong className="font-normal">Zgłoszenia moderacyjne</strong> - zgłoszenia
+              wysłane przez Ciebie i dotyczące Ciebie zostają, ale są odłączone od Twojego
+              konta i przestają wskazywać konkretną osobę. Trzymamy je, żeby móc reagować na
+              nadużycia.
             </li>
             <li>
-              <strong className="font-normal">Pokoje gry innych graczy</strong>, w których
-              brałeś udział - Twój udział zostaje odłączony od konta. Same pokoje kasują się
+              <strong className="font-normal">Pokoje gry innych graczy</strong> z Twoim
+              udziałem - Twój udział zostaje odłączony od konta. Same pokoje kasują się
               automatycznie: zakończone po 7 dniach, porzucone znacznie szybciej.
             </li>
             <li>
-              <strong className="font-normal">Dane o awariach i statystyki użycia</strong> -
-              zbierane bez danych identyfikujących i przetwarzane zbiorczo. Jeśli chcesz, żeby
-              usunąć również je, napisz na <Mail />. Zbieranie statystyk możesz wyłączyć w
-              aplikacji w każdej chwili: Ustawienia → Anonimowe statystyki.
+              <strong className="font-normal">Dane o awariach</strong> - zbierane bez danych
+              identyfikujących.
             </li>
             <li>
-              <strong className="font-normal">Dane wymagane przepisami</strong> - jeśli
-              dokonałeś zakupu, dokumenty księgowe przechowujemy tak długo, jak wymaga tego
-              prawo podatkowe. Nie zawierają one treści z gier.
+              <strong className="font-normal">Statystyki użycia</strong> - zostają powiązane z
+              identyfikatorem usuniętego konta, bez adresu e-mail i nicku. Jeśli chcesz je
+              usunąć, napisz na <Mail />. Zbieranie statystyk wyłączysz w aplikacji
+              przełącznikiem statystyk w Ustawienia → Aplikacja.
+            </li>
+            <li>
+              <strong className="font-normal">Historia zakupów BIFOR+</strong> - RevenueCat,
+              który obsługuje subskrypcje, przechowuje ją powiązaną z identyfikatorem konta
+              także po jego usunięciu. Na prośbę wysłaną na <Mail /> usuniemy ją również tam.
+              Dane transakcji przechowują też Apple i Google na własnych zasadach.
             </li>
           </ul>
         </Section>
