@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             Polityka prywatności
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 5 lipca 2026
+            Ostatnia aktualizacja: 1 października 2026
           </p>
         </div>
 
@@ -94,6 +94,16 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>
               <strong className="font-normal text-on-surface">
+                Statystyki gier i odznaki
+              </strong>{' '}
+              - tylko dla kont: liczba rozegranych i wygranych gier, wyniki w
+              poszczególnych grach, dni, w które grasz, największa liczba graczy
+              w jednej grze, liczba gier nocnych, daty pierwszej i ostatniej gry
+              oraz zdobyte odznaki. Bez konta seria dni gry jest liczona
+              wyłącznie na Twoim urządzeniu.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
                 Treści tworzone przez użytkownika (UGC)
               </strong>{' '}
               - wpisy w grach (m.in. sekrety, zdania, odpowiedzi), nazwy pokoi
@@ -101,6 +111,20 @@ export default function PrivacyPolicyPage() {
               te są przetwarzane efemerycznie na potrzeby bieżącej rozgrywki i
               przesyłane między urządzeniami graczy w danym pokoju; nie budujemy
               z nich trwałego archiwum po stronie serwera.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Subskrypcja BIFOR+
+              </strong>{' '}
+              - po uruchomieniu Aplikacja łączy się z RevenueCat, żeby pokazać
+              aktualne ceny i sprawdzić, czy masz dostęp do BIFOR+. Bez konta
+              używa do tego losowego identyfikatora zapisanego na urządzeniu, a
+              po zalogowaniu - identyfikatora konta. Przy zakupie RevenueCat
+              otrzymuje od sklepu informacje o transakcji: produkt, cenę i
+              walutę, daty, status subskrypcji i kraj sklepu. W naszej bazie
+              przechowujemy wyłącznie datę, do której masz dostęp, jego źródło i
+              identyfikator produktu. Nie otrzymujemy danych karty ani innych
+              danych płatniczych - płatność obsługuje Apple lub Google.
             </li>
             <li>
               <strong className="font-normal text-on-surface">
@@ -115,6 +139,17 @@ export default function PrivacyPolicyPage() {
               </strong>{' '}
               - zgłoszenia treści/graczy, blokady graczy oraz dane techniczne
               niezbędne do ograniczania nadużyć (rate-limit).
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Statystyki użycia
+              </strong>{' '}
+              - zdarzenia z korzystania z Aplikacji (np. otwarte ekrany,
+              uruchomione gry, utworzone pokoje) powiązane z losowym
+              identyfikatorem, a po zalogowaniu z identyfikatorem konta. Nie
+              przekazujemy adresu e-mail ani pseudonimu, a ustalanie lokalizacji
+              na podstawie adresu IP jest wyłączone. Zbieranie możesz wyłączyć w
+              Aplikacji: Ustawienia → Aplikacja → Anonimowe statystyki.
             </li>
             <li>
               <strong className="font-normal text-on-surface">
@@ -139,8 +174,18 @@ export default function PrivacyPolicyPage() {
           <ul className="list-disc list-inside text-on-surface-variant font-extralight leading-relaxed space-y-2 pl-4">
             <li>
               Świadczenie usługi - prowadzenie konta, rozgrywka wieloosobowa,
-              synchronizacja profilu - art. 6 ust. 1 lit. b RODO (wykonanie
+              synchronizacja profilu, statystyki gier i odznaki - art. 6 ust. 1
+              lit. b RODO (wykonanie umowy).
+            </li>
+            <li>
+              Obsługa subskrypcji BIFOR+ - sprawdzanie zakupów i przyznawanie
+              dostępu do płatnych treści - art. 6 ust. 1 lit. b RODO (wykonanie
               umowy).
+            </li>
+            <li>
+              Statystyki użycia - poprawianie i rozwój Aplikacji - art. 6 ust. 1
+              lit. f RODO (uzasadniony interes). Możesz się temu sprzeciwić,
+              wyłączając statystyki w Ustawieniach Aplikacji.
             </li>
             <li>
               Newsletter oraz powiadomienia marketingowe (np. zaproszenia na
@@ -191,6 +236,17 @@ export default function PrivacyPolicyPage() {
               - diagnostyka awarii Aplikacji.
             </li>
             <li>
+              <strong className="font-normal text-on-surface">
+                RevenueCat, Inc.
+              </strong>{' '}
+              - obsługa subskrypcji BIFOR+ i weryfikacja zakupów.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">PostHog, Inc.</strong>{' '}
+              - statystyki użycia Aplikacji, przetwarzane na serwerach w Unii
+              Europejskiej.
+            </li>
+            <li>
               <strong className="font-normal text-on-surface">Expo</strong> -
               usługa dostarczania powiadomień push.
             </li>
@@ -205,6 +261,11 @@ export default function PrivacyPolicyPage() {
               - hosting strony internetowej.
             </li>
           </ul>
+          <p className="text-on-surface-variant font-extralight leading-relaxed">
+            Płatności za BIFOR+ obsługuje operator sklepu - Apple (App Store) lub
+            Google (Google Play) - na własnych zasadach i jako odrębny
+            administrator danych.
+          </p>
         </section>
 
         <section className="space-y-4">
@@ -227,9 +288,11 @@ export default function PrivacyPolicyPage() {
             Strona bifor.games korzysta z plików cookies wyłącznie w zakresie
             niezbędnym do działania zabezpieczenia Cloudflare Turnstile. Są to
             cookies techniczne, które nie śledzą aktywności na innych stronach i
-            nie służą celom marketingowym ani analitycznym. Nie korzystamy z
-            Google Analytics, Facebook Pixel ani innych narzędzi śledzących i nie
-            wyświetlamy reklam. Aplikacja mobilna nie używa plików cookies.
+            nie służą celom marketingowym ani analitycznym. Na stronie nie
+            korzystamy z Google Analytics, Facebook Pixel ani innych narzędzi
+            śledzących i nie wyświetlamy reklam. Aplikacja mobilna nie używa
+            plików cookies, nie wyświetla reklam i nie śledzi Cię w innych
+            aplikacjach ani na stronach internetowych.
           </p>
         </section>
 
@@ -248,8 +311,23 @@ export default function PrivacyPolicyPage() {
               dni).
             </li>
             <li>
-              Tożsamości anonimowych graczy (gości) - usuwane po okresie
-              bezczynności (do 30 dni).
+              Statystyki gier i odznaki oraz zapis dostępu do BIFOR+ - do
+              momentu usunięcia konta.
+            </li>
+            <li>
+              Historia transakcji w RevenueCat - pozostaje powiązana z
+              identyfikatorem konta także po jego usunięciu. Na Twoją prośbę
+              wysłaną na contact@bifor.games usuniemy ją również tam. Dane
+              transakcji przechowują też Apple i Google na własnych zasadach.
+            </li>
+            <li>
+              Statystyki użycia - do czasu, gdy przestaną być potrzebne do
+              analizy działania Aplikacji. Na Twoją prośbę usuniemy je wcześniej.
+            </li>
+            <li>
+              Dane gości - identyfikatory graczy bez konta są usuwane
+              automatycznie po 30 dniach bez aktywności, a techniczne sesje
+              logowania gości po 30 dniach od ich utworzenia.
             </li>
             <li>
               Zgłoszenia moderacyjne - przechowywane do czasu rozpatrzenia oraz w

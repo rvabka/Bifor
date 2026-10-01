@@ -51,7 +51,7 @@ export default function TermsPage() {
             Regulamin
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 4 lipca 2026
+            Ostatnia aktualizacja: 1 października 2026
           </p>
           <p className={P_CLASS}>
             Niniejszy Regulamin (dalej „Regulamin”) stanowi umowę licencyjną
@@ -93,6 +93,10 @@ export default function TermsPage() {
               <strong className="font-normal text-on-surface">Pokój</strong> -
               prywatna sesja gry online, do której inni dołączają za pomocą kodu
               PIN lub kodu QR.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">BIFOR+</strong> -
+              płatna subskrypcja dająca dostęp do płatnych paczek haseł i pytań.
             </li>
           </ul>
         </Section>
@@ -229,15 +233,76 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="8. Zakupy w aplikacji">
+        <Section title="8. Subskrypcja BIFOR+">
           <p className={P_CLASS}>
-            Aplikacja może oferować płatne treści dodatkowe (np. pakiety pytań)
-            w formie zakupów w aplikacji. Płatności są obsługiwane wyłącznie
-            przez operatora sklepu (Apple App Store lub Google Play) zgodnie z
-            jego regulaminem i polityką zwrotów. Ceny oraz zakres dostępnych
-            treści mogą ulegać zmianie. Zakupione treści są przypisane do konta,
-            z którego dokonano zakupu.
+            Aplikacja jest bezpłatna, a część paczek haseł i pytań jest dostępna
+            bez opłat. Pozostałe paczki odblokowuje subskrypcja BIFOR+, którą
+            kupujesz jako zakup w aplikacji. Do zakupu potrzebne jest Konto.
           </p>
+          <ul className={UL_CLASS}>
+            <li>
+              <strong className="font-normal text-on-surface">Zakres.</strong>{' '}
+              BIFOR+ daje dostęp do wszystkich płatnych paczek we wszystkich
+              grach, w których są dostępne, także do paczek dodanych w trakcie
+              trwania subskrypcji. Możemy dodawać nowe paczki i aktualizować
+              istniejące.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Gra w Twoim Pokoju.
+              </strong>{' '}
+              Gdy z aktywnym BIFOR+ prowadzisz Pokój, pozostali gracze w tym
+              Pokoju grają Twoimi płatnymi paczkami bez własnego zakupu. Nie
+              daje im to dostępu do płatnych paczek poza Twoim Pokojem.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Cena i płatność.
+              </strong>{' '}
+              Okres subskrypcji, cenę i ewentualny bezpłatny okres próbny widzisz
+              w Aplikacji przed zakupem. Płatność pobiera operator sklepu (Apple
+              App Store lub Google Play) z konta sklepu, z którego dokonujesz
+              zakupu. Nie przetwarzamy danych płatniczych. O zmianie ceny
+              subskrypcji informuje Cię sklep przed jej wejściem w życie, na
+              zasadach tego sklepu.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Automatyczne odnawianie.
+              </strong>{' '}
+              Subskrypcja odnawia się automatycznie na kolejny okres tej samej
+              długości, dopóki jej nie anulujesz najpóźniej 24 godziny przed
+              końcem bieżącego okresu. Anulujesz ją w ustawieniach konta sklepu:
+              na iPhonie w Ustawienia → Twoje imię → Subskrypcje, na Androidzie
+              w Google Play → Profil → Płatności i subskrypcje → Subskrypcje.
+              Usunięcie Aplikacji ani usunięcie Konta nie anuluje subskrypcji.
+              Po anulowaniu dostęp do BIFOR+ trwa do końca opłaconego okresu.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Bezpłatny okres próbny.
+              </strong>{' '}
+              Jeśli plan obejmuje bezpłatny okres próbny, po jego zakończeniu
+              subskrypcja automatycznie przechodzi w płatną, chyba że anulujesz
+              ją najpóźniej 24 godziny przed końcem okresu próbnego. O tym, czy
+              okres próbny Ci przysługuje, decyduje sklep.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">
+                Konto i przywracanie zakupów.
+              </strong>{' '}
+              Dostęp do BIFOR+ jest przypisany do Konta, na którym dokonano
+              zakupu. Funkcja „Przywróć zakupy” przywraca
+              dostęp na podstawie konta sklepu. Przywrócenie zakupów na innym
+              Koncie przenosi dostęp na to Konto.
+            </li>
+            <li>
+              <strong className="font-normal text-on-surface">Zwroty.</strong>{' '}
+              Wnioski o zwrot rozpatruje operator sklepu według swoich zasad. Nie
+              ogranicza to praw, które przysługują Ci na podstawie bezwzględnie
+              obowiązujących przepisów, w tym przepisów chroniących konsumentów.
+            </li>
+          </ul>
         </Section>
 
         <Section title="9. Własność intelektualna">
