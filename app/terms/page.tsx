@@ -51,7 +51,7 @@ export default function TermsPage() {
             Regulamin
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 1 października 2026
+            Ostatnia aktualizacja: 2 października 2026
           </p>
           <p className={P_CLASS}>
             Niniejszy Regulamin (dalej „Regulamin”) stanowi umowę licencyjną
@@ -64,7 +64,7 @@ export default function TermsPage() {
 
         <Section title="1. Postanowienia ogólne">
           <p className={P_CLASS}>
-            Dostawcą Aplikacji jest Bifor (dalej „my”, „nas”, „Dostawca”).
+            Dostawcą Aplikacji jest Bifor Wiktor Stefaniak, Fajsławice 203/1, 21-060 Fajsławice, NIP 5641805869, przedsiębiorca wpisany do Centralnej Ewidencji i Informacji o Działalności Gospodarczej (CEIDG) (dalej „my”, „nas”, „Dostawca”).
             Kontakt: <Mail />. Aplikacja to zestaw towarzyskich gier imprezowych,
             w które grasz wspólnie ze znajomymi na jednym urządzeniu lub w
             prywatnym pokoju online.
@@ -354,7 +354,7 @@ export default function TermsPage() {
           </p>
           <ul className={UL_CLASS}>
             <li>
-              Regulamin zawierasz wyłącznie z nami (Bifor), a nie z Apple. Apple
+              Regulamin zawierasz wyłącznie z nami (Bifor Wiktor Stefaniak), a nie z Apple. Apple
               nie jest stroną tej umowy.
             </li>
             <li>

@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             Polityka prywatności
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 1 października 2026
+            Ostatnia aktualizacja: 2 października 2026
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
             1. Administrator danych
           </h2>
           <p className="text-on-surface-variant font-extralight leading-relaxed">
-            Administratorem Twoich danych osobowych jest Bifor (dalej
+            Administratorem Twoich danych osobowych jest Bifor Wiktor Stefaniak, Fajsławice 203/1, 21-060 Fajsławice, NIP 5641805869, przedsiębiorca wpisany do Centralnej Ewidencji i Informacji o Działalności Gospodarczej (CEIDG) (dalej
             &quot;Administrator&quot;). W sprawach związanych z ochroną danych
             osobowych możesz skontaktować się z nami pod adresem e-mail:{' '}
             <a
