@@ -51,7 +51,7 @@ export default function TermsPage() {
             Regulamin
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 2 października 2026
+            Ostatnia aktualizacja: 3 października 2026
           </p>
           <p className={P_CLASS}>
             Niniejszy Regulamin (dalej „Regulamin”) stanowi umowę licencyjną
@@ -104,7 +104,7 @@ export default function TermsPage() {
         <Section title="3. Wiek i uprawnienie do korzystania">
           <p className={P_CLASS}>
             Aby zakładać konto i korzystać z Aplikacji, musisz mieć ukończone co
-            najmniej 16 lat; przy pierwszym uruchomieniu potwierdzasz swój wiek.
+            najmniej 18 lat; przy pierwszym uruchomieniu potwierdzasz swój wiek.
             Aplikacja zawiera treści imprezowe - pytania, zabawy i wyzwania
             towarzyskie - zgodnie z kategorią wiekową przypisaną Aplikacji w
             sklepie App Store / Google Play. Korzystając z Aplikacji, oświadczasz,

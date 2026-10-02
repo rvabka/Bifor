@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             Polityka prywatności
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 2 października 2026
+            Ostatnia aktualizacja: 3 października 2026
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>
               <strong className="font-normal text-on-surface">Wiek</strong> -
-              jednorazowe potwierdzenie ukończenia 16 lat. Podana data urodzenia
+              jednorazowe potwierdzenie ukończenia 18 lat. Podana data urodzenia
               służy wyłącznie do weryfikacji wieku i pozostaje lokalnie na Twoim
               urządzeniu - nie wysyłamy jej na serwer.
             </li>
@@ -344,8 +344,8 @@ export default function PrivacyPolicyPage() {
             10. Dzieci i osoby małoletnie
           </h2>
           <p className="text-on-surface-variant font-extralight leading-relaxed">
-            Aplikacja jest przeznaczona dla osób, które ukończyły 16 lat. Świadomie
-            nie zbieramy danych osób poniżej 16. roku życia. Jeżeli dowiemy się, że
+            Aplikacja jest przeznaczona dla osób, które ukończyły 18 lat. Świadomie
+            nie zbieramy danych osób poniżej 18. roku życia. Jeżeli dowiemy się, że
             konto należy do osoby poniżej tego wieku, usuniemy je wraz z powiązanymi
             danymi. Jeśli jesteś rodzicem lub opiekunem i sądzisz, że dziecko
             przekazało nam swoje dane, napisz na{' '}
