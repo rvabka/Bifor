@@ -4,7 +4,6 @@ import { useSyncExternalStore } from 'react';
 
 import {
   androidPaused,
-  androidViaBetaTest,
   androidViaPlay,
   hasIosBuild,
   TESTFLIGHT_URL
@@ -98,9 +97,7 @@ export default function DownloadPanel() {
               ? 'wkrótce w Google Play'
               : androidViaPlay
                 ? 'przez Google Play'
-                : androidViaBetaTest
-                  ? 'testy beta'
-                  : 'plik APK'}
+                : 'plik APK'}
           </span>
         </a>
       </div>
@@ -113,12 +110,10 @@ export default function DownloadPanel() {
             ? 'Wersja na Androida czeka na wejście do Google Play - zostaw adres niżej, damy znać tego samego dnia.'
             : androidViaPlay
               ? 'Na Androidzie wszystko idzie przez Google Play.'
-              : androidViaBetaTest
-                ? 'Na Androidzie Bifor jest już w Google Play, ale na czas testów trzeba się najpierw zapisać na listę testerów. Zajmuje to minutę i prowadzimy przez to krok po kroku.'
-                : 'Na Androidzie na czas testów instalujesz plik bezpośrednio, z pominięciem sklepu.'}
+              : 'Na Androidzie na czas testów instalujesz plik bezpośrednio, z pominięciem sklepu.'}
         </p>
 
-        {!androidViaPlay && !androidPaused && !androidViaBetaTest && (
+        {!androidViaPlay && !androidPaused && (
           <>
             <p className="text-pretty text-sm leading-relaxed text-on-surface-variant">
               Otwierasz to z TikToka albo Instagrama? Wybierz w menu{' '}

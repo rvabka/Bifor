@@ -19,21 +19,13 @@ export const TESTFLIGHT_URL = 'https://testflight.apple.com/join/QeyxePNt';
 export const ANDROID_APK_URL =
   'https://github.com/rvabka/Bifor/releases/latest/download/bifor-beta.apk';
 
-// Gdy Android przejdzie na Google Play: wpisz adres sklepu. Strona i redirect
-// przelacza sie same, a caly blok o testach zamknietych znika.
+// Adres sklepu Google Play. `null` = Androida nie ma w sklepie: kafel zbiera
+// wtedy zapisy na powiadomienie, a redirect /pobierz/android prowadzi do zapisu.
 export const PLAY_URL: string | null =
   'https://play.google.com/store/apps/details?id=com.bifor.app';
 
-// Android jest w Google Play, ale na kanale ZAMKNIETYM - zeby zainstalowac,
-// trzeba najpierw dolaczyc do grupy testerow i wlaczyc test. Tych dwoch krokow
-// nie da sie skrocic do jednego linku (taka jest konstrukcja testu zamknietego),
-// wiec strona /test prowadzi przez nie po kolei i to ona jest celem przycisku.
-// Po uzyskaniu dostepu do produkcji: ustaw PLAY_URL wyzej i wyzeruj to ponizej.
-export const BETA_TEST_PATH: string | null = null;
-
-export const androidTarget = PLAY_URL ?? BETA_TEST_PATH ?? ANDROID_APK_URL;
+export const androidTarget = PLAY_URL ?? ANDROID_APK_URL;
 export const androidViaPlay = PLAY_URL !== null;
-export const androidViaBetaTest = PLAY_URL === null && BETA_TEST_PATH !== null;
 export const hasIosBuild = TESTFLIGHT_URL.length > 0;
 
 // Brak JAKIEGOKOLWIEK publicznego kanalu na Androida. Wtedy - i tylko wtedy -
@@ -41,7 +33,7 @@ export const hasIosBuild = TESTFLIGHT_URL.length > 0;
 // APK zostaje w tym pliku, bo nadal wysylamy go pojedynczym osobom, ale strona
 // go nie podaje: instalacja z pliku nie liczy sie do wymaganych przez Google
 // 12 testerow, a kosztuje ostrzezenia Play Protect i pytania na kontakt@.
-export const androidPaused = PLAY_URL === null && BETA_TEST_PATH === null;
+export const androidPaused = PLAY_URL === null;
 
 // Kotwica bloku z zapisem na /pobierz. Trzymana tu, bo wskazuje na nia takze
 // redirect /pobierz/android, czyli adres uzywany w mailach i w bio na TikToku.

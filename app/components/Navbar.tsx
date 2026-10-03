@@ -78,14 +78,14 @@ export default function Navbar() {
       }`}
     >
       <Link
-        href={androidViaPlay ? '/pobierz/android' : '/test'}
+        href={androidViaPlay ? '/pobierz/android' : '/pobierz#powiadom'}
         className="group border-primary/20 bg-primary/[0.12] flex items-center justify-center gap-2 border-b px-4 py-2.5 text-center backdrop-blur-xl"
       >
         <span className="text-primary text-[13px] font-semibold tracking-tight">
-          {androidViaPlay ? 'BIFOR jest już w Google Play' : 'Trwają testy beta na Androida'}
+          {androidViaPlay ? 'BIFOR jest już w Google Play' : 'Bifor wkrótce w Google Play'}
         </span>
         <span className="text-primary/70 hidden text-[13px] font-light sm:inline">
-          {androidViaPlay ? '- pobierz na Androida' : '- dołącz i zagraj pierwszy'}
+          {androidViaPlay ? '- pobierz na Androida' : '- damy znać w dniu premiery'}
         </span>
         <svg
           viewBox="0 0 24 24"

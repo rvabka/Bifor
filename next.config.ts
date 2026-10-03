@@ -31,6 +31,8 @@ const nextConfig: NextConfig = {
       { source: "/gry/panstwa", destination: "/gry/panstwa-miasta", permanent: true },
       { source: "/gry/czolko-gra", destination: "/gry/czolko", permanent: true },
       { source: "/pytania", destination: "/faq", permanent: true },
+      // Dawna strona zapisu na testy Androida - link trafił do maili i na TikToka.
+      { source: "/test", destination: "/pobierz/android", permanent: false },
     ];
   },
 };
