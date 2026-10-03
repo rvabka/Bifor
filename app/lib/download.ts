@@ -21,14 +21,15 @@ export const ANDROID_APK_URL =
 
 // Gdy Android przejdzie na Google Play: wpisz adres sklepu. Strona i redirect
 // przelacza sie same, a caly blok o testach zamknietych znika.
-export const PLAY_URL: string | null = null;
+export const PLAY_URL: string | null =
+  'https://play.google.com/store/apps/details?id=com.bifor.app';
 
 // Android jest w Google Play, ale na kanale ZAMKNIETYM - zeby zainstalowac,
 // trzeba najpierw dolaczyc do grupy testerow i wlaczyc test. Tych dwoch krokow
 // nie da sie skrocic do jednego linku (taka jest konstrukcja testu zamknietego),
 // wiec strona /test prowadzi przez nie po kolei i to ona jest celem przycisku.
 // Po uzyskaniu dostepu do produkcji: ustaw PLAY_URL wyzej i wyzeruj to ponizej.
-export const BETA_TEST_PATH: string | null = '/test';
+export const BETA_TEST_PATH: string | null = null;
 
 export const androidTarget = PLAY_URL ?? BETA_TEST_PATH ?? ANDROID_APK_URL;
 export const androidViaPlay = PLAY_URL !== null;

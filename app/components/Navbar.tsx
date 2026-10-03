@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { smoothScrollTo } from './scrollTo';
+import { androidViaPlay } from '../lib/download';
 
 const SECTION_LINKS = [{ label: 'Jak to działa', id: 'jak-to-dziala' }];
 
@@ -77,14 +78,14 @@ export default function Navbar() {
       }`}
     >
       <Link
-        href="/test"
+        href={androidViaPlay ? '/pobierz/android' : '/test'}
         className="group border-primary/20 bg-primary/[0.12] flex items-center justify-center gap-2 border-b px-4 py-2.5 text-center backdrop-blur-xl"
       >
         <span className="text-primary text-[13px] font-semibold tracking-tight">
-          Trwają testy beta na Androida
+          {androidViaPlay ? 'BIFOR jest już w Google Play' : 'Trwają testy beta na Androida'}
         </span>
         <span className="text-primary/70 hidden text-[13px] font-light sm:inline">
-          - dołącz i zagraj pierwszy
+          {androidViaPlay ? '- pobierz na Androida' : '- dołącz i zagraj pierwszy'}
         </span>
         <svg
           viewBox="0 0 24 24"
