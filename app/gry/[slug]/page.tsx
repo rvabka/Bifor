@@ -3,15 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '../../components/JsonLd';
-import PageShell, { PageHero, Prose } from '../../components/ui/PageShell';
-import { Card, Section, SectionHead } from '../../components/ui/Surface';
+import PageShell from '../../components/ui/PageShell';
+import StoreBadges from '../../components/StoreBadges';
+import Reveal from '../../components/home/Reveal';
 import { GAMES, gamePath, getGame } from '../../lib/games';
-import {
-  breadcrumbNode,
-  faqNode,
-  gameNode,
-  howToNode
-} from '../../lib/jsonld';
+import { breadcrumbNode, faqNode, gameNode, howToNode } from '../../lib/jsonld';
 import { abs } from '../../lib/site';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -26,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!game) return {};
 
   const title = `${game.title} - zasady gry i jak grać (${game.players})`;
-  const description = `${game.summary} Gra dostępna w darmowej aplikacji Bifor na iOS i Android, ${game.modeLabel.toLowerCase()}.`;
+  const description = `${game.summary} Za darmo w aplikacji BIFOR na iPhone i Androida.`;
 
   return {
     title,
@@ -37,17 +33,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       locale: 'pl_PL',
       url: abs(gamePath(game.slug)),
-      siteName: 'Bifor',
-      title: `${game.title} - zasady gry imprezowej`,
-      description: game.summary
+      siteName: 'BIFOR',
+      title: `${game.title} - zasady gry na imprezę`,
+      description: game.summary,
+      images: [{ url: game.art, width: 640, height: 857 }]
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${game.title} - zasady gry imprezowej`,
+      title: `${game.title} - zasady gry na imprezę`,
       description: game.summary
     }
   };
 }
+
+const H2 =
+  'font-display text-balance text-[clamp(1.75rem,3.6vw,2.5rem)] font-extrabold leading-[1] tracking-[-0.025em]';
 
 export default async function GamePage({ params }: Props) {
   const { slug } = await params;
@@ -65,211 +65,206 @@ export default async function GamePage({ params }: Props) {
       faqNode(game.faq, `${url}#faq`),
       breadcrumbNode([
         { name: 'Strona główna', path: '/' },
-        { name: 'Gry imprezowe', path: '/gry' },
+        { name: 'Gry', path: '/gry' },
         { name: game.title, path: gamePath(game.slug) }
       ])
     ]
   };
 
   const facts: { label: string; value: string }[] = [
-    { label: 'Liczba graczy', value: game.players },
-    { label: 'Czas rozgrywki', value: game.duration },
-    { label: 'Tryb gry', value: game.modeLabel },
-    { label: 'Typ gry', value: game.genre },
-    { label: 'Cena', value: 'Darmowa podstawowa kategoria haseł' },
-    { label: 'Platformy', value: 'iPhone (otwarta beta), Android wkrótce' }
+    { label: 'Gracze', value: game.players },
+    { label: 'Czas', value: game.duration },
+    { label: 'Jak gracie', value: game.modeLabel },
+    { label: 'Cena', value: game.categories.premium.length ? 'Za darmo, więcej haseł w BIFOR+' : 'Za darmo, w całości' }
   ];
 
   return (
     <>
       <JsonLd data={jsonLd} />
       <PageShell>
-        <PageHero eyebrow={game.genre} title={game.title} lead={game.summary}>
-          <nav aria-label="Ścieżka nawigacji" className="mt-10 text-xs text-on-surface-variant">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link href="/" className="transition-colors hover:text-primary">
-                  Strona główna
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li>
-                <Link href="/gry" className="transition-colors hover:text-primary">
-                  Gry imprezowe
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li aria-current="page" className="text-on-surface">
-                {game.title}
-              </li>
-            </ol>
-          </nav>
-        </PageHero>
-
-        <Section>
-          <div className="grid gap-6 md:grid-cols-[minmax(0,22rem)_1fr] md:items-start">
-            <Card accent={game.glow}>
+        <header className="px-6 pt-28 sm:px-8 md:pt-36">
+          <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-16">
+            <div className="overflow-hidden rounded-[1.6rem]">
               <Image
                 src={game.art}
-                alt={`${game.title} - gra imprezowa w aplikacji Bifor`}
-                width={800}
-                height={1071}
+                alt={`${game.title} - gra na imprezę w aplikacji BIFOR`}
+                width={640}
+                height={857}
                 priority
-                sizes="(max-width: 768px) 100vw, 352px"
+                sizes="(max-width: 768px) 100vw, 320px"
                 className="h-auto w-full"
               />
-            </Card>
+            </div>
 
-            <div>
-              <h2 className="sr-only">Najważniejsze informacje o grze {game.title}</h2>
-              <dl className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            <div className="flex flex-col justify-center">
+              <nav aria-label="Ścieżka nawigacji" className="text-sm text-on-surface-variant">
+                <Link href="/gry" className="transition-colors hover:text-on-surface">
+                  Wszystkie gry
+                </Link>
+              </nav>
+              <h1 className="font-display mt-4 text-[clamp(2.5rem,6vw,4.25rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
+                {game.title}
+              </h1>
+              <p className="mt-3 text-lg font-semibold" style={{ color: game.glow }}>
+                {game.tagline}
+              </p>
+              <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-on-surface-variant">
+                {game.summary}
+              </p>
+
+              <dl className="mt-8 grid max-w-xl grid-cols-2 gap-x-8 gap-y-5 border-t border-white/[0.08] pt-6">
                 {facts.map((fact) => (
-                  <Card key={fact.label} className="p-5 sm:p-6">
-                    <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-on-surface-variant">
-                      {fact.label}
-                    </dt>
-                    <dd className="font-display mt-2 text-base font-bold text-on-surface">
-                      {fact.value}
-                    </dd>
-                  </Card>
+                  <div key={fact.label}>
+                    <dt className="text-sm text-on-surface-variant">{fact.label}</dt>
+                    <dd className="mt-1 font-semibold text-on-surface">{fact.value}</dd>
+                  </div>
                 ))}
               </dl>
+
+              <StoreBadges className="mt-9" />
             </div>
           </div>
-        </Section>
+        </header>
 
-        <Section id="na-czym-polega">
-          <SectionHead eyebrow="Zasady" title={`Na czym polega ${game.title}?`} />
-          <div className="mt-10">
-            <Prose>
+        <section id="na-czym-polega" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Na czym polega {game.title}?</h2>
+            <div className="mt-8 max-w-[44rem] space-y-5 text-pretty text-lg leading-relaxed text-on-surface-variant">
               {game.intro.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
-              <p>Najlepiej sprawdza się jako {game.bestFor}.</p>
-            </Prose>
-          </div>
-        </Section>
+              <p>Najlepiej sprawdza się, gdy {game.bestFor}.</p>
+            </div>
 
-        <Section id="jak-grac">
-          <SectionHead eyebrow="Krok po kroku" title={`Jak grać w ${game.title}`} />
-          <ol className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
-            {game.steps.map((step, i) => (
-              <Card key={step.name} as="li" className="p-6 sm:p-7">
-                <div id={`krok-${i + 1}`} className="flex gap-5">
-                  <span
-                    className="font-display text-2xl font-extrabold tabular-nums leading-none"
-                    style={{ color: game.glow }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
+            {game.modeArt && (
+              <div className="mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+                {[
+                  { art: game.modeArt.local, label: 'Na jednym telefonie' },
+                  { art: game.modeArt.online, label: 'Każdy na swoim' }
+                ].map((mode) => (
+                  <figure key={mode.label}>
+                    <div className="overflow-hidden rounded-[1.3rem]">
+                      <Image
+                        src={mode.art}
+                        alt={`${game.title}: ${mode.label.toLowerCase()}`}
+                        width={900}
+                        height={600}
+                        sizes="(max-width: 640px) 100vw, 440px"
+                        className="h-auto w-full"
+                      />
+                    </div>
+                  </figure>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section id="jak-grac" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Jak grać w {game.title}</h2>
+            <ol className="mt-10 max-w-3xl divide-y divide-white/[0.07]">
+              {game.steps.map((step, i) => (
+                <li key={step.name} id={`krok-${i + 1}`} className="grid grid-cols-[2.5rem_1fr] gap-4 py-6">
+                  <span className="font-display text-xl font-extrabold tabular-nums" style={{ color: game.glow }}>
+                    {i + 1}
                   </span>
                   <div>
-                    <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
-                      {step.name}
-                    </h3>
-                    <p className="mt-2 text-pretty text-sm leading-relaxed text-on-surface-variant">
-                      {step.text}
-                    </p>
+                    <h3 className="font-display text-lg font-bold tracking-[-0.01em]">{step.name}</h3>
+                    <p className="mt-1.5 text-pretty leading-relaxed text-on-surface-variant">{step.text}</p>
                   </div>
-                </div>
-              </Card>
-            ))}
-          </ol>
-        </Section>
-
-        <Section id="punktacja">
-          <SectionHead eyebrow="Punkty" title={`Punktacja w grze ${game.title}`} />
-          <div className="mt-10">
-            <Prose>
-              <p>{game.scoring}</p>
-            </Prose>
+                </li>
+              ))}
+            </ol>
           </div>
-        </Section>
+        </section>
 
-        <Section id="wskazowki">
-          <SectionHead eyebrow="Taktyka" title="Wskazówki i taktyka" />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
-            {game.tips.map((tip) => (
-              <Card key={tip.slice(0, 24)} as="li" className="p-6 sm:p-7">
-                <p className="text-pretty text-sm leading-relaxed text-on-surface-variant sm:text-base">
+        <section id="punktacja" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-2">
+            <div>
+              <h2 className={H2}>Punkty</h2>
+              <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-on-surface-variant">{game.scoring}</p>
+            </div>
+            <div id="kategorie">
+              <h2 className={H2}>Kategorie haseł</h2>
+              <p className="mt-6 text-on-surface-variant">
+                Za darmo: <span className="text-on-surface">{game.categories.free.join(', ')}</span>
+              </p>
+              {game.categories.premium.length > 0 && (
+                <p className="mt-3 text-pretty leading-relaxed text-on-surface-variant">
+                  W BIFOR+: <span className="text-on-surface">{game.categories.premium.join(', ')}</span>
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section id="wskazowki" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Kilka rad od nas</h2>
+            <ul className="mt-8 max-w-3xl space-y-4">
+              {game.tips.map((tip) => (
+                <li key={tip.slice(0, 24)} className="flex gap-4 text-pretty text-lg leading-relaxed text-on-surface-variant">
+                  <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: game.glow }} />
                   {tip}
-                </p>
-              </Card>
-            ))}
-          </ul>
-        </Section>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-        <Section id="faq-gry">
-          <SectionHead eyebrow="FAQ" title={`${game.title} - najczęstsze pytania`} />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
-            {game.faq.map((item) => (
-              <Card key={item.question} as="li" className="p-6 sm:p-7">
-                <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
-                  {item.question}
-                </h3>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
-                  {item.answer}
-                </p>
-              </Card>
-            ))}
-          </ul>
-        </Section>
+        <section id="faq" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Pytania o {game.title}</h2>
+            <div className="mt-8 max-w-3xl divide-y divide-white/[0.07]">
+              {game.faq.map((item) => (
+                <div key={item.question} className="py-6">
+                  <h3 className="font-display text-lg font-bold tracking-[-0.01em]">{item.question}</h3>
+                  <p className="mt-2 text-pretty leading-relaxed text-on-surface-variant">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <Section id="cta">
-          <Card accent={game.glow} className="px-6 py-14 text-center sm:px-12 sm:py-16">
-            <h2 className="font-display text-balance text-[clamp(1.75rem,4.5vw,2.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
-              Zagraj w {game.title} ze znajomymi
-            </h2>
-            <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
-              {game.title} to jedna z siedmiu gier w aplikacji Bifor. Otwarta beta na
-              iPhone jest już do pobrania, a podstawowa rozgrywka jest darmowa.
-              Wersja na Androida czeka na wejście do Google Play.
-            </p>
-            <Link
-              href="/pobierz"
-              className="mt-9 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-primary px-9 text-base font-semibold text-on-primary shadow-[0_20px_60px_-25px_rgba(255,178,0,0.7)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Pobierz za darmo
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </Card>
-        </Section>
+        <section className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 border-t border-white/[0.08] pt-14 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className={H2}>Zagraj w {game.title} ze znajomymi</h2>
+              <p className="mt-4 max-w-md text-pretty text-lg leading-relaxed text-on-surface-variant">
+                Za darmo, razem z sześcioma innymi grami.
+              </p>
+            </div>
+            <StoreBadges />
+            <Reveal from="up" className="pointer-events-none absolute -top-[7.5rem] right-4 hidden w-28 md:block">
+              <Image src="/postacie/czeka.webp" alt="" width={319} height={526} className="h-auto w-full" />
+            </Reveal>
+          </div>
+        </section>
 
-        <Section id="inne-gry">
-          <SectionHead eyebrow="Reszta biblioteki" title="Pozostałe gry imprezowe w Bifor" />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-3">
-            {others.map((other) => (
-              <Card key={other.slug} as="li" accent={other.glow}>
-                <Link href={gamePath(other.slug)} className="block p-6 sm:p-7">
-                  <span
-                    className="font-display block text-xl font-bold tracking-[-0.02em]"
-                    style={{ color: other.glow }}
-                  >
-                    {other.title}
-                  </span>
-                  <span className="mt-2 block text-pretty text-sm leading-relaxed text-on-surface-variant">
-                    {other.tagline}
-                  </span>
-                  <span className="mt-5 block border-t border-white/[0.07] pt-4 text-xs text-on-surface-variant">
-                    {other.players} - {other.modeLabel}
-                  </span>
-                </Link>
-              </Card>
-            ))}
-          </ul>
-          <p className="mt-8 text-sm text-on-surface-variant">
-            Zobacz też{' '}
-            <Link href="/gry" className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">
-              pełną listę gier imprezowych na telefon
-            </Link>{' '}
-            oraz{' '}
-            <Link href="/faq" className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">
-              odpowiedzi na najczęstsze pytania
-            </Link>
-            .
-          </p>
-        </Section>
+        <section id="inne-gry" className="px-6 pb-28 pt-24 sm:px-8 md:pt-28">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-display text-xl font-bold tracking-[-0.01em]">Pozostałe gry w BIFOR</h2>
+            <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
+              {others.map((other) => (
+                <li key={other.slug}>
+                  <Link href={gamePath(other.slug)} className="group block">
+                    <span className="block overflow-hidden rounded-xl">
+                      <Image
+                        src={other.art}
+                        alt={other.title}
+                        width={640}
+                        height={857}
+                        sizes="(max-width: 640px) 30vw, 160px"
+                        className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.04]"
+                      />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </PageShell>
     </>
   );

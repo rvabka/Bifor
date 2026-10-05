@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { smoothScrollTo } from './scrollTo';
-import { androidViaPlay } from '../lib/download';
 
-const SECTION_LINKS = [{ label: 'Jak to działa', id: 'jak-to-dziala' }];
+const SECTION_LINKS: { label: string; id: string }[] = [];
 
 const PAGE_LINKS = [
   { label: 'Gry', href: '/gry' },
-  { label: 'Pobierz', href: '/pobierz' },
+  { label: 'Wieczór', href: '/wieczor' },
+  { label: 'W co zagrać', href: '/gry-na-impreze' },
   { label: 'FAQ', href: '/faq' }
 ];
 
@@ -78,14 +78,14 @@ export default function Navbar() {
       }`}
     >
       <Link
-        href={androidViaPlay ? '/pobierz/android' : '/pobierz#powiadom'}
+        href="/pobierz"
         className="group border-primary/20 bg-primary/[0.12] flex items-center justify-center gap-2 border-b px-4 py-2.5 text-center backdrop-blur-xl"
       >
         <span className="text-primary text-[13px] font-semibold tracking-tight">
-          {androidViaPlay ? 'BIFOR jest już w Google Play' : 'Bifor wkrótce w Google Play'}
+          BIFOR jest już w App Store i Google Play
         </span>
         <span className="text-primary/70 hidden text-[13px] font-light sm:inline">
-          {androidViaPlay ? '- pobierz na Androida' : '- damy znać w dniu premiery'}
+          - pobierz za darmo
         </span>
         <svg
           viewBox="0 0 24 24"
@@ -102,10 +102,10 @@ export default function Navbar() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
         <button
           onClick={goTop}
-          aria-label="Bifor - góra strony"
+          aria-label="BIFOR - góra strony"
           className="cursor-pointer transition-transform active:scale-95"
         >
-          <Image src="/logo.png" alt="Bifor" width={120} height={40} priority className="h-9 w-auto" />
+          <Image src="/logo.png" alt="BIFOR" width={120} height={40} priority className="h-9 w-auto" />
         </button>
 
         <div className="hidden md:flex items-center gap-9">

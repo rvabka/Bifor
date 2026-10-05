@@ -7,6 +7,9 @@ import { GAMES, gamePath } from '../lib/games';
 
 const INFO_LINKS = [
   { label: 'Wszystkie gry', href: '/gry' },
+  { label: 'Wieczór BIFOR', href: '/wieczor' },
+  { label: 'W co zagrać na imprezie', href: '/gry-na-impreze' },
+  { label: 'Pobierz', href: '/pobierz' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Prywatność', href: '/polityka-prywatnosci' },
   { label: 'Regulamin', href: '/terms' }
@@ -20,10 +23,10 @@ export default function Footer() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-14 sm:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.2fr_1fr_1fr_auto] md:gap-12">
           <div className="flex flex-col items-center gap-4 md:items-start">
-            <Image src="/logo.png" alt="Bifor" width={120} height={40} className="h-10 w-auto" />
+            <Image src="/logo.png" alt="BIFOR" width={120} height={40} className="h-10 w-auto" />
             <p className="max-w-xs text-center text-sm font-extralight leading-relaxed text-on-surface-variant md:text-left">
-              Bifor to aplikacja z grami imprezowymi na telefon. Siedem gier, jeden wieczór -
-              graj na jednym telefonie albo każdy na swoim.
+              BIFOR to siedem gier na imprezę w jednej apce. Gracie na jednym telefonie albo
+              każdy na swoim, za darmo na iPhone i Androida.
             </p>
           </div>
 
@@ -77,7 +80,7 @@ export default function Footer() {
               href="https://www.tiktok.com/@biforgames"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Bifor na TikToku"
+              aria-label="BIFOR na TikToku"
             >
               <svg
                 className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-primary"
@@ -110,7 +113,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-12 border-t border-white/5 pt-8 text-center text-[10px] uppercase tracking-[0.3em] text-on-surface-variant md:text-left">
-          © {new Date().getFullYear()} Bifor. Wszystkie prawa zastrzeżone.
+          © {new Date().getFullYear()} BIFOR. Wszystkie prawa zastrzeżone.
         </p>
       </div>
     </footer>

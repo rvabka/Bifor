@@ -1,22 +1,19 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { SITE_URL } from '../lib/site';
-import DownloadPanel from './DownloadPanel';
 import PageShell from '../components/ui/PageShell';
-import NewsletterForm from '../components/NewsletterForm';
-import { Card } from '../components/ui/Surface';
-import { androidPaused } from '../lib/download';
+import StoreBadges from '../components/StoreBadges';
 
 export const metadata: Metadata = {
-  title: 'Pobierz Bifor - gry na imprezę na Androida i iPhone',
+  title: 'Pobierz BIFOR - gry na imprezę na iPhone i Androida',
   description:
-    'Siedem gier imprezowych po polsku, za darmo. Na Androida w Google Play, na iPhone w wersji testowej przez TestFlight.',
+    'Siedem gier na imprezę po polsku, za darmo. BIFOR pobierzesz z App Store na iPhone i z Google Play na Androida.',
   alternates: { canonical: `${SITE_URL}/pobierz` },
   openGraph: {
-    title: 'Pobierz Bifor',
-    description:
-      'Siedem gier imprezowych po polsku, za darmo. Android w Google Play, iPhone przez TestFlight.',
+    title: 'Pobierz BIFOR',
+    description: 'Siedem gier na imprezę po polsku, za darmo. App Store i Google Play.',
     url: `${SITE_URL}/pobierz`
   }
 };
@@ -24,51 +21,40 @@ export const metadata: Metadata = {
 export default function DownloadPage() {
   return (
     <PageShell>
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-12 px-6 pt-32 pb-24 text-center md:pt-40">
-        <div>
-          <p className="text-primary text-[11px] font-semibold tracking-[0.3em] uppercase">
-            Za darmo
-          </p>
-          <h1 className="font-display mt-5 text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance">
-            Pobierz Bifor
-          </h1>
-          <p className="text-on-surface-variant mx-auto mt-6 max-w-lg text-base leading-relaxed text-pretty sm:text-lg">
-            Siedem gier imprezowych po polsku, za darmo. Na iPhonie trwa jeszcze
-            wersja testowa, więc coś może zgrzytnąć - i właśnie o tym chcemy usłyszeć.
-          </p>
-        </div>
+      <div className="mx-auto flex max-w-2xl flex-col items-center px-6 pt-32 pb-28 text-center md:pt-40">
+        <Image
+          src="/postacie/macha.webp"
+          alt=""
+          width={440}
+          height={449}
+          priority
+          className="h-auto w-36 sm:w-44"
+        />
+        <h1 className="font-display mt-6 text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance">
+          Pobierz BIFOR
+        </h1>
+        <p className="text-on-surface-variant mx-auto mt-6 max-w-md text-lg leading-relaxed text-pretty">
+          Siedem gier na imprezę po polsku, za darmo. Wybierz swój sklep.
+        </p>
 
-        <DownloadPanel />
+        <StoreBadges center className="mt-10" />
 
-        {androidPaused && (
-          <section id="powiadom" className="w-full scroll-mt-32">
-            <Card className="px-6 py-9 text-center sm:px-10">
-              <h2 className="text-xl font-normal tracking-tight sm:text-2xl">
-                Damy znać, gdy wejdziemy do Google Play.
-              </h2>
-              <p className="text-on-surface-variant mx-auto mt-3 max-w-md text-sm leading-relaxed text-pretty">
-                Kończymy testy wymagane przez Google przed publikacją. Zostaw adres, a
-                dostaniesz jedną wiadomość w dniu, w którym Bifor pojawi się w sklepie.
-              </p>
-
-              <NewsletterForm
-                submitLabel="Powiadom mnie"
-                idleNote="Jedna wiadomość o premierze. Wypisujesz się jednym kliknięciem."
-              />
-            </Card>
-          </section>
-        )}
-
-        <p className="text-on-surface-variant max-w-md text-sm leading-relaxed text-pretty">
-          Coś nie działa albo apka się wysypała? Napisz na{' '}
+        <p className="text-on-surface-variant mt-14 max-w-md text-sm leading-relaxed text-pretty">
+          Coś nie działa albo masz pomysł na grę? Napisz na{' '}
           <a
             href="mailto:contact@bifor.games"
             className="text-primary decoration-primary/40 hover:decoration-primary underline underline-offset-4"
           >
             contact@bifor.games
           </a>
-          . Każde zgłoszenie realnie zmienia kolejne wersje.
+          . Czytamy każdą wiadomość.
         </p>
+        <Link
+          href="/gry"
+          className="text-on-surface-variant mt-4 text-sm underline decoration-white/20 underline-offset-4 hover:text-on-surface"
+        >
+          Najpierw zobacz gry
+        </Link>
       </div>
     </PageShell>
   );

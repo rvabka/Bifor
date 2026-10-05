@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import DownloadPanel from '../../pobierz/DownloadPanel';
+import StoreBadges from '../../components/StoreBadges';
 import PageShell from '../../components/ui/PageShell';
 import { normalizeRoomCode } from '../../lib/room';
 import { abs } from '../../lib/site';
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const code = normalizeRoomCode((await params).code);
   if (!code) return {};
   const title = `Dołącz do pokoju ${code}`;
-  const description = 'Ekipa czeka na Ciebie w pokoju. Otwórz Bifor i dołącz jednym stuknięciem.';
+  const description = 'Ekipa czeka na ciebie w pokoju. Otwórz BIFOR i dołącz jednym stuknięciem.';
   return {
     title,
     description,
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `Dołącz do pokoju ${code}`,
       description,
       url: abs(`/room/${code}`),
-      siteName: 'Bifor',
+      siteName: 'BIFOR',
       locale: 'pl_PL'
     },
     twitter: {
@@ -43,7 +43,7 @@ export default async function RoomInvitePage({ params }: Props) {
       <div className="mx-auto flex max-w-xl flex-col items-center gap-10 px-6 pt-28 pb-24 text-center md:pt-36">
         <Image
           src="/cards/dolacz.webp"
-          alt="Dołącz do pokoju w Bifor"
+          alt="Dołącz do pokoju w BIFOR"
           width={900}
           height={600}
           priority
@@ -63,14 +63,12 @@ export default async function RoomInvitePage({ params }: Props) {
 
         <div className="w-full border-t border-white/10 pt-10">
           <h2 className="font-display text-xl font-extrabold tracking-tight sm:text-2xl">
-            Nie masz jeszcze Bifor?
+            Nie masz jeszcze BIFOR?
           </h2>
           <p className="text-on-surface-variant mx-auto mt-3 max-w-md text-sm leading-relaxed text-pretty sm:text-base">
             Pobierz za darmo, stuknij plus na dole ekranu, wybierz Dołącz i wpisz kod {code}.
           </p>
-          <div className="mt-8">
-            <DownloadPanel />
-          </div>
+          <StoreBadges center className="mt-8" />
         </div>
       </div>
     </PageShell>

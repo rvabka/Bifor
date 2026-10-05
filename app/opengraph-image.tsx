@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'Bifor - gry imprezowe na telefon';
+export const alt = 'BIFOR - gry na imprezę na telefon';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -22,7 +22,7 @@ export default function Image() {
         }}
       >
         <div style={{ display: 'flex', fontSize: 168, fontWeight: 800, letterSpacing: -4 }}>
-          <span style={{ color: '#ffffff' }}>Bifor</span>
+          <span style={{ color: '#ffffff' }}>BIFOR</span>
           <span style={{ color: '#ffb200' }}>.</span>
         </div>
         <div style={{ display: 'flex', fontSize: 46, color: '#d4d4d4', marginTop: 6 }}>

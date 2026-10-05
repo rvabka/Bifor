@@ -201,7 +201,7 @@ export default function HeroFilm() {
                 </svg>
               </Link>
               <span className="text-[13px] leading-snug text-on-surface-variant">
-                Otwarta beta na iPhone. Android wkrótce.
+                Za darmo na iPhone i Androida.
               </span>
             </div>
           </div>

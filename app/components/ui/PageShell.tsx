@@ -1,19 +1,14 @@
 import type { ReactNode } from 'react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import AmbientWash from './AmbientWash';
 
-/* Subpages share the home page's ground: the same shader wash, the same
-   display face, the same container. Without this they read as a different
-   site wearing the same logo. */
+/* Podstrony stoją na tym samym, gładkim tle co strona główna poniżej filmu:
+   bez plam gradientu, ten sam krój i ta sama szerokość kolumny. */
 export default function PageShell({ children }: { children: ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="relative">
-        <AmbientWash />
-        <div className="relative z-10">{children}</div>
-      </main>
+      <main className="relative">{children}</main>
       <Footer />
     </>
   );
@@ -25,7 +20,7 @@ export function PageHero({
   lead,
   children
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   lead?: ReactNode;
   children?: ReactNode;
@@ -33,10 +28,8 @@ export function PageHero({
   return (
     <header className="px-6 pb-4 pt-32 sm:px-8 md:pt-40">
       <div className="mx-auto max-w-6xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
-          {eyebrow}
-        </p>
-        <h1 className="font-display mt-5 max-w-4xl text-balance text-[clamp(2.25rem,6.5vw,4.25rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
+        {eyebrow ? <p className="mb-5 text-sm font-semibold text-primary">{eyebrow}</p> : null}
+        <h1 className="font-display max-w-4xl text-balance text-[clamp(2.25rem,6.5vw,4.25rem)] font-extrabold leading-[0.95] tracking-[-0.035em]">
           {title}
         </h1>
         {lead ? (

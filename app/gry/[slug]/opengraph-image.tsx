@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { GAMES, getGame } from '../../lib/games';
 
-export const alt = 'Gra imprezowa w aplikacji Bifor';
+export const alt = 'Gra na imprezę w aplikacji BIFOR';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -16,7 +16,7 @@ export default async function Image({
 }) {
   const { slug } = await params;
   const game = getGame(slug);
-  const title = game?.title ?? 'Bifor';
+  const title = game?.title ?? 'BIFOR';
   const tagline = game?.tagline ?? 'Gry imprezowe na telefon';
   const glow = game?.glow ?? '#ffb200';
   const meta = game ? `${game.players} · ${game.duration}` : 'Graj ze znajomymi';
@@ -46,7 +46,7 @@ export default async function Image({
             textTransform: 'uppercase'
           }}
         >
-          Bifor · gry imprezowe
+          BIFOR - gry na imprezę
         </div>
         <div
           style={{

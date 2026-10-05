@@ -2,16 +2,17 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import JsonLd from '../components/JsonLd';
-import PageShell, { PageHero, Prose } from '../components/ui/PageShell';
-import { Card, Section, SectionHead } from '../components/ui/Surface';
+import PageShell, { PageHero } from '../components/ui/PageShell';
+import StoreBadges from '../components/StoreBadges';
 import { GAMES, gamePath } from '../lib/games';
 import { breadcrumbNode, faqNode, gamesItemListNode } from '../lib/jsonld';
+import { PARTY_PATH } from '../lib/party';
 import { abs } from '../lib/site';
 
 export const metadata: Metadata = {
-  title: 'Gry na imprezę i domówkę - lista 7 gier imprezowych',
+  title: 'Gry na imprezę i domówkę - 7 gier w aplikacji BIFOR',
   description:
-    'Lista gier imprezowych na telefon w aplikacji Bifor: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Zasady, liczba graczy, czas rozgrywki i tryby - na jednym telefonie lub online ze znajomymi.',
+    'Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Zasady, liczba graczy, czas i która gra pasuje do jakiej ekipy.',
   keywords: [
     'gry imprezowe',
     'gry imprezowe na telefon',
@@ -27,74 +28,70 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pl_PL',
     url: abs('/gry'),
-    siteName: 'Bifor',
-    title: 'Gry imprezowe na telefon - lista gier w aplikacji Bifor',
-    description:
-      'Siedem gier imprezowych w jednej aplikacji: zasady, liczba graczy i tryby gry na jednym telefonie lub online.'
+    siteName: 'BIFOR',
+    title: 'Gry na imprezę w aplikacji BIFOR',
+    description: 'Siedem gier w jednej aplikacji: zasady, liczba graczy i jak gracie.'
   }
 };
 
 const CHOICES: { question: string; answer: string; slugs: string[] }[] = [
   {
-    question: 'Jaka gra imprezowa dla dwóch osób?',
-    answer:
-      'Czółko, Gra na P i Szybka Trójka działają już w dwie osoby - jedna opisuje albo odpowiada, druga zgaduje lub odmierza czas. Państwa Miasta w duecie zamieniają się w szybki pojedynek na czas.',
+    question: 'Jest was dwoje',
+    answer: 'Czółko, Gra na P, Szybka Trójka i Państwa Miasta działają od dwóch osób.',
     slugs: ['czolko', 'gra-na-p', 'szybka-trojka', 'panstwa-miasta']
   },
   {
-    question: 'Jaka gra dla dużej ekipy, 8-10 osób?',
-    answer:
-      'Zakazane dzieli grupę na drużyny, a Sekrety, Państwa Miasta i Szybka Trójka obsługują do 10 graczy jednocześnie, więc nikt nie czeka na swoją kolej.',
-    slugs: ['zakazane', 'sekrety', 'panstwa-miasta', 'szybka-trojka']
+    question: 'Jest was dziesięcioro',
+    answer: 'Zakazane dzieli wszystkich na drużyny, a w Sekretach i Szybkiej Trójce nikt nie czeka długo na swoją kolej.',
+    slugs: ['zakazane', 'sekrety', 'szybka-trojka']
   },
   {
-    question: 'Jaka gra, gdy mamy tylko jeden telefon?',
-    answer:
-      'Czółko, Zakazane, Impostor, Gra na P i Szybka Trójka mają tryb lokalny - telefon krąży po grupie i wystarczy jedno urządzenie na całą ekipę.',
-    slugs: ['czolko', 'impostor', 'gra-na-p', 'szybka-trojka']
-  },
-  {
-    question: 'Jaka gra na przełamanie lodów?',
-    answer:
-      'Sekrety zostały zaprojektowane dokładnie do tego: anonimowe odpowiedzi, pytania "kto z nas" i dziewięć typów rund, które szybko rozkręcają nieznajomą ekipę.',
-    slugs: ['sekrety']
-  },
-  {
-    question: 'Jaka gra bez internetu?',
-    answer:
-      'Tryby lokalne z darmową kategorią haseł działają offline - dotyczy to Czółka, Zakazanego, Impostora, Gry na P i Szybkiej Trójki. Sekrety i Państwa Miasta wymagają połączenia.',
+    question: 'Macie jeden telefon',
+    answer: 'Pięć gier działa na jednym telefonie podawanym w kółko, także bez internetu.',
     slugs: ['czolko', 'zakazane', 'impostor', 'gra-na-p', 'szybka-trojka']
   },
   {
-    question: 'Jaka gra na krótko, gdy macie 10 minut?',
-    answer:
-      'Czółko, Gra na P i Szybka Trójka dają się rozegrać w dziesięć minut, bo rundy są krótkie i można je przerwać w dowolnym momencie.',
-    slugs: ['czolko', 'gra-na-p', 'szybka-trojka']
+    question: 'Ekipa się nie zna',
+    answer: 'Sekrety: anonimowe odpowiedzi, „Kto z nas” i „Nigdy przenigdy”. Zacznijcie od kategorii Na luzie.',
+    slugs: ['sekrety']
+  },
+  {
+    question: 'Lubicie się kłócić',
+    answer: 'Impostor, czyli szukanie kłamcy, i Państwa Miasta, gdzie głosujecie, czy hasło się liczy.',
+    slugs: ['impostor', 'panstwa-miasta']
+  },
+  {
+    question: 'Macie dziesięć minut',
+    answer: 'Szybka Trójka albo jedno kółko Gry na P. Krótkie tury, można skończyć w każdej chwili.',
+    slugs: ['szybka-trojka', 'gra-na-p']
   }
 ];
 
 const HUB_FAQ = [
   {
-    question: 'Ile gier imprezowych jest w aplikacji Bifor?',
+    question: 'Ile gier jest w aplikacji BIFOR?',
     answer:
-      'Siedem: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P oraz Szybka Trójka. Każda ma własne zasady, liczbę graczy i tryby gry.'
+      'Siedem: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Do tego Wieczór BIFOR, który łączy kilka z nich w jeden wieczór z jedną tabelą.'
   },
   {
-    question: 'Czy gry imprezowe w Bifor są darmowe?',
+    question: 'Czy gry w BIFOR są darmowe?',
     answer:
-      'Tak, pełna rozgrywka jest darmowa - każda gra ma darmową kategorię haseł. Płatne są tylko dodatkowe paczki treści, a w pokoju online wystarczy, że ma je host.'
+      'Tak, wszystkie. Każda ma darmowe kategorie haseł, a dodatkowe są w opcjonalnej subskrypcji BIFOR+. W pokoju wystarczy, że ma ją osoba prowadząca.'
   },
   {
-    question: 'Czy trzeba zakładać konto, żeby zagrać?',
+    question: 'Czy trzeba zakładać konto?',
     answer:
-      'Nie. Do gry lokalnej konto nie jest potrzebne w ogóle, a do pokoju online dołącza się kodem pokoju lub kodem QR.'
+      'Do gry na jednym telefonie i do dołączenia do pokoju nie. Konto zakłada osoba, która tworzy pokój online.'
   },
   {
     question: 'Ile osób może grać jednocześnie?',
     answer:
-      'Od 2 do 10 osób zależnie od gry. Czółko obsługuje 2-8 graczy, Impostor 3-8, Zakazane 4-10, Sekrety 3-10, Państwa Miasta 2-10, Gra na P 2-10, a Szybka Trójka 2-10.'
+      'Czółko 2-8, Impostor 3-8, Zakazane 4-10, Sekrety 3-10, Państwa Miasta, Gra na P i Szybka Trójka 2-10. Pokój online mieści do 12 osób.'
   }
 ];
+
+const H2 =
+  'font-display text-balance text-[clamp(1.75rem,3.6vw,2.5rem)] font-extrabold leading-[1] tracking-[-0.025em]';
 
 export default function GamesHubPage() {
   const jsonLd = {
@@ -104,7 +101,7 @@ export default function GamesHubPage() {
       faqNode(HUB_FAQ, `${abs('/gry')}#faq`),
       breadcrumbNode([
         { name: 'Strona główna', path: '/' },
-        { name: 'Gry imprezowe', path: '/gry' }
+        { name: 'Gry', path: '/gry' }
       ])
     ]
   };
@@ -114,217 +111,153 @@ export default function GamesHubPage() {
       <JsonLd data={jsonLd} />
       <PageShell>
         <PageHero
-          eyebrow="Biblioteka"
-          title="Gry imprezowe na telefon"
-          lead={
-            <>
-              <p>
-                Bifor to aplikacja z siedmioma grami imprezowymi po polsku. Pięć z
-                nich zagrasz na jednym telefonie podawanym z ręki do ręki, wszystkie
-                siedem w trybie online, gdzie każdy gra na swoim. Bez planszy, bez
-                kartek, bez tłumaczenia zasad przez pół godziny.
-              </p>
-              <p className="mt-4 text-base">
-                Poniżej znajdziesz listę gier z zasadami, liczbą graczy i czasem
-                rozgrywki, a niżej podpowiedź, którą grę wybrać w konkretnej sytuacji.
-              </p>
-            </>
-          }
-        >
-          <nav aria-label="Ścieżka nawigacji" className="mt-10 text-xs text-on-surface-variant">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link href="/" className="transition-colors hover:text-primary">
-                  Strona główna
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li aria-current="page" className="text-on-surface">
-                Gry imprezowe
-              </li>
-            </ol>
-          </nav>
-        </PageHero>
+          title="Gry na imprezę"
+          lead="Siedem gier w jednej aplikacji. W pięć zagracie na jednym telefonie podawanym w kółko, we wszystkie każdy na swoim. Stuknij plakat, żeby zobaczyć zasady."
+        />
 
-        <Section id="lista-gier">
-          <SectionHead eyebrow="Siedem gier" title="Lista gier w aplikacji Bifor" />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+        <section id="lista-gier" className="px-6 pt-14 sm:px-8">
+          <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4">
             {GAMES.map((game) => (
-              <Card key={game.slug} as="li" accent={game.glow}>
-                <Link href={gamePath(game.slug)} className="flex h-full gap-5 p-5 sm:gap-6 sm:p-6">
-                  <Image
-                    src={game.art}
-                    alt={`${game.title} - ${game.tagline}`}
-                    width={800}
-                    height={1071}
-                    sizes="128px"
-                    className="h-auto w-24 shrink-0 self-start rounded-[1.15rem] sm:w-28"
-                  />
-                  <span className="block">
-                    <span
-                      className="font-display block text-xl font-bold tracking-[-0.02em] sm:text-2xl"
-                      style={{ color: game.glow }}
-                    >
-                      {game.title}
-                    </span>
-                    <span className="mt-2 block text-sm leading-relaxed text-on-surface">
-                      {game.tagline}
-                    </span>
-                    <span className="mt-4 block text-xs leading-relaxed text-on-surface-variant">
-                      {game.players} - {game.duration}
-                      <br />
-                      {game.modeLabel}
-                    </span>
+              <li key={game.slug}>
+                <Link href={gamePath(game.slug)} className="group block">
+                  <span className="block overflow-hidden rounded-[1.4rem]">
+                    <Image
+                      src={game.art}
+                      alt={`${game.title} - gra na imprezę`}
+                      width={640}
+                      height={857}
+                      sizes="(max-width: 768px) 46vw, 270px"
+                      className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
                   </span>
+                  <span className="font-display mt-4 block text-lg font-bold tracking-[-0.01em]">{game.title}</span>
+                  <span className="mt-1 block text-pretty text-sm leading-snug text-on-surface-variant">
+                    {game.tagline}
+                  </span>
+                  <span className="mt-2 block text-xs text-on-surface-variant/70">{game.players}</span>
                 </Link>
-              </Card>
+              </li>
             ))}
+            <li>
+              <Link href={PARTY_PATH} className="group block">
+                <span className="block overflow-hidden rounded-[1.4rem]">
+                  <Image
+                    src="/plakaty/wieczor.webp"
+                    alt="Wieczór BIFOR - kilka gier i jedna tabela"
+                    width={640}
+                    height={857}
+                    sizes="(max-width: 768px) 46vw, 270px"
+                    className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </span>
+                <span className="font-display mt-4 block text-lg font-bold tracking-[-0.01em]">Wieczór BIFOR</span>
+                <span className="mt-1 block text-pretty text-sm leading-snug text-on-surface-variant">
+                  Kilka gier, jedna tabela na cały wieczór.
+                </span>
+                <span className="mt-2 block text-xs text-on-surface-variant/70">od 2 osób</span>
+              </Link>
+            </li>
           </ul>
-        </Section>
+        </section>
 
-        <Section id="porownanie">
-          <SectionHead eyebrow="Zestawienie" title="Porównanie gier" />
-          <Card className="mt-12 overflow-x-auto">
-            <table className="w-full min-w-[680px] border-collapse text-left text-sm">
-              <caption className="sr-only">
-                Porównanie siedmiu gier imprezowych w aplikacji Bifor pod kątem liczby
-                graczy, czasu rozgrywki i trybów
-              </caption>
-              <thead>
-                <tr className="border-b border-white/[0.07] text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
-                  <th scope="col" className="p-4 font-semibold">Gra</th>
-                  <th scope="col" className="p-4 font-semibold">Typ</th>
-                  <th scope="col" className="p-4 font-semibold">Gracze</th>
-                  <th scope="col" className="p-4 font-semibold">Czas</th>
-                  <th scope="col" className="p-4 font-semibold">Jeden telefon</th>
-                  <th scope="col" className="p-4 font-semibold">Online</th>
-                </tr>
-              </thead>
-              <tbody className="text-on-surface-variant">
-                {GAMES.map((game) => (
-                  <tr key={game.slug} className="border-b border-white/[0.05] last:border-0">
-                    <th scope="row" className="p-4 font-semibold" style={{ color: game.glow }}>
-                      <Link href={gamePath(game.slug)} className="hover:underline">
-                        {game.title}
-                      </Link>
-                    </th>
-                    <td className="p-4">{game.genre}</td>
-                    <td className="whitespace-nowrap p-4">{game.players}</td>
-                    <td className="whitespace-nowrap p-4">{game.duration}</td>
-                    <td className="p-4">{game.local ? 'Tak' : 'Nie'}</td>
-                    <td className="p-4">{game.online ? 'Tak' : 'Nie'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Card>
-        </Section>
-
-        <Section id="ktora-gra">
-          <SectionHead
-            eyebrow="Podpowiedź"
-            title="Którą grę wybrać?"
-            lead="Sześć typowych sytuacji i gry, które sprawdzają się w każdej z nich."
-          />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
-            {CHOICES.map((choice) => (
-              <Card key={choice.question} as="li" className="p-6 sm:p-7">
-                <h3 className="font-display text-lg font-bold tracking-[-0.01em] sm:text-xl">
-                  {choice.question}
-                </h3>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
-                  {choice.answer}
-                </p>
-                <p className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.07] pt-4 text-[13px] font-semibold">
-                  {choice.slugs.map((slug) => {
-                    const game = GAMES.find((g) => g.slug === slug);
-                    if (!game) return null;
-                    return (
-                      <Link
-                        key={slug}
-                        href={gamePath(slug)}
-                        className="hover:underline"
-                        style={{ color: game.glow }}
-                      >
-                        {game.title}
-                      </Link>
-                    );
-                  })}
-                </p>
-              </Card>
-            ))}
-          </ul>
-        </Section>
-
-        <Section id="tryby">
-          <SectionHead eyebrow="Dwa tryby" title="Na jednym telefonie czy każdy na swoim?" />
-          <div className="mt-10">
-            <Prose>
-              <p>
-                W trybie lokalnym wystarczy jedno urządzenie - telefon krąży po grupie,
-                a każdy widzi swoją część gry, gdy przyjdzie jego kolej. To najszybszy
-                sposób, żeby zacząć, i jedyny, który działa bez internetu.
-              </p>
-              <p>
-                W trybie online host tworzy pokój, a reszta dołącza kodem pokoju lub
-                kodem QR. Każdy widzi na swoim ekranie tylko to, co powinien - dzięki
-                temu możliwe są anonimowe odpowiedzi, ukryte role i jednoczesne pisanie.
-                Gracze nie muszą być w tej samej sieci Wi-Fi, wystarczy internet.
-              </p>
-            </Prose>
+        <section id="ktora-gra" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Którą wybrać?</h2>
+            <dl className="mt-10 grid max-w-5xl gap-x-12 gap-y-8 md:grid-cols-2">
+              {CHOICES.map((choice) => (
+                <div key={choice.question}>
+                  <dt className="font-display text-lg font-bold">{choice.question}</dt>
+                  <dd className="mt-2 text-pretty leading-relaxed text-on-surface-variant">
+                    {choice.answer}{' '}
+                    {choice.slugs.map((slug, i) => {
+                      const game = GAMES.find((g) => g.slug === slug);
+                      if (!game) return null;
+                      return (
+                        <span key={slug}>
+                          {i > 0 ? ', ' : ''}
+                          <Link href={gamePath(slug)} className="text-on-surface underline decoration-white/25 underline-offset-4 hover:decoration-primary">
+                            {game.title}
+                          </Link>
+                        </span>
+                      );
+                    })}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </Section>
+        </section>
 
-        <Section id="hub-faq">
-          <SectionHead
-            eyebrow="FAQ"
-            title="Najczęstsze pytania o gry imprezowe w Bifor"
-          />
-          <ul className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
-            {HUB_FAQ.map((item) => (
-              <Card key={item.question} as="li" className="p-6 sm:p-7">
-                <h3 className="font-display text-lg font-bold tracking-[-0.01em]">
-                  {item.question}
-                </h3>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
-                  {item.answer}
-                </p>
-              </Card>
-            ))}
-          </ul>
-          <p className="mt-8 text-sm text-on-surface-variant">
-            Więcej odpowiedzi znajdziesz w{' '}
-            <Link
-              href="/faq"
-              className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
-            >
-              sekcji FAQ
-            </Link>
-            .
-          </p>
-        </Section>
+        <section id="porownanie" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Wszystkie gry w jednej tabeli</h2>
+            <div className="mt-10 overflow-x-auto">
+              <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+                <caption className="sr-only">
+                  Porównanie siedmiu gier w aplikacji BIFOR: liczba graczy, czas i sposób gry
+                </caption>
+                <thead>
+                  <tr className="border-b border-white/[0.1] text-on-surface-variant">
+                    <th scope="col" className="py-3 pr-4 font-medium">Gra</th>
+                    <th scope="col" className="py-3 pr-4 font-medium">Gracze</th>
+                    <th scope="col" className="py-3 pr-4 font-medium">Czas</th>
+                    <th scope="col" className="py-3 pr-4 font-medium">Jeden telefon</th>
+                    <th scope="col" className="py-3 pr-4 font-medium">Każdy na swoim</th>
+                    <th scope="col" className="py-3 font-medium">Darmowe kategorie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {GAMES.map((game) => (
+                    <tr key={game.slug} className="border-b border-white/[0.06]">
+                      <th scope="row" className="py-4 pr-4 font-semibold">
+                        <Link href={gamePath(game.slug)} className="hover:text-primary">
+                          {game.title}
+                        </Link>
+                      </th>
+                      <td className="whitespace-nowrap py-4 pr-4 text-on-surface-variant">{game.players}</td>
+                      <td className="whitespace-nowrap py-4 pr-4 text-on-surface-variant">{game.duration}</td>
+                      <td className="py-4 pr-4 text-on-surface-variant">{game.local ? 'tak' : 'nie'}</td>
+                      <td className="py-4 pr-4 text-on-surface-variant">{game.online ? 'tak' : 'nie'}</td>
+                      <td className="py-4 text-on-surface-variant">{game.categories.free.join(', ')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
-        <Section id="hub-cta">
-          <Card accent="#FFB200" className="px-6 py-14 text-center sm:px-12 sm:py-16">
-            <h2 className="font-display text-balance text-[clamp(1.75rem,4.5vw,2.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em]">
-              Otwarta beta na iPhone
-            </h2>
-            <p className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-on-surface-variant">
-              Wszystkie siedem gier jest już do pobrania, a podstawowa rozgrywka
-              jest darmowa, bez zakładania konta. Wersja na Androida czeka na
-              wejście do Google Play.
+        <section id="faq" className="px-6 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <h2 className={H2}>Częste pytania</h2>
+            <div className="mt-8 max-w-3xl divide-y divide-white/[0.07]">
+              {HUB_FAQ.map((item) => (
+                <div key={item.question} className="py-6">
+                  <h3 className="font-display text-lg font-bold tracking-[-0.01em]">{item.question}</h3>
+                  <p className="mt-2 text-pretty leading-relaxed text-on-surface-variant">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-sm text-on-surface-variant">
+              Więcej w{' '}
+              <Link href="/faq" className="text-on-surface underline decoration-white/25 underline-offset-4 hover:decoration-primary">
+                FAQ
+              </Link>{' '}
+              i w poradniku{' '}
+              <Link href="/gry-na-impreze" className="text-on-surface underline decoration-white/25 underline-offset-4 hover:decoration-primary">
+                w co zagrać na imprezie
+              </Link>
+              .
             </p>
-            <Link
-              href="/pobierz"
-              className="mt-9 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-primary px-9 text-base font-semibold text-on-primary shadow-[0_20px_60px_-25px_rgba(255,178,0,0.7)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Pobierz za darmo
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </Card>
-        </Section>
+          </div>
+        </section>
+
+        <section className="px-6 pb-28 pt-24 sm:px-8 md:pt-32">
+          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 border-t border-white/[0.08] pt-14 md:flex-row md:items-center md:justify-between">
+            <h2 className={H2}>Pobierz za darmo</h2>
+            <StoreBadges />
+          </div>
+        </section>
       </PageShell>
     </>
   );

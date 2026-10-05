@@ -17,8 +17,12 @@ export type Game = {
   online: boolean;
   modeLabel: string;
   bestFor: string;
+  /** Plakat z serii kart biblioteki w apce, z tytułem wypalonym na grafice. */
   art: string;
+  /** Plakaty trybów z ekranu „Jak gracie?” w apce - tylko gry z oboma trybami. */
+  modeArt?: { local: string; online: string };
   glow: string;
+  categories: { free: string[]; premium: string[] };
   keywords: string[];
   steps: GameStep[];
   scoring: string;
@@ -26,529 +30,568 @@ export type Game = {
   faq: GameFaq[];
 };
 
+// Fakty sprawdzone z kodem apki (październik 2026). Kategorie, liczby graczy,
+// czasy i punktacja mają się zgadzać z tym, co gracz zobaczy w aplikacji -
+// ten plik trafia też do llms.txt, więc każda nieścisłość wraca w odpowiedziach
+// chatbotów.
 export const GAMES: Game[] = [
   {
     slug: 'czolko',
     title: 'Czółko',
-    tagline: 'Zgadnij kim jesteś, zanim czas minie.',
+    tagline: 'Hasło na czole, pytania tak albo nie.',
     summary:
-      'Czółko to gra imprezowa typu heads up: trzymasz telefon na czole, wszyscy dookoła widzą Twoje hasło i podpowiadają, a Ty zgadujesz, kim albo czym jesteś.',
+      'Czółko w BIFOR to zgadywanka „Kim jestem?”: przykładasz telefon do czoła, reszta widzi twoje hasło, a ty pytasz o nie tak albo nie. Każdy ma własne hasło, pytacie po kolei w kółko i nie ma limitu czasu.',
     intro: [
-      'Czółko to najprostszy sposób, żeby rozkręcić towarzystwo. Telefon leci na czoło, na ekranie pojawia się hasło, którego jako jedyny nie widzisz, a reszta ekipy opisuje je na wszystkie sposoby - byle nie wprost.',
-      'W Bifor każdy gracz dostaje własne hasło, a telefon krąży po grupie w kółko. Dzięki temu nie ma jednej osoby, która "prowadzi" całą grę - w każdej rundzie zgaduje ktoś inny, a punkty zależą od tego, kto trafi jako pierwszy.'
+      'Każdy dostaje swoje hasło, na przykład „Shrek” albo „wiertarka”. Przykładasz telefon do czoła, żeby widzieli je wszyscy oprócz ciebie, i pytasz: „Czy jestem zwierzęciem?”. Ekipa odpowiada tylko tak albo nie.',
+      'Potem pyta następna osoba, o swoje hasło, i tak w kółko, aż ktoś trafi. Nie ma zegara, więc nikt nie gada na wyścigi. Wygrywa ten, kto zadaje pytania, które najwięcej odcinają.',
+      'Na jednym telefonie każdy najpierw po kolei pokazuje swoje hasło reszcie, a potem zaczyna się pytanie. W trybie online każdy ma hasło na swoim telefonie i chowa je stuknięciem.'
     ],
-    genre: 'Gra imprezowa typu heads up (zgadywanka z hasłem na czole)',
-    alsoKnownAs: ['heads up', 'gra w hasła na czole', 'zgadywanka z telefonem na czole'],
-    players: '2-8 graczy',
+    genre: 'Zgadywanka „Kim jestem?” z hasłem na czole',
+    alsoKnownAs: ['Kim jestem', 'gra w hasła na czole', 'zgadywanka w stylu Heads Up'],
+    players: '2-8 osób',
     minPlayers: 2,
     maxPlayers: 8,
     duration: '10-20 minut',
     local: true,
     online: true,
-    modeLabel: 'Na jednym telefonie lub każdy na swoim',
-    bestFor: 'rozgrzewka na start wieczoru, gdy ekipa dopiero się schodzi',
-    art: '/games/czolko.webp',
+    modeLabel: 'Na jednym telefonie albo każdy na swoim',
+    bestFor: 'ekipa dopiero się schodzi i trzeba czegoś na rozgrzewkę',
+    art: '/plakaty/czolko.webp',
+    modeArt: { local: '/tryby/czolko-local.webp', online: '/tryby/czolko-online.webp' },
     glow: '#F59E0B',
-    keywords: [
-      'czółko gra',
-      'heads up po polsku',
-      'gra w hasła na czole',
-      'gra imprezowa na telefon'
-    ],
+    categories: {
+      free: ['Klasyczne'],
+      premium: ['Piłkarze', 'Telewizja', 'Film', 'Twarze internetu', 'Muzyka', 'Zwierzęta']
+    },
+    keywords: ['czółko gra', 'kim jestem gra', 'gra w hasła na czole', 'gra imprezowa na telefon'],
     steps: [
       {
-        name: 'Wybierzcie kategorię i ustawienia',
-        text: 'Host wybiera kategorię haseł oraz długość rundy. Kategoria "Klasyczne" jest darmowa i działa bez internetu.'
+        name: 'Wybierzcie kategorię',
+        text: 'Klasyczne są za darmo i działają bez internetu. Z BIFOR+ dochodzą między innymi Film, Muzyka, Piłkarze i Twarze internetu.'
       },
       {
-        name: 'Przyłóż telefon do czoła',
-        text: 'Ekran ustawiasz w stronę grupy. Hasło widzą wszyscy poza Tobą.'
+        name: 'Telefon na czoło',
+        text: 'Ekranem do ekipy. Masz pięć sekund, żeby go przyłożyć, zanim hasło się pokaże.'
       },
       {
-        name: 'Reszta opisuje hasło',
-        text: 'Grupa podpowiada, opisuje, gra scenkę lub udaje dźwięki. Nie wolno powiedzieć hasła ani jego części.'
+        name: 'Pytaj tak albo nie',
+        text: '„Czy jestem człowiekiem?”, „Czy da się mnie zjeść?”. Ekipa odpowiada tylko tak albo nie, bez podpowiadania.'
       },
       {
-        name: 'Zgaduj, aż czas się skończy',
-        text: 'Trafione hasło zalicza punkt, a telefon wędruje do następnej osoby w kółku.'
+        name: 'Kolejka idzie w kółko',
+        text: 'Po twoim pytaniu pyta następna osoba, o swoje hasło. Gracie, aż wszyscy zgadną albo uznacie rundę za skończoną.'
       },
       {
-        name: 'Zbierzcie punkty i sprawdźcie wyniki',
-        text: 'Po ostatniej rundzie aplikacja pokazuje klasyfikację i zwycięzcę.'
+        name: 'Punkty za kolejność',
+        text: 'Kto zgadnie pierwszy, ma 3 punkty, drugi 2, każdy następny 1. Po rundzie decydujecie: kolejna runda albo koniec.'
       }
     ],
     scoring:
-      'Punkty zależą od kolejności zgadnięcia w rundzie: pierwszy dostaje 3 punkty, drugi 2, trzeci 1. Wygrywa osoba z najwyższą sumą po wszystkich rundach.',
+      'Liczy się kolejność: pierwsza osoba, która zgadnie swoje hasło, dostaje 3 punkty, druga 2, każda następna 1. Punkty sumują się przez kolejne rundy. Liczby rund nie ustalacie z góry, po każdej klasyfikacji decydujecie, czy gracie dalej.',
     tips: [
-      'Opisujcie skojarzeniami, nie definicjami ze słownika - szybciej trafia.',
-      'Ustawcie krótsze rundy, jeśli gracie w większej grupie, żeby telefon szybciej krążył.',
-      'W trybie online każdy trzyma swój telefon, więc gra działa też wtedy, gdy siedzicie w kilku pokojach.'
+      'Zacznij od pytań, które dzielą świat na pół: „Czy istnieję naprawdę?”, „Czy jestem człowiekiem?”.',
+      'Odpowiadajcie uczciwie, nawet przy wrednym haśle. Jedno złe „tak” potrafi zepsuć komuś całą rundę.',
+      'Online każdy chowa swoje hasło stuknięciem, więc telefon można odłożyć na stół między pytaniami.'
     ],
     faq: [
       {
-        question: 'Ile osób potrzeba do gry w Czółko?',
+        question: 'Ile osób potrzeba do Czółka?',
         answer:
-          'Od 2 do 8 osób. Przy dwóch graczach jedna osoba zgaduje, a druga opisuje; im większa grupa, tym więcej pomysłów na podpowiedzi.'
+          'Od 2 do 8. Na jednym telefonie gracie wszyscy na zmianę, online każdy ma hasło na swoim telefonie.'
+      },
+      {
+        question: 'Czy w Czółku jest limit czasu?',
+        answer:
+          'Nie. Zgadujecie pytaniami tak albo nie, kolejka idzie w kółko i nikt nie goni zegara. Jedyne odliczanie to pięć sekund na przyłożenie telefonu do czoła.'
+      },
+      {
+        question: 'Czym Czółko w BIFOR różni się od Heads Up?',
+        answer:
+          'W klasycznym Heads Up jedna osoba zgaduje na czas kilka haseł, a reszta je opisuje. W BIFOR każdy ma własne hasło, pyta o nie tak albo nie, a punkty zależą od tego, kto zgadnie pierwszy.'
       },
       {
         question: 'Czy Czółko działa bez internetu?',
         answer:
-          'Tak. Tryb na jednym telefonie z darmową kategorią haseł działa w pełni offline. Internet jest potrzebny tylko w trybie online, gdy każdy gra na swoim telefonie.'
-      },
-      {
-        question: 'Czym Czółko w Bifor różni się od zwykłego heads up?',
-        answer:
-          'Każdy gracz ma własne hasło, a telefon krąży po grupie, więc nikt nie czeka bezczynnie. Punkty przyznawane są za kolejność zgadnięcia, a nie tylko za sam fakt trafienia.'
+          'Tak, na jednym telefonie z kategorią Klasyczne. Internet jest potrzebny w trybie online i do pierwszego pobrania płatnych kategorii.'
       }
     ]
   },
   {
     slug: 'zakazane',
     title: 'Zakazane',
-    tagline: 'Opisz hasło bez używania zakazanych słów.',
+    tagline: 'Opisz hasło bez słów, które same cisną się na usta.',
     summary:
-      'Zakazane to polska gra imprezowa w stylu tabu: opisujesz hasło swojej drużynie, ale nie wolno Ci użyć kilku najbardziej oczywistych słów, a przeciwnicy czekają z palcem na buzzerze.',
+      'Zakazane to drużynowa gra w opisywanie haseł w stylu Tabu: masz kilkadziesiąt sekund, żeby twoja drużyna zgadła jak najwięcej haseł, a przy każdym są słowa, których nie wolno ci powiedzieć. Online przeciwnicy widzą hasło i pilnują cię przyciskiem SPALONE.',
     intro: [
-      'Zasada jest prosta i dlatego działa: masz hasło, masz listę słów, których nie wolno wypowiedzieć, i masz kilkadziesiąt sekund. Reszta to nerwy, śmiech i kreatywne omijanie tematu.',
-      'W Bifor drużyna przeciwna nie siedzi bezczynnie - pełni rolę sędziów. Jedno zakazane słowo i lecą z przyciskiem "SPALONE", a punkt przepada.'
+      'Hasło: „sushi”. Nie wolno: ryż, ryba, Japonia, pałeczki, rolka. Masz 90 sekund i drużynę, która krzyczy wszystko oprócz sushi.',
+      'Na jednym telefonie opisujący trzyma telefon i przesuwa karty: w prawo dobrze, w lewo źle. Online przeciwnicy widzą to samo hasło razem z zakazanymi słowami, a gdy któreś padnie, stukają SPALONE i hasło przepada.'
     ],
-    genre: 'Gra imprezowa typu tabu (opisywanie haseł w drużynach)',
-    alsoKnownAs: ['tabu', 'gra w zakazane słowa', 'taboo po polsku'],
-    players: '4-10 graczy',
+    genre: 'Drużynowa gra w opisywanie haseł (w stylu Tabu)',
+    alsoKnownAs: ['gra w zakazane słowa', 'tabu po polsku', 'gra w opisywanie haseł w drużynach'],
+    players: '4-10 osób, 2-4 drużyny',
     minPlayers: 4,
     maxPlayers: 10,
-    duration: '15-30 minut',
+    duration: '20-30 minut',
     local: true,
     online: true,
-    modeLabel: 'Na jednym telefonie lub każdy na swoim',
-    bestFor: 'ekipa, która lubi rywalizację drużynową i gadanie na czas',
-    art: '/games/zakazane.webp',
+    modeLabel: 'Na jednym telefonie albo każdy na swoim',
+    bestFor: 'ekipa lubi rywalizację drużynową i gadanie na czas',
+    art: '/plakaty/zakazane.webp',
+    modeArt: { local: '/tryby/zakazane-local.webp', online: '/tryby/zakazane-online.webp' },
     glow: '#22C55E',
-    keywords: [
-      'zakazane słowa gra',
-      'tabu gra imprezowa',
-      'gra w opisywanie haseł',
-      'gry drużynowe na imprezę'
-    ],
+    categories: {
+      free: ['Klasyczne'],
+      premium: ['Piłka nożna', 'Polska', 'Popkultura', 'Impreza', 'Pikantne 18+']
+    },
+    keywords: ['zakazane słowa gra', 'tabu na telefon', 'gra w opisywanie haseł', 'gry drużynowe na imprezę'],
     steps: [
       {
         name: 'Podzielcie się na drużyny',
-        text: 'Aplikacja pomaga rozdzielić graczy na dwie lub więcej drużyn.'
+        text: 'Od 2 do 4 drużyn. Online apka rozdziela graczy sama, a host może przetasować składy.'
       },
       {
-        name: 'Opisujący dostaje hasło i listę zakazanych słów',
-        text: 'Na ekranie widzi hasło do zgadnięcia oraz słowa, których nie wolno użyć w opisie.'
+        name: 'Opisujący dostaje hasło',
+        text: 'Widzi hasło i słowa, których nie wolno mu użyć. Jego drużyna zgaduje na głos.'
       },
       {
-        name: 'Drużyna zgaduje na czas',
-        text: 'Opisujący mówi wszystko poza zakazanymi słowami, a jego drużyna rzuca odpowiedziami.'
+        name: 'Czas leci',
+        text: '60, 90 albo 120 sekund na turę. Trudne hasło można spasować, pasów na turę jest od 1 do 5.'
       },
       {
-        name: 'Przeciwnicy pilnują zasad',
-        text: 'Drużyna przeciwna słucha i naciska "SPALONE", gdy padnie zakazane słowo. Hasło wtedy przepada.'
+        name: 'Przeciwnicy pilnują',
+        text: 'Online widzą to samo co opisujący i stukają SPALONE, gdy padnie zakazane słowo.'
       },
       {
-        name: 'Zamiana ról',
-        text: 'Po upływie czasu tura przechodzi do kolejnej drużyny, a punkty sumują się do końca gry.'
+        name: 'Tura przechodzi dalej',
+        text: 'Gra kolejna drużyna, a opisujący zmienia się co rundę. Gracie 3, 5 albo 8 rund.'
       }
     ],
     scoring:
-      'Każde poprawnie zgadnięte hasło to punkt dla drużyny. Użycie zakazanego słowa unieważnia hasło. Wygrywa drużyna z największą liczbą punktów po ustalonej liczbie tur.',
+      'Każde zgadnięte hasło to punkt dla drużyny. Spalone hasło przepada, a przy włączonej karze za spalone drużyna traci jeszcze punkt. Wygrywa drużyna z najwyższym wynikiem po ostatniej rundzie.',
     tips: [
-      'Zaczynaj od kategorii nadrzędnej ("to jest sport"), potem zawężaj - drużyna szybciej wchodzi na trop.',
-      'Nie bój się pomijać trudnych haseł, jeśli tracisz na nie za dużo czasu.',
-      'W trybie online sędziowanie jest automatyczne po stronie przeciwników, więc nikt nie musi pilnować kartek.'
+      'Zacznij od najszerszego: „to jedzenie”, „to sport”, i dopiero potem zawężaj.',
+      'Pas to nie porażka. Hasło, nad którym siedzisz 20 sekund, kosztuje cię dwa łatwe.',
+      'Uważajcie na formy zakazanych słów. „Rybny” przy zakazanej „rybie” to dobry powód do SPALONE.'
     ],
     faq: [
       {
         question: 'Ile osób potrzeba do gry w Zakazane?',
         answer:
-          'Od 4 do 10 osób, czyli minimum dwie drużyny po dwie osoby. Im więcej graczy, tym więcej sędziów po stronie przeciwnej.'
+          'Co najmniej cztery, czyli dwie drużyny po dwie osoby. Drużyn może być do czterech, a graczy online do dziesięciu.'
       },
       {
         question: 'Czy Zakazane to to samo co Tabu?',
         answer:
-          'Mechanika jest z tej samej rodziny - opisujesz hasło bez używania zakazanych słów. Zakazane to polska gra na telefon z własnymi hasłami i rolą sędziego z buzzerem dla drużyny przeciwnej.'
+          'Zasada jest z tej samej rodziny: opisujesz hasło bez zakazanych słów. Zakazane ma własne, polskie hasła, a w trybie online przeciwnicy sędziują przyciskiem SPALONE.'
       },
       {
         question: 'Czy da się grać na jednym telefonie?',
         answer:
-          'Tak. Telefon podajecie opisującemu z każdej drużyny po kolei. Jest też tryb online, w którym każdy widzi swoją rolę na własnym ekranie.'
+          'Tak. Telefon dostaje opisujący z każdej drużyny po kolei. Jest też tryb online, w którym każdy widzi swoją rolę na swoim ekranie.'
+      },
+      {
+        question: 'Jakie są kategorie haseł?',
+        answer:
+          'Klasyczne są za darmo. Z BIFOR+ dochodzą Piłka nożna, Polska, Popkultura, Impreza i Pikantne 18+.'
       }
     ]
   },
   {
     slug: 'impostor',
     title: 'Impostor',
-    tagline: 'Odkryj zdrajcę wśród przyjaciół.',
+    tagline: 'Wszyscy znają hasło. Prawie wszyscy.',
     summary:
-      'Impostor to gra imprezowa typu social deduction: wszyscy dostają to samo hasło poza jedną osobą, która musi blefować i nie dać się wykryć w głosowaniu.',
+      'Impostor to gra w blefowanie: wszyscy dostają to samo hasło oprócz impostora, który musi udawać, że wie, o czym mowa. Każdy mówi jedno słowo skojarzenia, a potem ekipa szuka, kto kłamie. Impostorów może być jeden, dwóch albo losowo.',
     intro: [
-      'Każdy widzi hasło na swoim ekranie - poza impostorem, który dostaje pustkę i musi udawać, że wie, o co chodzi. Potem kolejno rzucacie podpowiedziami, po jednym słowie, na tyle konkretnymi, żeby udowodnić swoją niewinność, i na tyle ogólnymi, żeby nie zdradzić hasła zdrajcy.',
-      'Na koniec głosowanie. Jeśli grupa wskaże impostora, wygrywa reszta. Jeśli nie, albo jeśli impostor zgadnie hasło, wygrywa on.'
+      'Hasło: „plaża”. Ty mówisz „ręcznik”, ktoś „parawan”, a ktoś inny „ciepło”. Ciepło? Trochę za ogólne. I tak zaczyna się dyskusja.',
+      'Impostor nie zna hasła, ale jeśli macie włączoną podpowiedź, dostaje jedno słowo, które go naprowadza. Impostorów może być jeden, dwóch albo losowo. Przy losowaniu nikt nie wie, ilu ich jest w tej rundzie.',
+      'Wskazujecie podejrzanego na żywo, palcem. Apka nie liczy głosów, tylko zapisuje wynik rundy: wygrali niewinni albo impostor.'
     ],
-    genre: 'Gra imprezowa typu social deduction (wykrywanie oszusta)',
-    alsoKnownAs: ['gra w zdrajcę', 'social deduction po polsku', 'gra typu impostor'],
-    players: '3-8 graczy',
+    genre: 'Gra w blefowanie i dedukcję (social deduction)',
+    alsoKnownAs: ['gra w impostora', 'gra w zdrajcę', 'gra w szpiega'],
+    players: '3-8 osób',
     minPlayers: 3,
     maxPlayers: 8,
-    duration: '10-25 minut',
+    duration: '15-25 minut',
     local: true,
     online: true,
-    modeLabel: 'Na jednym telefonie lub każdy na swoim',
-    bestFor: 'grupy, które lubią blefować, oskarżać i śmiać się z własnych teorii',
-    art: '/games/impostor.webp',
+    modeLabel: 'Na jednym telefonie albo każdy na swoim',
+    bestFor: 'ekipa lubi blefować, oskarżać i bronić się do ostatniego słowa',
+    art: '/plakaty/impostor.webp',
+    modeArt: { local: '/tryby/impostor-local.webp', online: '/tryby/impostor-online.webp' },
     glow: '#EF4444',
-    keywords: [
-      'impostor gra na telefon',
-      'gra w zdrajcę',
-      'gry dedukcyjne na imprezę',
-      'gra w blefowanie'
-    ],
+    categories: {
+      free: ['Klasyczne'],
+      premium: [
+        'Jedzenie i kuchnia',
+        'Typy ludzkie',
+        'Praca i biuro',
+        'Szkoła i dzieciństwo',
+        'Marki',
+        'Pokolenie Z',
+        'Dookoła świata',
+        'Znani sportowcy',
+        'Pikantne 18+'
+      ]
+    },
+    keywords: ['impostor gra', 'gra w impostora na telefon', 'gra w zdrajcę', 'gra w blefowanie'],
     steps: [
       {
-        name: 'Rozdanie ról',
-        text: 'Aplikacja losuje hasło i przydziela role. Wszyscy widzą hasło poza impostorem.'
+        name: 'Sprawdźcie role',
+        text: 'Każdy po kolei patrzy na swoją kartę. Niewinni widzą hasło, impostor widzi, że jest impostorem, i ewentualnie podpowiedź.'
       },
       {
-        name: 'Runda podpowiedzi',
-        text: 'Po kolei każdy mówi jedno słowo kojarzące się z hasłem. Impostor improwizuje na podstawie tego, co usłyszał.'
+        name: 'Jedno słowo na osobę',
+        text: 'Apka losuje, kto zaczyna. Każdy mówi jedno skojarzenie z hasłem.'
       },
       {
         name: 'Dyskusja',
-        text: 'Grupa porównuje podpowiedzi i szuka osoby, która brzmi zbyt ogólnie albo zbyt pewnie.'
+        text: 'Bez zegara. Rozmawiacie, aż ktoś rzuci oskarżenie, którego reszta nie umie obalić.'
       },
       {
-        name: 'Głosowanie',
-        text: 'Wszyscy wskazują podejrzanego. Aplikacja odsłania wynik i prawdziwą rolę.'
+        name: 'Wskazujecie',
+        text: 'Na trzy palcem w podejrzanego. Potem odsłaniacie, kto naprawdę był impostorem.'
       },
       {
-        name: 'Ostatnia szansa impostora',
-        text: 'Wykryty impostor może jeszcze spróbować zgadnąć hasło i uratować rundę.'
+        name: 'Zapisujecie wynik',
+        text: 'W apce zaznaczacie, kto wygrał rundę. Gracie 3, 5, 7 albo 10 rund.'
       }
     ],
     scoring:
-      'Grupa wygrywa rundę, gdy poprawnie wskaże impostora. Impostor wygrywa, gdy przetrwa głosowanie albo trafi hasło po wykryciu. Punkty sumują się przez kolejne rundy.',
+      'Gdy impostor przetrwa, dostaje 3 punkty (przy dwóch impostorach każdy z nich). Gdy wygrają niewinni, każdy niewinny dostaje punkt. Na koniec apka pokazuje klasyfikację i najlepszego impostora.',
     tips: [
-      'Podpowiedź zbyt oczywista pomaga impostorowi - podpowiedź zbyt ogólna czyni z Ciebie podejrzanego.',
-      'Zwracaj uwagę na osoby, które odzywają się dopiero po kilku podpowiedziach.',
-      'Role są przydzielane przez serwer i nie są rozsyłane po urządzeniach, więc nikt nie podejrzy cudzej karty.'
+      'Skojarzenie ma być na tyle konkretne, żeby obronić ciebie, i na tyle ogólne, żeby nie podać hasła impostorowi.',
+      'Jako impostor słuchaj pierwszych osób i idź w ich stronę. Najgorzej wypada oryginalność.',
+      'Przy „Losowo” nie zakładajcie, że po złapaniu jednego impostora jest po wszystkim.'
     ],
     faq: [
       {
         question: 'Ile osób potrzeba do gry w Impostora?',
-        answer:
-          'Od 3 do 8 osób. Przy trzech graczach dedukcja jest błyskawiczna, przy sześciu i więcej robi się z tego pełnoprawna dyskusja.'
+        answer: 'Od 3 do 8. Dwóch impostorów da się ustawić od czterech graczy.'
       },
       {
         question: 'Czy Impostor działa na jednym telefonie?',
         answer:
-          'Tak. Telefon krąży po grupie i każdy po kolei sprawdza swoją rolę na osobnym ekranie. Jest też tryb online, w którym każdy widzi rolę u siebie.'
+          'Tak. Telefon krąży po ekipie i każdy po kolei sprawdza swoją rolę. Online każdy widzi rolę na swoim telefonie.'
       },
       {
-        question: 'Czy impostor może wygrać, gdy zostanie wykryty?',
+        question: 'Czy impostor dostaje podpowiedź?',
         answer:
-          'Tak. Po wskazaniu przez grupę dostaje ostatnią szansę na odgadnięcie hasła - trafienie ratuje mu rundę.'
+          'Jeśli podpowiedź jest włączona (domyślnie tak), impostor widzi jedno słowo, które naprowadza na hasło, ale go nie zdradza.'
+      },
+      {
+        question: 'Czy w apce się głosuje?',
+        answer:
+          'Nie. Wskazujecie podejrzanego na żywo, a w apce zaznaczacie tylko, czy wygrali niewinni, czy impostor. Online robi to host.'
       }
     ]
   },
   {
     slug: 'sekrety',
     title: 'Sekrety',
-    tagline: 'Poznajcie się lepiej, zanim impreza się rozkręci.',
+    tagline: 'Dziewięć rund, w których dowiadujecie się o sobie za dużo.',
     summary:
-      'Sekrety to imprezowy ice breaker online, w którym dziewięć typów rund - od anonimowych sekretów, przez "kto z nas", po selfie na żądanie - tasuje się jak talia kart i nikt nie wie, co będzie dalej.',
+      'Sekrety to gra na poznanie się lepiej: dziewięć typów rund, od anonimowych sekretów, przez „Kto z nas”, po selfie na zawołanie, przemieszanych jak talia kart. Każdy gra na swoim telefonie, a odpowiedzi są anonimowe do odsłony.',
     intro: [
-      'Sekrety nie mają jednej mechaniki. To zestaw krótkich rund, które lecą jedna po drugiej: anonimowy sekret, prawda czy kłamstwo, "kto z nas", nigdy przenigdy, gorące krzesło, uszereguj nas, twarz na żądanie, jak dobrze cię znamy i riposta.',
-      'Odpowiedzi są anonimowe, a między rundami wpadają ukryte modyfikatory - mnożniki punktów, sojusze i konsekwencje - które odsłaniają się dopiero w trakcie. Dzięki temu każda partia wygląda inaczej.'
+      'Na start każdy pisze anonimowo jeden sekret i trzy zdania o sobie, z których jedno jest kłamstwem. Potem lecą rundy: zgadujecie, czyj to sekret, kto skłamał i kto z was najpewniej zgubi klucze w drodze na imprezę.',
+      'Typ rundy poznajecie dopiero, gdy wyskoczy karta. Po drodze trafiają się niespodzianki: podwójne punkty w drugiej połowie gry, sojusze par i konsekwencje w formie pytania albo wyzwania.'
     ],
-    genre: 'Imprezowy ice breaker online z losowanymi typami rund',
-    alsoKnownAs: ['gra w sekrety', 'ice breaker na imprezę', 'gra typu prawda czy wyzwanie'],
-    players: '3-10 graczy',
+    genre: 'Gra na poznanie się (ice breaker) z losowymi typami rund',
+    alsoKnownAs: ['gra w sekrety', 'kto z nas', 'nigdy przenigdy na telefon', 'gra na przełamanie lodów'],
+    players: '3-10 osób',
     minPlayers: 3,
     maxPlayers: 10,
-    duration: '20-40 minut',
+    duration: '25-45 minut',
     local: false,
     online: true,
-    modeLabel: 'Online - każdy na swoim telefonie',
-    bestFor: 'ekipa, która się dopiero poznaje, oraz każdy before, który wymaga przełamania lodów',
-    art: '/games/sekrety.webp',
+    modeLabel: 'Każdy na swoim telefonie',
+    bestFor: 'ekipa dopiero się poznaje albo trzeba przełamać lody',
+    art: '/plakaty/sekrety.webp',
     glow: '#A855F7',
-    keywords: [
-      'gry na przełamanie lodów',
-      'gra w sekrety',
-      'gry na poznanie się',
-      'gry imprezowe online ze znajomymi'
-    ],
+    categories: { free: ['Na luzie', 'Impreza'], premium: ['Rozkminy'] },
+    keywords: ['gra w sekrety', 'kto z nas gra', 'gry na przełamanie lodów', 'nigdy przenigdy na telefon'],
     steps: [
       {
-        name: 'Host tworzy pokój',
-        text: 'Gracze dołączają kodem pokoju lub kodem QR, każdy na swoim telefonie.'
+        name: 'Ktoś zakłada pokój',
+        text: 'Reszta dołącza kodem albo kodem QR. Każdy potrzebuje swojego telefonu.'
       },
       {
-        name: 'Wybierzcie poziom treści',
-        text: 'Do wyboru są trzy tiery: Na luzie, Impreza oraz Bez hamulców dla dorosłych.'
+        name: 'Wybieracie klimat i długość',
+        text: 'Na luzie, Impreza albo Rozkminy (w BIFOR+). Gra trwa 10, 15 albo 20 rund.'
       },
       {
-        name: 'Losuje się typ rundy',
-        text: 'Talia rund tasuje się przed grą, więc nie wiadomo, czy trafi się sekret, głosowanie czy selfie.'
+        name: 'Piszecie sekrety',
+        text: 'Jeden sekret i trzy zdania o sobie, w tym jedno kłamstwo. Anonimowo. W połowie gry dopisujecie drugą porcję.'
       },
       {
-        name: 'Wszyscy odpowiadają anonimowo',
-        text: 'Odpowiedzi trafiają na wspólny ekran bez podpisu, a grupa zgaduje, kto co napisał.'
+        name: 'Lecą rundy',
+        text: 'Sekret, Prawda czy kłamstwo, Kto z nas, Nigdy przenigdy, Gorące krzesło, Uszereguj nas, Twarz na żądanie, Jak dobrze cię znamy i Riposta.'
       },
       {
-        name: 'Odsłona i punkty',
-        text: 'Aplikacja odkrywa autorów, dolicza punkty i ujawnia aktywne modyfikatory.'
+        name: 'Odsłona',
+        text: 'Gdy wszyscy zagłosują, apka pokazuje wynik i autora. Po ostatniej rundzie jest klasyfikacja.'
       }
     ],
     scoring:
-      'Punkty przyznawane są za trafne typowanie autorów oraz za wygrane głosowania w poszczególnych rundach. Ukryte modyfikatory potrafią je mnożyć, więc wynik do końca nie jest przesądzony.',
+      'Za trafienie autora sekretu albo kłamstwa dostajesz punkt, a autor dostaje punkt za każdą osobę, którą zmylił, najwyżej trzy. W „Kto z nas” 2 punkty idą do osoby z największą liczbą głosów, w Riposcie i selfie liczą się głosy na twoją odpowiedź. Gorączka punktów potrafi podwoić wszystko w drugiej połowie gry.',
     tips: [
-      'Zacznijcie od poziomu "Na luzie", jeśli w ekipie są osoby, które widzą się pierwszy raz.',
-      'Tier "Bez hamulców" jest przeznaczony dla dorosłych - warto ustalić to przed startem.',
-      'Runda z selfie działa najlepiej, gdy wszyscy siedzą w jednym pomieszczeniu.'
+      'Na luzie sprawdza się w ekipie, która widzi się pierwszy raz. Rozkminy to pytania na późniejszą godzinę.',
+      'Pisz sekrety prawdziwe, ale takie, z którymi przeżyjesz następny dzień.',
+      'Twarz na żądanie najlepiej działa, gdy wszyscy siedzą w jednym pokoju i widzą swoje miny.'
     ],
     faq: [
       {
         question: 'Czy w Sekrety można grać na jednym telefonie?',
         answer:
-          'Nie. Sekrety wymagają, żeby każdy grał na swoim telefonie, bo odpowiedzi są anonimowe i nie mogą być widoczne dla reszty przed odsłoną.'
+          'Nie. Każdy gra na swoim telefonie, bo odpowiedzi są anonimowe i nikt nie może ich zobaczyć przed odsłoną.'
       },
       {
-        question: 'Jakie typy rund są w Sekretach?',
+        question: 'Jakie rundy są w Sekretach?',
         answer:
-          'Dziewięć: Sekret, Prawda-Kłamstwo, Kto z nas, Nigdy przenigdy, Gorące krzesło, Uszereguj nas, Twarz na żądanie, Jak dobrze cię znamy oraz Riposta.'
+          'Dziewięć: Sekret, Prawda czy kłamstwo, Kto z nas, Nigdy przenigdy, Gorące krzesło, Uszereguj nas, Twarz na żądanie, Jak dobrze cię znamy i Riposta.'
       },
       {
-        question: 'Czy Sekrety są odpowiednie dla każdej grupy?',
+        question: 'Czy Sekrety mają wersję z piciem?',
         answer:
-          'Poziomy Na luzie i Impreza są bezpieczne dla mieszanych ekip. Poziom Bez hamulców zawiera treści dla dorosłych i jest oznaczony jako 18+.'
+          'Jest opcjonalna „Wersja z drinkiem”, domyślnie wyłączona. Mówi, kto pije łyk po rundzie, i nie wpływa na punkty.'
+      },
+      {
+        question: 'Które kategorie są darmowe?',
+        answer: 'Na luzie i Impreza. Rozkminy są w BIFOR+.'
       }
     ]
   },
   {
     slug: 'panstwa-miasta',
     title: 'Państwa Miasta',
-    tagline: 'Litera, kolumny i walka o punkty.',
+    tagline: 'Ta z zeszytu, tylko nikt nie liczy punktów ręcznie.',
     summary:
-      'Państwa Miasta to cyfrowa wersja klasycznej gry na kartkę: losuje się litera, wszyscy jednocześnie wypełniają kolumny kategorii, a potem wzajemnie oceniają odpowiedzi i liczą punkty.',
+      'Państwa Miasta w BIFOR to klasyczna gra na literę online: apka losuje literę, wszyscy jednocześnie wypełniają kolumny na swoich telefonach, potem oceniacie swoje odpowiedzi, a apka sama liczy punkty. Wszystkie zestawy kategorii są za darmo.',
     intro: [
-      'Ta sama gra, którą znasz z zeszytu w kratkę, tylko bez sporów o pismo i bez ręcznego liczenia punktów. Aplikacja losuje literę, pilnuje czasu i sama zbiera odpowiedzi wszystkich graczy.',
-      'Najciekawsza jest faza oceny: odpowiedzi trafiają pod głosowanie grupy, a wątpliwe hasła można obronić jokerem. Punktacja idzie po klasycznych zasadach - 15 punktów za odpowiedź unikalną, mniej za powtórzoną.'
+      'Litera K. Państwo: Kenia. Miasto: Kraków. Zwierzę: kret. Ktoś kończy pierwszy i przytrzymuje GOTOWE, a reszta ma wtedy 15 sekund na dopisanie.',
+      'Potem przegląd. Każdy widzi odpowiedzi innych i może zagłosować przeciw: „Kaczor Donald to nie zwierzę”. Żeby hasło odpadło, przeciw musi być zdecydowana większość pozostałych, a jedno wątpliwe hasło na grę można obronić jokerem.',
+      'Kolumny wybieracie z ośmiu gotowych zestawów: Klasyczne, Impreza i Popkultura, Geografia, Sport, Dorosłość, Szkoła, Dom i sąsiedzi oraz Absurd.'
     ],
-    genre: 'Klasyczna gra słowna na literę, w wersji na telefon',
-    alsoKnownAs: ['państwa miasta online', 'gra na kartkę', 'scattergories po polsku'],
-    players: '2-10 graczy',
+    genre: 'Klasyczna gra słowna na literę, w wersji online',
+    alsoKnownAs: ['państwa miasta online', 'gra na kartkę w państwa miasta', 'gra słowna na literę'],
+    players: '2-10 osób',
     minPlayers: 2,
     maxPlayers: 10,
     duration: '15-30 minut',
     local: false,
     online: true,
-    modeLabel: 'Online - każdy na swoim telefonie',
-    bestFor: 'mieszane grupy i rodziny, gdzie każdy zna zasady od dziecka',
-    art: '/games/panstwa.webp',
+    modeLabel: 'Każdy na swoim telefonie',
+    bestFor: 'przy stole siedzą bardzo różni ludzie, a zasady zna każdy',
+    art: '/plakaty/panstwa-miasta.webp',
     glow: '#3B82F6',
-    keywords: [
-      'państwa miasta online',
-      'państwa miasta na telefon',
-      'gra słowna na literę',
-      'gry ze znajomymi online'
-    ],
+    categories: {
+      free: [
+        'Klasyczne',
+        'Impreza i Popkultura',
+        'Geografia',
+        'Sport',
+        'Dorosłość',
+        'Szkoła',
+        'Dom i sąsiedzi',
+        'Absurd'
+      ],
+      premium: []
+    },
+    keywords: ['państwa miasta online', 'państwa miasta na telefon', 'gra słowna na literę', 'gry ze znajomymi online'],
     steps: [
       {
-        name: 'Ustalcie kategorie',
-        text: 'Host wybiera kolumny, na przykład państwo, miasto, imię, rzecz, roślina, zwierzę.'
+        name: 'Ktoś zakłada pokój',
+        text: 'Wybiera zestaw kolumn, liczbę rund (3, 5 albo 8) i czas na rundę (60, 90 albo 120 sekund).'
       },
       {
         name: 'Losowanie litery',
-        text: 'Aplikacja losuje literę dla całej rundy i startuje odliczanie.'
+        text: 'Apka losuje literę dla wszystkich naraz.'
       },
       {
-        name: 'Wszyscy piszą jednocześnie',
-        text: 'Każdy wypełnia swoje kolumny na własnym telefonie, dopóki nie skończy się czas.'
+        name: 'Piszecie jednocześnie',
+        text: 'Każdy na swoim telefonie. Kto skończy pierwszy, przytrzymuje GOTOWE, a reszta ma 15 sekund.'
       },
       {
-        name: 'Wzajemna ocena',
-        text: 'Odpowiedzi trafiają pod głosowanie. Wątpliwe hasła można obronić jokerem obrony.'
+        name: 'Oceniacie',
+        text: 'Głos przeciw przy hasłach, które wam nie pasują. Jeden joker na grę chroni hasło przed odrzuceniem.'
       },
       {
-        name: 'Podliczenie punktów',
-        text: 'Aplikacja sumuje wynik i pokazuje klasyfikację po każdej rundzie.'
+        name: 'Punkty',
+        text: 'Apka liczy wynik i pokazuje klasyfikację po każdej rundzie.'
       }
     ],
     scoring:
-      'Klasyczna punktacja: 15 punktów za unikalną poprawną odpowiedź, 10 za odpowiedź powtórzoną przez innych, 5 za odpowiedź częściowo uznaną i 0 za brak lub odrzucenie. Do tego dochodzą mnożniki i joker obrony.',
+      'W każdej kolumnie: 15 punktów, gdy tylko ty masz poprawną odpowiedź, 10, gdy twoja jest unikalna, ale inni też coś wpisali, 5 za odpowiedź, którą ma ktoś jeszcze, i 0 za pustą, na złą literę albo odrzuconą. Trudne litery F, G i H liczą się podwójnie, jedna tajna kolumna w rundzie też, a kto skończy pierwszy bez odrzuconych haseł, dostaje 5 punktów bonusu. Każdą z tych zasad można wyłączyć.',
     tips: [
-      'Nie zostawiaj pustej kolumny - nawet ryzykowna odpowiedź może zostać uznana w głosowaniu.',
-      'Trzymaj jokera obrony na hasło, o które na pewno wybuchnie kłótnia.',
-      'Krótszy czas rundy oznacza więcej rund i mniej czasu na szukanie w pamięci.'
+      'Pusta kolumna to zawsze zero. Lepiej wpisać coś ryzykownego i liczyć na łaskę ekipy.',
+      'Jokera masz jednego na grę. Trzymaj go na hasło, o które na pewno będzie kłótnia.',
+      'Szybkie GOTOWE zabiera innym czas, ale bonus dostaniesz tylko wtedy, gdy nic ci nie odrzucą.'
     ],
     faq: [
       {
         question: 'Czy w Państwa Miasta można grać przez internet?',
         answer:
-          'Tak, to gra wyłącznie online. Każdy gracz wypełnia kolumny na swoim telefonie, a wyniki liczą się automatycznie.'
+          'Tak, w BIFOR to gra wyłącznie online. Każdy wypełnia kolumny na swoim telefonie, nie musicie być w tej samej sieci Wi-Fi.'
       },
       {
         question: 'Ile punktów daje odpowiedź w Państwa Miasta?',
         answer:
-          'Unikalna poprawna odpowiedź to 15 punktów, powtórzona przez innych 10, częściowo uznana 5, a brak lub odrzucona odpowiedź 0 punktów.'
+          '15 punktów, gdy tylko ty masz poprawną odpowiedź w kolumnie, 10 za unikalną odpowiedź, 5 za powtórzoną i 0 za pustą albo odrzuconą.'
       },
       {
-        question: 'Czy trzeba być w tej samej sieci Wi-Fi?',
+        question: 'Czy można wpisać własne kategorie?',
         answer:
-          'Nie. Wystarczy, że każdy ma internet i kod pokoju. Gracze mogą być w różnych miejscach.'
+          'Na razie nie. Wybieracie jeden z ośmiu gotowych zestawów kolumn, wszystkie są za darmo.'
+      },
+      {
+        question: 'Czy Państwa Miasta są darmowe?',
+        answer: 'Tak, w całości. To jedyna gra w BIFOR bez płatnych kategorii.'
       }
     ]
   },
   {
     slug: 'gra-na-p',
     title: 'Gra na P',
-    tagline: 'Opisz hasło tylko słowami na literę P.',
+    tagline: 'Opisz hasło. Ale tylko słowami na P.',
     summary:
-      'Gra na P to kalambury słowne z jednym absurdalnym ograniczeniem: hasło możesz opisywać wyłącznie słowami zaczynającymi się na literę P.',
+      'Gra na P to kalambury słowne z jedną zasadą: hasło opisujesz wyłącznie słowami zaczynającymi się na literę P. Samo hasło nie musi być na P. Kto zgadnie, dostaje punkt, a opisujący też.',
     intro: [
-      'Brzmi jak żart, działa jak najlepsza gra wieczoru. Masz hasło i możesz powiedzieć o nim wszystko, pod warunkiem że każde Twoje słowo zaczyna się na P. "Prostokątne pudło, przenosi pasażerów, potrzebuje paliwa" - i ekipa zgaduje.',
-      'Punkty dostaje zarówno zgadujący, jak i opisujący, więc opłaca się kombinować, a nie kalkulować. Zamiast rund gra liczy kółka, w których każdy raz opisuje.'
+      'Hasło: „rower”. „Pojazd. Pedały. Pedałujesz. Pojedynczy pasażer…”. Przy „pedałujesz” ktoś krzyczy „rower!” i obie strony mają punkt.',
+      'Opisujący stuka w awatar osoby, która zgadła. Każdy opisuje raz na kółko, a po każdym kółku jest klasyfikacja.'
     ],
-    genre: 'Kalambury słowne z ograniczeniem na jedną literę',
+    genre: 'Kalambury słowne z ograniczeniem do jednej litery',
     alsoKnownAs: ['kalambury na P', 'gra w słowa na P', 'gra słowna na imprezę'],
-    players: '2-10 graczy',
+    players: '2-10 osób',
     minPlayers: 2,
     maxPlayers: 10,
-    duration: '10-25 minut',
+    duration: '15-25 minut',
     local: true,
     online: true,
-    modeLabel: 'Na jednym telefonie lub każdy na swoim',
-    bestFor: 'moment, w którym ekipa jest już rozkręcona i chce czegoś absurdalnego',
-    art: '/games/granap.webp',
+    modeLabel: 'Na jednym telefonie albo każdy na swoim',
+    bestFor: 'ekipa jest już rozkręcona i chce czegoś absurdalnego',
+    art: '/plakaty/gra-na-p.webp',
+    modeArt: { local: '/tryby/gra-na-p-local.webp', online: '/tryby/gra-na-p-online.webp' },
     glow: '#F97316',
-    keywords: [
-      'kalambury na p',
-      'gra na literę p',
-      'gry słowne na imprezę',
-      'gra w opisywanie słowami na p'
-    ],
+    categories: {
+      free: ['Klasyczne'],
+      premium: ['Dom', 'Jedzenie', 'Zwierzaki', 'Natura', 'Groza', 'Fantazja', 'Pikantne 18+']
+    },
+    keywords: ['kalambury na p', 'gra na literę p', 'gry słowne na imprezę', 'gra w opisywanie słowami na p'],
     steps: [
       {
-        name: 'Opisujący dostaje hasło',
-        text: 'Hasło widzi tylko osoba, która w danym kółku opisuje.'
+        name: 'Ustawcie grę',
+        text: 'Liczba kółek od 2 do 6, czas tury 60, 75 albo 90 sekund, od 1 do 5 pasów na turę.'
       },
       {
-        name: 'Mów wyłącznie słowami na P',
-        text: 'Każde słowo w opisie musi zaczynać się na literę P. Gesty i dźwięki nie liczą się jako słowa.'
+        name: 'Opisujący widzi hasło',
+        text: 'Hasło widzi tylko osoba, która w tej turze opisuje.'
       },
       {
-        name: 'Reszta zgaduje bez ograniczeń',
-        text: 'Zgadujący mogą rzucać dowolnymi odpowiedziami, ile razy chcą.'
+        name: 'Tylko słowa na P',
+        text: 'Każde słowo w opisie zaczyna się na P. Zgadujący mówią, co chcą.'
       },
       {
-        name: 'Punkt dla dwóch stron',
-        text: 'Trafienie daje punkt zgadującemu i punkt opisującemu.'
+        name: 'Stuknij, kto zgadł',
+        text: 'Punkt dla osoby, która zgadła, i punkt dla ciebie.'
       },
       {
-        name: 'Kolejne kółko',
-        text: 'Rola opisującego przechodzi dalej, aż każdy zaliczy swoją kolejkę.'
+        name: 'Następna osoba',
+        text: 'Opisuje kolejna osoba w kółku. Po każdym kółku jest klasyfikacja.'
       }
     ],
     scoring:
-      'Za każde trafione hasło punkt dostaje osoba, która zgadła, oraz osoba, która opisywała. Gra liczona jest w kółkach, więc każdy ma tyle samo okazji do zdobycia punktów.',
+      'Trafione hasło daje punkt zgadującemu i opisującemu. Możecie włączyć karę za spalone: kto powie słowo na inną literę, traci punkt.',
     tips: [
-      'Zaczynaj od kategorii: "przedmiot", "postać", "potrawa" - to wszystko słowa na P.',
-      'Przymiotniki na P ratują życie: prostokątny, przezroczysty, pluszowy, popularny.',
-      'Nie przerywaj, gdy się pomylisz - lepiej mówić dalej niż tracić czas na tłumaczenia.'
+      'Przymiotniki na P ratują życie: prostokątny, puszysty, popularny, pyszny.',
+      'Słowa-wytrychy też są na P: „podobne do”, „prawie”, „przeciwieństwo”.',
+      'Pomyłka nie zatrzymuje gry. Mów dalej, tłumaczenie się zjada czas.'
     ],
     faq: [
       {
         question: 'Na czym polega Gra na P?',
         answer:
-          'Opisujesz wylosowane hasło swojej ekipie, ale każde słowo, którego użyjesz, musi zaczynać się na literę P. Zgadujący nie mają żadnych ograniczeń.'
+          'Opisujesz hasło, ale każde słowo, którego używasz, musi zaczynać się na P. Hasło może być na dowolną literę, a zgadujący nie mają żadnych ograniczeń.'
       },
       {
         question: 'Ile osób może grać w Grę na P?',
-        answer:
-          'Od 2 do 10 osób, zarówno na jednym telefonie, jak i online, gdzie każdy gra na swoim.'
+        answer: 'Od 2 do 10, na jednym telefonie albo online, każdy na swoim.'
       },
       {
-        question: 'Czy gesty są dozwolone?',
+        question: 'Czy za słowo na inną literę jest kara?',
         answer:
-          'Zasada dotyczy słów, więc mimika i gesty przechodzą - ale to właśnie słowa na P dają najwięcej śmiechu.'
+          'Tylko jeśli ją włączycie. Wtedy za słowo na inną literę opisujący stuka SPALONE na swoim ekranie i traci punkt.'
       }
     ]
   },
   {
     slug: 'szybka-trojka',
     title: 'Szybka Trójka',
-    tagline: 'Wymień trzy rzeczy, zanim kulka doleci do końca.',
+    tagline: 'Trzy odpowiedzi, zanim kulka spadnie.',
     summary:
-      'Szybka Trójka to błyskawiczna gra na skojarzenia: słyszysz polecenie "wymień 3 rzeczy...", a kulka spadająca przez rurkę na ekranie odmierza Ci czas na trzy odpowiedzi na głos.',
+      'Szybka Trójka to gra na refleks: ktoś czyta polecenie „Wymień 3…”, puszcza kulkę w rurce na ekranie, a ty masz podać trzy odpowiedzi na głos, zanim kulka dotoczy się na dół. Polecenia nie widzisz, tylko je słyszysz.',
     intro: [
-      'Zasada jest banalnie prosta i właśnie dlatego działa na każdej imprezie: pytanie typu "wymień 3 zwierzęta na safari" albo "wymień 3 rzeczy, które chowasz przed rodzicami", a Ty masz odpowiedzieć na głos, zanim kulka dotrze do końca krętej rurki.',
-      'Telefon puszcza czas osoba, która czyta polecenie - nie Ty. Dzięki temu nie masz ani sekundy na spokojne myślenie, a reszta ekipy patrzy, jak kulka przyspiesza w ostatnim zakręcie.'
+      '„Wymień 3 rzeczy, które zabierasz na kemping”. Namiot, śpiwór i… kulka jest już na ostatnim zakręcie.',
+      'Polecenie czyta i kulkę puszcza osoba przed tobą w kolejce, i to ona ocenia, czy padły trzy odpowiedzi. Na odpowiedź masz 5 albo 7 sekund.'
     ],
-    genre: 'Gra imprezowa na skojarzenia i refleks pod presją czasu',
-    alsoKnownAs: ['gra w trójki', 'wymień 3 rzeczy', 'gra na czas ze znajomymi'],
-    players: '2-10 graczy',
+    genre: 'Gra na skojarzenia i refleks pod presją czasu',
+    alsoKnownAs: ['wymień 3 rzeczy', 'gra w trójki', 'gra na czas ze znajomymi'],
+    players: '2-10 osób',
     minPlayers: 2,
     maxPlayers: 10,
     duration: '10-20 minut',
     local: true,
     online: true,
-    modeLabel: 'Na jednym telefonie lub każdy na swoim',
-    bestFor: 'szybkie tury między innymi grami, gdy ekipa chce czegoś na refleks',
-    art: '/games/trojka.webp',
+    modeLabel: 'Na jednym telefonie albo każdy na swoim',
+    bestFor: 'potrzebujecie szybkiego kółka na refleks między innymi grami',
+    art: '/plakaty/szybka-trojka.webp',
+    modeArt: { local: '/tryby/szybka-trojka-local.webp', online: '/tryby/szybka-trojka-online.webp' },
     glow: '#06B6D4',
-    keywords: [
-      'gra wymień 3 rzeczy',
-      'szybka trójka gra',
-      'gra na skojarzenia na telefon',
-      'gra imprezowa na czas'
-    ],
+    categories: {
+      free: ['Klasyczne'],
+      premium: ['Dzieciństwo i podwórko', 'Internet i telefon', 'Geografia i podróże', 'Pikantne 18+']
+    },
+    keywords: ['gra wymień 3 rzeczy', 'szybka trójka gra', 'gra na skojarzenia', 'gra imprezowa na czas'],
     steps: [
       {
-        name: 'Polecenie czyta sąsiad',
-        text: 'Osoba obok odpowiadającego czyta na głos "wymień 3 rzeczy..." - odpowiadający go jeszcze nie widzi.'
+        name: 'Ktoś czyta polecenie',
+        text: 'Osoba przed tobą w kolejce czyta na głos „Wymień 3…”. Ty polecenia nie widzisz.'
       },
       {
-        name: 'Puszczenie kulki startuje czas',
-        text: 'Czytający puszcza kulkę w rurce dopiero po przeczytaniu polecenia na głos.'
+        name: 'Kulka rusza',
+        text: 'Czytający puszcza kulkę dopiero po przeczytaniu polecenia. Czas to 5 albo 7 sekund.'
       },
       {
         name: 'Trzy odpowiedzi na głos',
-        text: 'Odpowiadający wymienia trzy rzeczy zanim kulka doleci na dół krętej rurki.'
+        text: 'Wymieniasz trzy rzeczy, zanim kulka spadnie na dół rurki.'
       },
       {
-        name: 'Host ocenia werdykt',
-        text: 'Host jednym tapnięciem potwierdza, czy padły trzy odpowiedzi, zanim kulka wylądowała.'
+        name: 'Czytający ocenia',
+        text: 'Jednym stuknięciem zalicza albo nie. Za udaną turę jest punkt.'
       },
       {
-        name: 'Przejęcie albo kolejna osoba',
-        text: 'Gdy się nie uda, to samo polecenie przejmuje następny gracz - bez powtarzania tego, co już padło.'
+        name: 'Kolejka idzie dalej',
+        text: 'Następna osoba dostaje nowe polecenie. Gracie od 2 do 6 kółek.'
       }
     ],
     scoring:
-      'Nie ma punktów za wynik liczbowy - gra liczy udane tury i przejęcia. Kto nie zdąży z trzema odpowiedziami, oddaje polecenie następnej osobie w kolejce.',
+      'Udana tura to punkt. Gracie od 2 do 6 kółek, po każdym jest klasyfikacja, a na koniec wygrywa osoba z największą liczbą punktów.',
     tips: [
-      'Odpowiadaj pierwszą rzeczą, która przyjdzie do głowy - zastanawianie się kosztuje najwięcej czasu.',
-      'Jako czytający nie zdradzaj tempa głosem - kulka i tak nie zwolni.',
-      'Dobra rozgrzewka przed cięższymi grami dedukcyjnymi w tym samym wieczorze.'
+      'Mów pierwsze, co przyjdzie do głowy. Szukanie lepszej odpowiedzi kosztuje najwięcej czasu.',
+      'Jako czytający czytaj równym tempem. Kulka i tak nie zwolni.',
+      'Dobra rozgrzewka przed grami, w których trzeba dłużej myśleć, jak Impostor.'
     ],
     faq: [
       {
         question: 'Ile osób potrzeba do Szybkiej Trójki?',
-        answer:
-          'Od 2 do 10 osób, zarówno na jednym telefonie podawanym z rąk do rąk, jak i online, gdzie każdy gra na swoim.'
+        answer: 'Od 2 do 10, na jednym telefonie podawanym w kółko albo online.'
       },
       {
-        question: 'Kto ocenia, czy odpowiedzi się zaliczają?',
-        answer:
-          'Host - jedno tapnięcie po wylądowaniu kulki. Reszta ekipy widzi w tym czasie ekran oczekiwania.'
+        question: 'Kto ocenia, czy odpowiedzi się liczą?',
+        answer: 'Osoba, która przeczytała polecenie i puściła kulkę. Jednym stuknięciem po tym, jak kulka spadnie.'
       },
       {
         question: 'Co się dzieje, gdy ktoś nie zdąży?',
-        answer:
-          'To samo polecenie przechodzi do następnego gracza w kolejce, bez powtarzania odpowiedzi, które już padły.'
+        answer: 'Nie dostaje punktu, a kolejka idzie dalej. Następna osoba dostaje nowe polecenie.'
       }
     ]
   }
@@ -560,7 +603,7 @@ export const gamePath = (slug: string) => `/gry/${slug}`;
 
 export const modeSummary = (game: Game) =>
   game.local && game.online
-    ? 'lokalnie na jednym telefonie i online'
+    ? 'na jednym telefonie albo każdy na swoim'
     : game.online
-      ? 'online, każdy na swoim telefonie'
-      : 'lokalnie na jednym telefonie';
+      ? 'każdy na swoim telefonie'
+      : 'na jednym telefonie';

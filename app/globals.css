@@ -349,3 +349,36 @@ html {
     animation: none;
   }
 }
+
+/* Wejście przy przewinięciu (components/home/Reveal). Postacie wyskakują zza
+   krawędzi z lekkim odbiciem, treść tylko podjeżdża. */
+.reveal {
+  transition:
+    transform 760ms cubic-bezier(0.22, 1.25, 0.36, 1),
+    opacity 420ms ease-out;
+}
+.reveal[data-reveal='hidden'] {
+  opacity: 0;
+}
+.reveal[data-reveal='hidden'][data-from='up'] {
+  transform: translate3d(0, 42%, 0);
+}
+.reveal[data-reveal='hidden'][data-from='left'] {
+  transform: translate3d(-36%, 0, 0) rotate(-6deg);
+}
+.reveal[data-reveal='hidden'][data-from='right'] {
+  transform: translate3d(36%, 0, 0) rotate(6deg);
+}
+.reveal[data-reveal='hidden'][data-from='fade'] {
+  transform: translate3d(0, 18px, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+  }
+  .reveal[data-reveal='hidden'] {
+    opacity: 1;
+    transform: none;
+  }
+}

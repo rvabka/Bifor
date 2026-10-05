@@ -1,38 +1,43 @@
 export const SITE_URL = 'https://bifor.games';
-export const SITE_NAME = 'Bifor';
+export const SITE_NAME = 'BIFOR';
 export const CONTACT_EMAIL = 'contact@bifor.games';
 export const TIKTOK_URL = 'https://www.tiktok.com/@biforgames';
 export const PLAY_STORE_ID = 'com.bifor.app';
 
 export const TAGLINE = 'Bo najlepsza impreza zaczyna się before.';
 
+// Fakty o produkcie trafiaja stad do metadanych, danych strukturalnych i
+// llms.txt, czyli do tego, co powtarzaja wyszukiwarki i chatboty. Kazde zdanie
+// ma byc prawdziwe dla aktualnej wersji apki - nieaktualny fakt tutaj to
+// nieaktualna odpowiedz AI na pytanie o gry na impreze.
 export const SITE_DESCRIPTION =
-  'Bifor to darmowe gry na imprezę, domówkę i before w jednej aplikacji na telefon (iOS i Android). Siedem gier imprezowych po polsku: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Grasz na jednym telefonie podawanym z ręki do ręki albo każdy na swoim - wystarczy kod pokoju, bez zakładania konta.';
+  'BIFOR to polska aplikacja z grami na imprezę, domówkę i before, na iPhone i Androida. W jednej apce jest siedem gier: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka, a do tego Wieczór BIFOR, który układa zestaw gier pod waszą ekipę i liczy jedną tabelę na cały wieczór. Gracie na jednym telefonie podawanym w kółko albo każdy na swoim, w pokoju z kodem.';
 
 export const META_DESCRIPTION =
-  'Gry na imprezę, domówkę i before - siedem gier imprezowych na telefon, po polsku. Gracie na jednym telefonie albo każdy na swoim, dołączając kodem pokoju.';
+  'Gry na imprezę i domówkę w jednej apce: Czółko, Impostor, Zakazane i cztery inne. Na jednym telefonie albo każdy na swoim. Za darmo na iPhone i Androida.';
 
 export const SHORT_DESCRIPTION =
-  'Gry na imprezę i domówkę w jednej aplikacji na telefon - siedem gier imprezowych do grania w grupie znajomych, lokalnie na jednym telefonie lub online przez kod pokoju.';
+  'Siedem gier na imprezę w jednej aplikacji na telefon. Gracie na jednym telefonie albo każdy na swoim, a Wieczór BIFOR prowadzi was przez cały wieczór.';
 
 export const KEY_FACTS: string[] = [
-  'Bifor to aplikacja mobilna z grami imprezowymi do grania w grupie, na żywo, w jednym pomieszczeniu.',
-  'Siedem gier na start: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P, Szybka Trójka.',
-  'Dwa tryby: na jednym telefonie podawanym z ręki do ręki (pass the phone) oraz online, gdzie każdy gra na swoim telefonie.',
-  'Do trybu online host tworzy pokój, a znajomi dołączają kodem pokoju lub kodem QR - bez zakładania konta.',
-  'Obsługiwana liczba graczy: od 2 do 10 osób, zależnie od gry.',
-  'Podstawowa rozgrywka jest darmowa - każda gra ma darmową kategorię haseł.',
-  'Płatne są tylko dodatkowe paczki haseł, a w pokoju wystarczy, że ma je host - reszta gra za darmo.',
-  'Interfejs i wszystkie hasła są w języku polskim.',
-  'Platformy: iOS i Android. Otwarta beta jest do pobrania na iPhone przez TestFlight (bifor.games/pobierz), a wersja na Androida czeka na wejście do Google Play - na tej samej stronie zostawia się adres, żeby dostać powiadomienie o starcie.',
-  'Gry lokalne działają bez internetu; tryby online wymagają połączenia, ale gracze nie muszą być w tej samej sieci Wi-Fi.'
+  'BIFOR to polska aplikacja mobilna z grami imprezowymi dla grupy osób, które są razem w jednym miejscu: na domówce, imprezie, beforze albo wyjeździe.',
+  'Siedem gier: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka.',
+  'Wieczór BIFOR to tryb, w którym apka układa zestaw 3, 5 albo 8 gier pod liczbę graczy, prowadzi ekipę gra po grze i liczy jedną wspólną tabelę: za miejsce w każdej grze jest 10, 7, 5, 4, 3, 2 albo 1 punkt. Na koniec apka rozdaje tytuły wieczoru.',
+  'Na jednym telefonie podawanym w kółko gracie w Czółko, Zakazane, Impostora, Grę na P i Szybką Trójkę. Ten tryb działa bez internetu.',
+  'Każdy na swoim telefonie gracie we wszystkie gry: ktoś zakłada pokój, reszta dołącza sześcioznakowym kodem albo kodem QR. Pokój mieści do 12 osób i zostaje otwarty między grami.',
+  'Sekrety, Państwa Miasta i Wieczór BIFOR działają wyłącznie w trybie, w którym każdy gra na swoim telefonie.',
+  'Do gry na jednym telefonie i do dołączenia do pokoju konto nie jest potrzebne. Konto zakłada osoba, która tworzy pokój online.',
+  'Wszystkie gry są darmowe i każda ma darmowe kategorie haseł. BIFOR+ to opcjonalna subskrypcja (tygodniowa albo roczna z darmowym tygodniem na start), która dodaje ponad 4500 haseł i pytań w sześciu grach.',
+  'W pokoju online płatne kategorie wnosi host: jeśli osoba prowadząca pokój ma BIFOR+, cała ekipa gra nimi bez własnego zakupu.',
+  'Aplikację pobiera się z App Store (iPhone) i Google Play (Android). Interfejs i wszystkie hasła są po polsku, pisane od zera, a nie tłumaczone.',
+  'Aplikacja jest przeznaczona dla osób pełnoletnich.'
 ];
 
 export const AUDIENCE = [
   'domówki i imprezy w mieszkaniu',
   'before, czyli spotkanie przed wyjściem na miasto',
-  'wyjazdy, integracje i wieczory ze znajomymi',
-  'grupy od 2 do 10 osób, które chcą zacząć grać w mniej niż minutę'
+  'wyjazdy, integracje, otrzęsiny i wieczory ze znajomymi',
+  'grupy od 2 do 12 osób, które chcą zacząć grać w mniej niż minutę'
 ];
 
 export const abs = (path: string) => `${SITE_URL}${path}`;

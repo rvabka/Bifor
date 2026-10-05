@@ -1,5 +1,6 @@
 import type { Game, GameFaq } from './games';
 import { GAMES, gamePath } from './games';
+import { APP_STORE_URL, STORE_LINKS } from './download';
 import {
   CONTACT_EMAIL,
   SITE_DESCRIPTION,
@@ -23,8 +24,8 @@ export const organizationNode = {
   email: CONTACT_EMAIL,
   slogan: 'Bo najlepsza impreza zaczyna się before.',
   description:
-    'Twórca aplikacji Bifor z grami imprezowymi na telefon dla polskojęzycznych grup znajomych.',
-  sameAs: [TIKTOK_URL],
+    'Twórca aplikacji BIFOR z grami na imprezę na telefon dla polskich ekip.',
+  sameAs: [TIKTOK_URL, ...STORE_LINKS],
   contactPoint: [
     {
       '@type': 'ContactPoint',
@@ -48,8 +49,8 @@ export const websiteNode = {
 export const appNode = {
   '@type': ['MobileApplication', 'SoftwareApplication'],
   '@id': APP_ID,
-  name: 'Bifor',
-  alternateName: 'Bifor - gry imprezowe',
+  name: 'BIFOR',
+  alternateName: ['BIFOR - gry na imprezę', 'Bifor'],
   description: SITE_DESCRIPTION,
   applicationCategory: 'GameApplication',
   applicationSubCategory: 'Gry imprezowe',
@@ -58,28 +59,33 @@ export const appNode = {
   url: SITE_URL,
   image: abs('/logo.png'),
   softwareVersion: '1.0',
+  contentRating: '18+',
+  downloadUrl: STORE_LINKS,
+  installUrl: APP_STORE_URL,
+  sameAs: STORE_LINKS,
   publisher: { '@id': ORGANIZATION_ID },
   author: { '@id': ORGANIZATION_ID },
   isAccessibleForFree: true,
   featureList: [
-    'Siedem gier imprezowych w jednej aplikacji',
-    'Tryb na jednym telefonie podawanym z ręki do ręki',
-    'Tryb online z pokojem i kodem dla znajomych',
-    'Dołączanie kodem pokoju lub kodem QR bez zakładania konta',
-    'Od 2 do 10 graczy zależnie od gry',
+    'Siedem gier na imprezę w jednej aplikacji',
+    'Wieczór BIFOR: zestaw gier pod liczbę graczy i jedna tabela na cały wieczór',
+    'Gra na jednym telefonie podawanym w kółko, bez internetu',
+    'Pokój online z kodem albo kodem QR, do 12 osób',
+    'Dołączanie do pokoju bez zakładania konta',
     'Polskie hasła i polski interfejs',
-    'Darmowa kategoria haseł w każdej grze'
+    'Darmowe kategorie haseł w każdej grze',
+    'Opcjonalna subskrypcja BIFOR+ z dodatkowymi hasłami, z której korzysta cały pokój hosta'
   ],
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'PLN',
-    availability: 'https://schema.org/PreOrder',
-    category: 'Darmowa aplikacja z opcjonalnymi zakupami'
+    availability: 'https://schema.org/InStock',
+    category: 'Darmowa aplikacja z opcjonalną subskrypcją BIFOR+'
   },
   audience: {
     '@type': 'Audience',
-    audienceType: 'Grupy znajomych na imprezach, domówkach i beforach',
+    audienceType: 'Dorosłe grupy znajomych na imprezach, domówkach i beforach',
     geographicArea: { '@type': 'Country', name: 'Polska' }
   }
 };
@@ -132,7 +138,7 @@ export const gameNode = (game: Game) => ({
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'PLN',
-    availability: 'https://schema.org/PreOrder'
+    availability: 'https://schema.org/InStock'
   }
 });
 
@@ -140,16 +146,16 @@ export const howToNode = (game: Game) => ({
   '@type': 'HowTo',
   '@id': `${abs(gamePath(game.slug))}#howto`,
   name: `Jak grać w ${game.title}`,
-  description: `Zasady gry ${game.title} w aplikacji Bifor krok po kroku. ${game.players}, ${game.duration}.`,
+  description: `Zasady gry ${game.title} w aplikacji BIFOR krok po kroku. ${game.players}, ${game.duration}.`,
   inLanguage: 'pl-PL',
   totalTime: 'PT20M',
   supply: [
     {
       '@type': 'HowToSupply',
-      name: game.online && !game.local ? 'Telefon dla każdego gracza' : 'Telefon z aplikacją Bifor'
+      name: game.online && !game.local ? 'Telefon dla każdego gracza' : 'Telefon z aplikacją BIFOR'
     }
   ],
-  tool: [{ '@type': 'HowToTool', name: 'Aplikacja Bifor' }],
+  tool: [{ '@type': 'HowToTool', name: 'Aplikacja BIFOR' }],
   step: game.steps.map((s, i) => ({
     '@type': 'HowToStep',
     position: i + 1,
@@ -162,7 +168,7 @@ export const howToNode = (game: Game) => ({
 export const gamesItemListNode = {
   '@type': 'ItemList',
   '@id': `${abs('/gry')}#lista-gier`,
-  name: 'Gry imprezowe w aplikacji Bifor',
+  name: 'Gry imprezowe w aplikacji BIFOR',
   numberOfItems: GAMES.length,
   itemListOrder: 'https://schema.org/ItemListUnordered',
   itemListElement: GAMES.map((game, i) => ({

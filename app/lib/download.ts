@@ -1,11 +1,11 @@
-// Jedyne miejsce z adresami do pobrania. Cala reszta (strona /pobierz, redirect
-// /pobierz/android, maile do newslettera, bio na TikToku) wskazuje na stale
-// adresy w tej domenie, wiec zmiana kanalu dystrybucji to zmiana TEGO pliku -
-// bez erraty do listy mailingowej i bez poprawiania opisow na TikToku.
+// Jedyne miejsce z adresami do pobrania. Cala reszta (strona /pobierz, redirecty
+// /pobierz/ios i /pobierz/android, maile do newslettera, bio na TikToku) wskazuje
+// na stale adresy w tej domenie, wiec zmiana kanalu dystrybucji to zmiana TEGO
+// pliku - bez erraty do listy mailingowej i bez poprawiania opisow na TikToku.
 
-// Publiczny link grupy zewnetrznej TestFlight (testflight.apple.com/join/XXXXXXXX).
-// Pusty string = przycisk iOS pokazuje sie jako niedostepny zamiast prowadzic donikad.
-export const TESTFLIGHT_URL = 'https://testflight.apple.com/join/QeyxePNt';
+// Karta BIFOR w App Store. Identyfikator z App Store Connect (ascAppId), bez
+// nazwy w adresie - Apple przekierowuje sam, a zmiana nazwy apki nie psuje linku.
+export const APP_STORE_URL = 'https://apps.apple.com/pl/app/id6788678207';
 
 // APK jako plik wydania na PUBLICZNYM repo strony. Adres `/releases/latest/`
 // zawsze wskazuje najnowsze wydanie, wiec po kolejnym buildzie NIE zmieniasz tu
@@ -26,7 +26,6 @@ export const PLAY_URL: string | null =
 
 export const androidTarget = PLAY_URL ?? ANDROID_APK_URL;
 export const androidViaPlay = PLAY_URL !== null;
-export const hasIosBuild = TESTFLIGHT_URL.length > 0;
 
 // Brak JAKIEGOKOLWIEK publicznego kanalu na Androida. Wtedy - i tylko wtedy -
 // kafel Androida przestaje byc przyciskiem i zbiera zapisy na powiadomienie.
@@ -38,3 +37,8 @@ export const androidPaused = PLAY_URL === null;
 // Kotwica bloku z zapisem na /pobierz. Trzymana tu, bo wskazuje na nia takze
 // redirect /pobierz/android, czyli adres uzywany w mailach i w bio na TikToku.
 export const ANDROID_NOTIFY_ANCHOR = '/pobierz#powiadom';
+
+// Linki do obu sklepow naraz - dane strukturalne, llms.txt i przyciski sklepow.
+export const STORE_LINKS = [APP_STORE_URL, PLAY_URL].filter(
+  (url): url is string => url !== null
+);

@@ -27,6 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       images: [abs(game.art)]
     })),
+    { url: abs('/wieczor'), lastModified, changeFrequency: 'monthly', priority: 0.8, images: [abs('/wieczor/hero.webp')] },
+    { url: abs('/gry-na-impreze'), lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: abs('/faq'), lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: abs('/terms'), lastModified, changeFrequency: 'yearly', priority: 0.3 },
     { url: abs('/usun-konto'), lastModified, changeFrequency: 'yearly', priority: 0.3 },
