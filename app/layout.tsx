@@ -32,8 +32,8 @@ const montserrat = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Gry na imprezę i domówkę - Bifor, 7 gier imprezowych na telefon',
-    template: '%s | Bifor'
+    default: 'BIFOR - gry imprezowe na telefon, na bifor i domówkę',
+    template: '%s | BIFOR'
   },
   description: META_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -79,15 +79,15 @@ export const metadata: Metadata = {
     locale: 'pl_PL',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'Gry na imprezę i domówkę - Bifor',
+    title: 'BIFOR - gry imprezowe na telefon',
     description:
-      'Siedem gier imprezowych w jednej aplikacji: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Grajcie na jednym telefonie albo każdy na swoim - dołączacie kodem pokoju, bez zakładania konta.'
+      'Siedem gier imprezowych w jednej aplikacji: Czółko, Zakazane, Impostor, Sekrety, Państwa Miasta, Gra na P i Szybka Trójka. Na jednym telefonie albo każdy na swoim, w pokoju z kodem.'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Gry na imprezę i domówkę - Bifor',
+    title: 'BIFOR - gry imprezowe na telefon',
     description:
-      'Siedem gier imprezowych w jednej aplikacji. Graj ze znajomymi na jednym telefonie lub online, dołączając kodem pokoju.'
+      'Siedem gier imprezowych w jednej aplikacji. Na jednym telefonie albo każdy na swoim, w pokoju z kodem.'
   },
   robots: {
     index: true,

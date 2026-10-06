@@ -4,7 +4,7 @@ import { ImageResponse } from 'next/og';
 
 import { normalizeRoomCode } from '../../lib/room';
 
-export const alt = 'Zaproszenie do pokoju w Bifor';
+export const alt = 'Zaproszenie do pokoju w BIFOR';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -56,7 +56,7 @@ export default async function Image({ params }: { params: Promise<{ code: string
           {code}
         </div>
         <div style={{ display: 'flex', fontSize: 44, fontWeight: 600, color: '#ffffff', marginTop: 24 }}>
-          Ekipa czeka. Dołącz w Bifor.
+          Ekipa czeka. Dołącz w BIFOR.
         </div>
       </div>
     ),

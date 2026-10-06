@@ -17,6 +17,9 @@ export type Game = {
   online: boolean;
   modeLabel: string;
   bestFor: string;
+  /** Tytuł i opis w wynikach wyszukiwania, gdy ludzie szukają gry inną frazą niż sama nazwa
+   *  (Search Console: „czółko online” ma kilkanaście razy więcej wyświetleń niż „czółko”). */
+  seo?: { title: string; description: string };
   /** Plakat z serii kart biblioteki w apce, z tytułem wypalonym na grafice. */
   art: string;
   /** Plakaty trybów z ekranu „Jak gracie?” w apce - tylko gry z oboma trybami. */
@@ -44,7 +47,7 @@ export const GAMES: Game[] = [
     intro: [
       'Każdy dostaje swoje hasło, na przykład „Shrek” albo „wiertarka”. Przykładasz telefon do czoła, żeby widzieli je wszyscy oprócz ciebie, i pytasz: „Czy jestem zwierzęciem?”. Ekipa odpowiada tylko tak albo nie.',
       'Potem pyta następna osoba, o swoje hasło, i tak w kółko, aż ktoś trafi. Nie ma zegara, więc nikt nie gada na wyścigi. Wygrywa ten, kto zadaje pytania, które najwięcej odcinają.',
-      'Na jednym telefonie każdy najpierw po kolei pokazuje swoje hasło reszcie, a potem zaczyna się pytanie. W trybie online każdy ma hasło na swoim telefonie i chowa je stuknięciem.'
+      'Na jednym telefonie każdy najpierw po kolei pokazuje swoje hasło reszcie, a potem zaczyna się pytanie. Czółko online to gra każdy na swoim telefonie: jedna osoba zakłada pokój, reszta dołącza kodem, a hasło chowa się stuknięciem.'
     ],
     genre: 'Zgadywanka „Kim jestem?” z hasłem na czole',
     alsoKnownAs: ['Kim jestem', 'gra w hasła na czole', 'zgadywanka w stylu Heads Up'],
@@ -56,6 +59,11 @@ export const GAMES: Game[] = [
     online: true,
     modeLabel: 'Na jednym telefonie albo każdy na swoim',
     bestFor: 'ekipa dopiero się schodzi i trzeba czegoś na rozgrzewkę',
+    seo: {
+      title: 'Czółko online i na telefon - zasady gry (2-8 osób)',
+      description:
+        'Zagraj w Czółko online ze znajomymi: każdy na swoim telefonie albo jeden telefon na wszystkich. Polskie hasła, bez limitu czasu, za darmo na iPhone i Androida.'
+    },
     art: '/plakaty/czolko.webp',
     modeArt: { local: '/tryby/czolko-local.webp', online: '/tryby/czolko-online.webp' },
     glow: '#F59E0B',
@@ -63,7 +71,15 @@ export const GAMES: Game[] = [
       free: ['Klasyczne'],
       premium: ['Piłkarze', 'Telewizja', 'Film', 'Twarze internetu', 'Muzyka', 'Zwierzęta']
     },
-    keywords: ['czółko gra', 'kim jestem gra', 'gra w hasła na czole', 'gra imprezowa na telefon'],
+    keywords: [
+      'czółko online',
+      'czółko gra na telefon',
+      'jak się gra w czółko',
+      'czółko gra',
+      'kim jestem gra',
+      'gra w hasła na czole',
+      'gra imprezowa na telefon'
+    ],
     steps: [
       {
         name: 'Wybierzcie kategorię',
@@ -108,6 +124,21 @@ export const GAMES: Game[] = [
         question: 'Czym Czółko w BIFOR różni się od Heads Up?',
         answer:
           'W klasycznym Heads Up jedna osoba zgaduje na czas kilka haseł, a reszta je opisuje. W BIFOR każdy ma własne hasło, pyta o nie tak albo nie, a punkty zależą od tego, kto zgadnie pierwszy.'
+      },
+      {
+        question: 'Jak grać w Czółko online?',
+        answer:
+          'Każdy pobiera BIFOR na swój telefon. Jedna osoba zakłada pokój (potrzebuje do tego konta), reszta dołącza sześcioznakowym kodem albo kodem QR, już bez konta. Każdy widzi swoje hasło na swoim telefonie, przykłada go do czoła i pyta tak albo nie, a prowadzący zaznacza, kto zgadł i w jakiej kolejności.'
+      },
+      {
+        question: 'Czy w Czółko online da się grać na odległość?',
+        answer:
+          'Czółko w BIFOR jest pomyślane na spotkanie na żywo, bo hasło pokazujesz reszcie, przykładając telefon do czoła. Na wideorozmowie można trzymać telefon ekranem do kamery, ale przy jednym stole gra się dużo wygodniej.'
+      },
+      {
+        question: 'Czy w Czółko można grać na komputerze?',
+        answer:
+          'BIFOR to aplikacja na telefon, na iPhone i Androida, wersji na komputer nie ma. Czółko i tak gra się z telefonem przy czole. Bez aplikacji wystarczą karteczki samoprzylepne: każdy pisze hasło dla sąsiada i przykleja mu je na czoło.'
       },
       {
         question: 'Czy Czółko działa bez internetu?',

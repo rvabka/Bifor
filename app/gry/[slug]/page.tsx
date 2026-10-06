@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = getGame(slug);
   if (!game) return {};
 
-  const title = `${game.title} - zasady gry i jak grać (${game.players})`;
-  const description = `${game.summary} Za darmo w aplikacji BIFOR na iPhone i Androida.`;
+  const title = game.seo?.title ?? `${game.title} - zasady gry i jak grać (${game.players})`;
+  const description = game.seo?.description ?? `${game.summary} Za darmo w aplikacji BIFOR na iPhone i Androida.`;
 
   return {
     title,
@@ -34,14 +34,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: 'pl_PL',
       url: abs(gamePath(game.slug)),
       siteName: 'BIFOR',
-      title: `${game.title} - zasady gry na imprezę`,
-      description: game.summary,
+      title: game.seo?.title ?? `${game.title} - zasady gry na imprezę`,
+      description: game.seo?.description ?? game.summary,
       images: [{ url: game.art, width: 640, height: 857 }]
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${game.title} - zasady gry na imprezę`,
-      description: game.summary
+      title: game.seo?.title ?? `${game.title} - zasady gry na imprezę`,
+      description: game.seo?.description ?? game.summary
     }
   };
 }

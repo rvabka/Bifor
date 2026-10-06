@@ -37,7 +37,7 @@ export default function RoomActions({ code }: { code: string }) {
         href={roomAppLink(code)}
         className="bg-primary text-on-primary font-display inline-flex w-full max-w-sm items-center justify-center rounded-2xl px-7 py-4 text-base font-extrabold transition-transform duration-200 hover:scale-[1.02] active:scale-[0.99]"
       >
-        Otwórz w Bifor
+        Otwórz w BIFOR
       </a>
     </div>
   );

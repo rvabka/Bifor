@@ -4,8 +4,8 @@ import { SHORT_DESCRIPTION } from './lib/site';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: '/',
-    name: 'Bifor - gry imprezowe na telefon',
-    short_name: 'Bifor',
+    name: 'BIFOR - gry imprezowe na telefon',
+    short_name: 'BIFOR',
     description: SHORT_DESCRIPTION,
     start_url: '/',
     scope: '/',
