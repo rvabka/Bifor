@@ -24,19 +24,21 @@ export default function DownloadPage() {
       <div className="mx-auto grid max-w-6xl items-center px-6 pt-28 pb-28 sm:px-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-6 md:pt-32">
         {/* Grafika kończy się wygaszonym dołem, więc na telefonie nagłówek
             wchodzi na jej dolną część zamiast stać pod nią. */}
-        <div className="relative mx-auto w-[min(100%,30rem)] md:order-2 md:w-full md:max-w-[38rem]">
+        {/* Źródło ma 583 px, więc szerokość ma sufit - większa grafika na
+            ekranie Retina wychodziła rozmyta. */}
+        <div className="relative mx-auto w-[min(78%,19rem)] md:order-2 md:w-[21rem]">
           <Image
             src="/postacie/macha.webp"
             alt=""
             width={583}
             height={600}
             priority
-            sizes="(max-width: 768px) 92vw, 608px"
+            sizes="(max-width: 768px) 78vw, 336px"
             className="h-auto w-full"
           />
         </div>
 
-        <div className="relative -mt-[22%] flex flex-col items-center text-center md:order-1 md:mt-0 md:items-start md:text-left">
+        <div className="relative -mt-14 flex flex-col items-center text-center md:order-1 md:mt-0 md:items-start md:text-left">
           <h1 className="font-display text-[clamp(3rem,9vw,6rem)] leading-[0.92] font-extrabold tracking-[-0.04em] text-balance">
             Pobierz BIFOR
           </h1>
