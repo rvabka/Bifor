@@ -10,9 +10,16 @@ const TILES = [
     href: gamePath(g.slug),
     art: g.art,
     title: g.title,
-    caption: g.players
+    caption: g.tagline,
+    meta: g.players
   })),
-  { href: PARTY_PATH, art: '/plakaty/wieczor.webp', title: 'Wieczór BIFOR', caption: 'kilka gier, jedna tabela' }
+  {
+    href: PARTY_PATH,
+    art: '/plakaty/wieczor.webp',
+    title: 'Wieczór BIFOR',
+    caption: 'Kilka gier, jedna tabela na cały wieczór.',
+    meta: '3, 5 albo 8 gier'
+  }
 ];
 
 export default function GamesGrid() {
@@ -51,9 +58,10 @@ export default function GamesGrid() {
                     />
                   </span>
                   <span className="sr-only">{tile.title}</span>
-                  <span className="mt-3 block text-sm text-on-surface-variant transition-colors group-hover:text-on-surface">
+                  <span className="mt-3 block text-pretty text-sm leading-snug text-on-surface/90 transition-colors group-hover:text-on-surface sm:text-[15px]">
                     {tile.caption}
                   </span>
+                  <span className="mt-1 block text-[13px] text-on-surface-variant">{tile.meta}</span>
                 </Link>
               </Reveal>
             </li>
