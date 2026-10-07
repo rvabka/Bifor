@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function DownloadPage() {
   return (
     <PageShell>
-      <div className="mx-auto grid max-w-6xl items-center px-6 pt-28 pb-28 sm:px-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-6 md:pt-32">
+      <div className="mx-auto grid min-h-svh max-w-6xl content-center items-center px-6 pt-28 pb-28 sm:px-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-6 md:pt-32">
         {/* Grafika kończy się wygaszonym dołem, więc na telefonie nagłówek
             wchodzi na jej dolną część zamiast stać pod nią. */}
         {/* Źródło ma 583 px, więc szerokość ma sufit - większa grafika na
