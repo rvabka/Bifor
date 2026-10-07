@@ -40,30 +40,44 @@ export default function FAQPage() {
     <>
       <JsonLd data={jsonLd} />
       <PageShell>
-        <PageHero
-          title="Pytania i odpowiedzi"
-          lead="Wszystko o BIFOR w jednym miejscu. Zasady konkretnych gier znajdziesz na ich stronach."
-        />
-
-        <section id="faq" className="px-6 pt-10 sm:px-8">
-          <div className="relative mx-auto max-w-6xl">
-            <div className="max-w-3xl divide-y divide-white/[0.07]">
-              {faqs.map((item) => (
-                <div key={item.question} className="py-6">
-                  <h2 className="font-display text-lg font-bold tracking-[-0.01em]">{item.question}</h2>
-                  <p className="mt-2 text-pretty leading-relaxed text-on-surface-variant">{item.answer}</p>
+        <div className="relative">
+          {/* Kolumna obok listy pytań: postać ma wysokość ekranu i jedzie
+              razem z czytającym od nagłówka do ostatniego pytania. */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 hidden px-8 lg:block">
+            <div className="relative mx-auto h-full max-w-6xl">
+              <div className="absolute inset-y-0 right-0 w-[calc(100%-48rem-2rem)]">
+                <div className="sticky top-28 h-[calc(100svh-8rem)]">
+                  <Image
+                    src="/postacie/reka.webp"
+                    alt=""
+                    width={562}
+                    height={1600}
+                    sizes="(max-width: 1280px) 220px, 330px"
+                    className="h-full w-full object-contain object-bottom"
+                  />
                 </div>
-              ))}
+              </div>
             </div>
-            <Image
-              src="/postacie/reka.webp"
-              alt=""
-              width={300}
-              height={855}
-              className="pointer-events-none absolute right-0 top-4 hidden h-auto w-24 lg:block"
-            />
           </div>
-        </section>
+
+          <PageHero
+            title="Pytania i odpowiedzi"
+            lead="Wszystko o BIFOR w jednym miejscu. Zasady konkretnych gier znajdziesz na ich stronach."
+          />
+
+          <section id="faq" className="px-6 pt-10 sm:px-8">
+            <div className="relative mx-auto max-w-6xl">
+              <div className="max-w-3xl divide-y divide-white/[0.07]">
+                {faqs.map((item) => (
+                  <div key={item.question} className="py-6">
+                    <h2 className="font-display text-lg font-bold tracking-[-0.01em]">{item.question}</h2>
+                    <p className="mt-2 text-pretty leading-relaxed text-on-surface-variant">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
 
         <section className="px-6 pt-20 sm:px-8">
           <div className="mx-auto max-w-6xl">

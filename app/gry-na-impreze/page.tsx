@@ -69,7 +69,7 @@ export default function GuidePage() {
       <JsonLd data={jsonLd} />
       <PageShell>
         <header className="px-6 pt-28 sm:px-8 md:pt-36">
-          <div className="relative mx-auto max-w-6xl">
+          <div className="relative mx-auto max-w-6xl lg:min-h-[24rem] xl:min-h-[35rem]">
             <h1 className="font-display max-w-3xl text-balance text-[clamp(2.25rem,5.5vw,4rem)] font-extrabold leading-[0.97] tracking-[-0.035em]">
               W co zagrać na imprezie?
             </h1>
@@ -78,8 +78,17 @@ export default function GuidePage() {
                 <p key={p.slice(0, 20)}>{p}</p>
               ))}
             </div>
-            <Reveal from="right" className="pointer-events-none absolute -top-6 right-0 hidden w-40 lg:block">
-              <Image src="/postacie/wskazuje.webp" alt="" width={460} height={669} priority className="h-auto w-full" />
+            {/* Odbity, żeby wskazywał w dół na listę, a nie poza ekran. */}
+            <Reveal from="right" className="pointer-events-none absolute -top-4 -right-6 hidden w-[17rem] lg:block xl:-top-6 xl:w-[25rem]">
+              <Image
+                src="/postacie/wskazuje.webp"
+                alt=""
+                width={1101}
+                height={1600}
+                priority
+                sizes="(max-width: 1280px) 272px, 400px"
+                className="h-auto w-full -scale-x-100"
+              />
             </Reveal>
           </div>
         </header>

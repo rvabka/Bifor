@@ -21,40 +21,48 @@ export const metadata: Metadata = {
 export default function DownloadPage() {
   return (
     <PageShell>
-      <div className="mx-auto flex max-w-2xl flex-col items-center px-6 pt-32 pb-28 text-center md:pt-40">
-        <Image
-          src="/postacie/macha.webp"
-          alt=""
-          width={440}
-          height={449}
-          priority
-          className="h-auto w-36 sm:w-44"
-        />
-        <h1 className="font-display mt-6 text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance">
-          Pobierz BIFOR
-        </h1>
-        <p className="text-on-surface-variant mx-auto mt-6 max-w-md text-lg leading-relaxed text-pretty">
-          Siedem gier na imprezę po polsku, za darmo. Wybierz swój sklep.
-        </p>
+      <div className="mx-auto grid max-w-6xl items-center px-6 pt-28 pb-28 sm:px-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-6 md:pt-32">
+        {/* Grafika kończy się wygaszonym dołem, więc na telefonie nagłówek
+            wchodzi na jej dolną część zamiast stać pod nią. */}
+        <div className="relative mx-auto w-[min(100%,30rem)] md:order-2 md:w-full md:max-w-[38rem]">
+          <Image
+            src="/postacie/macha.webp"
+            alt=""
+            width={583}
+            height={600}
+            priority
+            sizes="(max-width: 768px) 92vw, 608px"
+            className="h-auto w-full"
+          />
+        </div>
 
-        <StoreBadges center className="mt-10" />
+        <div className="relative -mt-[22%] flex flex-col items-center text-center md:order-1 md:mt-0 md:items-start md:text-left">
+          <h1 className="font-display text-[clamp(3rem,9vw,6rem)] leading-[0.92] font-extrabold tracking-[-0.04em] text-balance">
+            Pobierz BIFOR
+          </h1>
+          <p className="text-on-surface-variant mt-6 max-w-md text-lg leading-relaxed text-pretty">
+            Siedem gier na imprezę po polsku, za darmo. Wybierz swój sklep.
+          </p>
 
-        <p className="text-on-surface-variant mt-14 max-w-md text-sm leading-relaxed text-pretty">
-          Coś nie działa albo masz pomysł na grę? Napisz na{' '}
-          <a
-            href="mailto:contact@bifor.games"
-            className="text-primary decoration-primary/40 hover:decoration-primary underline underline-offset-4"
+          <StoreBadges className="mt-10 justify-center md:justify-start" />
+
+          <p className="text-on-surface-variant mt-14 max-w-md text-sm leading-relaxed text-pretty">
+            Coś nie działa albo masz pomysł na grę? Napisz na{' '}
+            <a
+              href="mailto:contact@bifor.games"
+              className="text-primary decoration-primary/40 hover:decoration-primary underline underline-offset-4"
+            >
+              contact@bifor.games
+            </a>
+            . Czytamy każdą wiadomość.
+          </p>
+          <Link
+            href="/gry"
+            className="text-on-surface-variant mt-4 text-sm underline decoration-white/20 underline-offset-4 hover:text-on-surface"
           >
-            contact@bifor.games
-          </a>
-          . Czytamy każdą wiadomość.
-        </p>
-        <Link
-          href="/gry"
-          className="text-on-surface-variant mt-4 text-sm underline decoration-white/20 underline-offset-4 hover:text-on-surface"
-        >
-          Najpierw zobacz gry
-        </Link>
+            Najpierw zobacz gry
+          </Link>
+        </div>
       </div>
     </PageShell>
   );

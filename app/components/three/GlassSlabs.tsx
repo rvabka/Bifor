@@ -135,7 +135,7 @@ export default function GlassSlabs({
       /* Off-screen the loop stops completely. Left running, this scene held
          the whole page at 7 fps - including the carousel two sections down.
          The exception is the handful of frames before the first one lands:
-         the canvas is armed a viewport and a half out, so without this it
+         the canvas is armed long before the section, so without this it
          would sit mounted and undrawn until it scrolled in, and the shaders
          would compile in front of the visitor instead of ahead of them. */
       frameloop={active || !ready ? 'always' : 'never'}

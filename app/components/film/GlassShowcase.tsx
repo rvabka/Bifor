@@ -1,15 +1,26 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { GAMES } from '../../lib/games';
 import { useReducedMotion } from '../useReducedMotion';
 
-/* WebGL, drei and postprocessing are a heavy payload for one section, so the
-   scene is split out. Until it lands the block is just type on black, which
-   is why it is fetched on the first scroll and armed a viewport and a half
-   out rather than at the edge of the section. */
+/* WebGL, drei and postprocessing are a heavy payload for one section (about
+   280 KB over the wire), so the scene is split out. Until it draws, the block
+   shows the poster below - the scene's own first frame - instead of black. */
 const GlassSlabs = dynamic(() => import('../three/GlassSlabs'), { ssr: false });
+
+/* Captured from the live scene at t = 0 and progress 0, without the scrim and
+   the copy, on a 2.4:1 canvas. The camera has a fixed vertical field of view,
+   so the frame lines up with the scene at any width as long as it is scaled
+   to the viewport height and centred - which is exactly how it is placed. */
+const POSTER = { src: '/film/glass-poster.webp', width: 2880, height: 1200 };
+
+const onIdle = (fn: () => void, timeout: number) =>
+  window.requestIdleCallback
+    ? window.requestIdleCallback(fn, { timeout })
+    : window.setTimeout(fn, 300);
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
@@ -51,22 +62,33 @@ export default function GlassShowcase() {
     arm.observe(section);
     live.observe(section);
 
-    /* Warmed on the first scroll, on idle: the module then has three screens
-       of hero to land in instead of starting to download once the section is
-       already needed. Someone who bounces off the hero still pays nothing. */
+    /* Fetched as soon as the page is idle, then mounted on the next idle
+       slot: by the time the visitor scrolls through the hero the shaders are
+       compiled and the canvas sits ready, paused, behind the poster. Waiting
+       for the first scroll left the module downloading while the section was
+       already on screen. */
     let idle = 0;
+    let started = false;
+    let cancelled = false;
     const warm = () => {
-      const load = () => void import('../three/GlassSlabs');
-      idle = window.requestIdleCallback
-        ? window.requestIdleCallback(load, { timeout: 4000 })
-        : window.setTimeout(load, 400);
+      if (started) return;
+      started = true;
+      idle = onIdle(() => {
+        void import('../three/GlassSlabs').then(() => {
+          if (!cancelled) idle = onIdle(() => setArmed(true), 1500);
+        });
+      }, 1500);
     };
     window.addEventListener('scroll', warm, { passive: true, once: true });
+    if (document.readyState === 'complete') warm();
+    else window.addEventListener('load', warm, { once: true });
 
     return () => {
+      cancelled = true;
       arm.disconnect();
       live.disconnect();
       window.removeEventListener('scroll', warm);
+      window.removeEventListener('load', warm);
       if (!idle) return;
       if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
       else window.clearTimeout(idle);
@@ -107,6 +129,18 @@ export default function GlassShowcase() {
       aria-label="Siedem gier Bifor"
     >
       <div className="sticky top-0 flex h-svh items-center overflow-hidden bg-[#0a0a0a]">
+        <Image
+          src={POSTER.src}
+          alt=""
+          aria-hidden
+          width={POSTER.width}
+          height={POSTER.height}
+          unoptimized
+          loading="eager"
+          fetchPriority="low"
+          draggable={false}
+          className="pointer-events-none absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-1/2 select-none"
+        />
         {armed ? (
           /* Revealed on the first drawn frame rather than on mount, so the
              section never shows the blank canvas that precedes it. */
