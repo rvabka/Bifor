@@ -5,7 +5,8 @@
 
 // Karta BIFOR w App Store. Identyfikator z App Store Connect (ascAppId), bez
 // nazwy w adresie - Apple przekierowuje sam, a zmiana nazwy apki nie psuje linku.
-export const APP_STORE_URL = 'https://apps.apple.com/pl/app/id6788678207';
+export const APP_STORE_ID = '6788678207';
+export const APP_STORE_URL = `https://apps.apple.com/pl/app/id${APP_STORE_ID}`;
 
 // APK jako plik wydania na PUBLICZNYM repo strony. Adres `/releases/latest/`
 // zawsze wskazuje najnowsze wydanie, wiec po kolejnym buildzie NIE zmieniasz tu

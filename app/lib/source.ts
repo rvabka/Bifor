@@ -1,4 +1,4 @@
-import { APP_STORE_URL, PLAY_URL, androidTarget } from './download';
+import { APP_STORE_ID, APP_STORE_URL, PLAY_URL, androidTarget } from './download';
 
 // Źródło wejścia (`?z=tiktok`) doklejane do linków sklepów, żeby App Store Connect
 // i Play Console pokazały, z którego kanału przyszła instalacja. Strona sama nic
@@ -7,10 +7,10 @@ export const SOURCE_PARAM = 'z';
 export const SITE_SOURCE = 'strona';
 export const INVITE_SOURCE = 'zaproszenie';
 
-// Identyfikator dostawcy z App Store Connect (generator linków kampanii w App
-// Analytics, parametr `pt`). Bez niego Apple nie przypisze instalacji do kampanii,
-// więc do czasu wpisania link do App Store idzie bez oznaczenia.
-export const APP_STORE_PROVIDER_TOKEN: string | null = null;
+// Identyfikator dostawcy z App Store Connect (Analytics → Acquisition → Campaigns,
+// parametr `pt` w wygenerowanym linku). Bez niego Apple nie przypisze instalacji
+// do kampanii.
+export const APP_STORE_PROVIDER_TOKEN: string | null = '129131510';
 
 const SESSION_KEY = 'bifor.zrodlo';
 const SOCIAL = new Set(['tiktok', 'instagram', 'youtube', 'facebook']);
@@ -30,9 +30,10 @@ const mediumFor = (source: string) => {
   return 'partner';
 };
 
+// Format linku kampanii dokładnie taki, jaki generuje App Store Connect.
 export const appStoreUrlFor = (source: string | null) =>
   source && APP_STORE_PROVIDER_TOKEN
-    ? `${APP_STORE_URL}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=${source}&mt=8`
+    ? `https://apps.apple.com/app/apple-store/id${APP_STORE_ID}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=${source}&mt=8`
     : APP_STORE_URL;
 
 export const playUrlFor = (source: string | null) => {
