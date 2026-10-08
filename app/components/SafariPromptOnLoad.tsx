@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from 'react';
 
 import { SAFARI_PROMPT_PARAM, blocksAppStore } from '../lib/inAppBrowser';
+import { SITE_SOURCE, currentSource } from '../lib/source';
 import OpenInSafariSheet from './OpenInSafariSheet';
 
 const noSubscription = () => () => {};
@@ -15,5 +16,6 @@ export default function SafariPromptOnLoad() {
   const prompt = useSyncExternalStore(noSubscription, shouldPrompt, () => false);
   const [dismissed, setDismissed] = useState(false);
 
-  return prompt && !dismissed ? <OpenInSafariSheet onClose={() => setDismissed(true)} /> : null;
+  if (!prompt || dismissed) return null;
+  return <OpenInSafariSheet source={currentSource(SITE_SOURCE)} onClose={() => setDismissed(true)} />;
 }

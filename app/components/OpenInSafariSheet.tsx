@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 
 import { SAFARI_DOWNLOAD_URL } from '../lib/inAppBrowser';
+import { SOURCE_PARAM } from '../lib/source';
 
 // Arkusz dla iPhone'a w przeglądarce TikToka. Nie ma tu przycisku „otwórz w
 // Safari” - TikTok blokuje także to przejście tym samym komunikatem, a przycisk
@@ -11,7 +12,7 @@ import { SAFARI_DOWNLOAD_URL } from '../lib/inAppBrowser';
 // zawsze: menu ••• TikToka i wyszukanie apki w App Store. Karta apki u góry
 // mówi, dokąd prowadzą te kroki. Rodzic montuje arkusz tylko na czas pokazania,
 // więc stan „Skopiowano” nie przechodzi na kolejne otwarcie.
-export default function OpenInSafariSheet({ onClose }: { onClose: () => void }) {
+export default function OpenInSafariSheet({ source, onClose }: { source: string; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function OpenInSafariSheet({ onClose }: { onClose: () => void }) 
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(SAFARI_DOWNLOAD_URL);
+      await navigator.clipboard.writeText(`${SAFARI_DOWNLOAD_URL}?${SOURCE_PARAM}=${source}`);
       setCopied(true);
     } catch {
       setCopied(false);

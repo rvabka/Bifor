@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { GAMES, gamePath } from './lib/games';
+import { NEVER_PATH } from './lib/never';
 import { abs } from './lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -29,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     { url: abs('/wieczor'), lastModified, changeFrequency: 'monthly', priority: 0.8, images: [abs('/wieczor/hero.webp')] },
     { url: abs('/gry-na-impreze'), lastModified, changeFrequency: 'monthly', priority: 0.9 },
+    { url: abs(NEVER_PATH), lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: abs('/faq'), lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: abs('/terms'), lastModified, changeFrequency: 'yearly', priority: 0.3 },
     { url: abs('/usun-konto'), lastModified, changeFrequency: 'yearly', priority: 0.3 },

@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import StoreBadges from '../../components/StoreBadges';
 import PageShell from '../../components/ui/PageShell';
 import { normalizeRoomCode } from '../../lib/room';
+import { INVITE_SOURCE } from '../../lib/source';
 import { abs } from '../../lib/site';
 import RoomActions from './RoomActions';
 
@@ -68,7 +69,7 @@ export default async function RoomInvitePage({ params }: Props) {
           <p className="text-on-surface-variant mx-auto mt-3 max-w-md text-sm leading-relaxed text-pretty sm:text-base">
             Pobierz za darmo, stuknij plus na dole ekranu, wybierz Dołącz i wpisz kod {code}.
           </p>
-          <StoreBadges center className="mt-8" />
+          <StoreBadges center className="mt-8" source={INVITE_SOURCE} />
         </div>
       </div>
     </PageShell>

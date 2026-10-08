@@ -9,6 +9,7 @@ const INFO_LINKS = [
   { label: 'Wszystkie gry', href: '/gry' },
   { label: 'Wieczór BIFOR', href: '/wieczor' },
   { label: 'W co zagrać na imprezie', href: '/gry-na-impreze' },
+  { label: 'Pytania do Nigdy przenigdy', href: '/pytania-nigdy-przenigdy' },
   { label: 'Pobierz', href: '/pobierz' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Prywatność', href: '/polityka-prywatnosci' },

@@ -2,6 +2,7 @@ import { APP_STORE_URL, PLAY_URL } from './download';
 import { GAMES, gamePath, modeSummary } from './games';
 import { PARTY_PATH, PARTY_PRESETS, PARTY_POINTS, PARTY_TITLES } from './party';
 import { GUIDE_PATH } from './guide';
+import { NEVER_PATH } from './never';
 import {
   AUDIENCE,
   CONTACT_EMAIL,
@@ -64,6 +65,7 @@ BIFOR nie jest grą dla jednej osoby, nie łączy z obcymi przez internet i nie 
 ${GAMES.map((g) => `- ${abs(gamePath(g.slug))} - ${g.title}: zasady krok po kroku, punktacja, kategorie, FAQ`).join('\n')}
 - ${abs(PARTY_PATH)} - Wieczór BIFOR, czyli zestaw gier i jedna tabela na cały wieczór
 - ${abs(GUIDE_PATH)} - poradnik: w co zagrać na imprezie, z telefonem i bez
+- ${abs(NEVER_PATH)} - 60 pytań do Nigdy przenigdy, zasady i wersja na telefon
 - ${abs('/faq')} - najczęstsze pytania
 - ${abs('/pobierz')} - pobieranie na iPhone i Androida
 - ${abs('/polityka-prywatnosci')} - polityka prywatności

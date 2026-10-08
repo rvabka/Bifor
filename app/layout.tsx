@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import JsonLd from './components/JsonLd';
 import SmoothScroll from './components/SmoothScroll';
+import SourceCapture from './components/SourceCapture';
 import { appNode, organizationNode, websiteNode } from './lib/jsonld';
 import { META_DESCRIPTION, SITE_NAME, SITE_URL } from './lib/site';
 
@@ -126,6 +127,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-background text-on-surface antialiased">
         <SmoothScroll />
+        <SourceCapture />
         {children}
       </body>
     </html>
