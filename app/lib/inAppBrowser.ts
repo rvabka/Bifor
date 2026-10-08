@@ -10,10 +10,10 @@ const IOS_UA = /iPhone|iPad|iPod/i;
 // przechodzi normalnie, więc problem dotyczy wyłącznie iPhone'a.
 export const blocksAppStore = (ua: string) => IOS_UA.test(ua) && TIKTOK_UA.test(ua);
 
-// Schemat Safari (iOS 17+). Otwiera stały adres pobierania w prawdziwym Safari,
-// a stamtąd App Store działa jak zawsze.
+// Stały adres pobierania - wklejony w Safari przekierowuje prosto do App Store.
+// Schematu `x-safari-https://` nie używamy: TikTok blokuje go tym samym
+// komunikatem co link do App Store.
 export const SAFARI_DOWNLOAD_URL = abs('/pobierz/ios');
-export const safariEscapeUrl = `x-safari-${SAFARI_DOWNLOAD_URL}`;
 
 // Parametr, z którym /pobierz/ios odsyła przeglądarkę TikToka na /pobierz -
 // tam od razu wyjeżdża instrukcja zamiast martwego przekierowania.
