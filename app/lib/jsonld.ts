@@ -59,7 +59,7 @@ export const appNode = {
   url: SITE_URL,
   image: abs('/logo.png'),
   softwareVersion: '1.0',
-  contentRating: '18+',
+  contentRating: '16+',
   downloadUrl: STORE_LINKS,
   installUrl: APP_STORE_URL,
   sameAs: STORE_LINKS,

@@ -172,7 +172,7 @@ export const GAMES: Game[] = [
     glow: '#22C55E',
     categories: {
       free: ['Klasyczne'],
-      premium: ['Piłka nożna', 'Polska', 'Popkultura', 'Impreza', 'Pikantne 18+']
+      premium: ['Piłka nożna', 'Polska', 'Popkultura', 'Impreza', 'Pikantne']
     },
     keywords: ['zakazane słowa gra', 'tabu na telefon', 'gra w opisywanie haseł', 'gry drużynowe na imprezę'],
     steps: [
@@ -223,7 +223,7 @@ export const GAMES: Game[] = [
       {
         question: 'Jakie są kategorie haseł?',
         answer:
-          'Klasyczne są za darmo. Z BIFOR+ dochodzą Piłka nożna, Polska, Popkultura, Impreza i Pikantne 18+.'
+          'Klasyczne są za darmo. Z BIFOR+ dochodzą Piłka nożna, Polska, Popkultura, Impreza i Pikantne.'
       }
     ]
   },
@@ -262,7 +262,7 @@ export const GAMES: Game[] = [
         'Pokolenie Z',
         'Dookoła świata',
         'Znani sportowcy',
-        'Pikantne 18+'
+        'Pikantne'
       ]
     },
     keywords: ['impostor gra', 'gra w impostora na telefon', 'gra w zdrajcę', 'gra w blefowanie'],
@@ -384,7 +384,7 @@ export const GAMES: Game[] = [
       {
         question: 'Czy Sekrety mają wersję z piciem?',
         answer:
-          'Jest opcjonalna „Wersja z drinkiem”, domyślnie wyłączona. Mówi, kto pije łyk po rundzie, i nie wpływa na punkty.'
+          'Jest opcjonalna „Wersja z łykiem”, domyślnie wyłączona. Mówi, kto po rundzie bierze łyk swojego napoju, i nie wpływa na punkty.'
       },
       {
         question: 'Które kategorie są darmowe?',
@@ -505,7 +505,7 @@ export const GAMES: Game[] = [
     glow: '#F97316',
     categories: {
       free: ['Klasyczne'],
-      premium: ['Dom', 'Jedzenie', 'Zwierzaki', 'Natura', 'Groza', 'Fantazja', 'Pikantne 18+']
+      premium: ['Dom', 'Jedzenie', 'Zwierzaki', 'Natura', 'Groza', 'Fantazja', 'Pikantne']
     },
     keywords: ['kalambury na p', 'gra na literę p', 'gry słowne na imprezę', 'gra w opisywanie słowami na p'],
     steps: [
@@ -579,7 +579,7 @@ export const GAMES: Game[] = [
     glow: '#06B6D4',
     categories: {
       free: ['Klasyczne'],
-      premium: ['Dzieciństwo i podwórko', 'Internet i telefon', 'Geografia i podróże', 'Pikantne 18+']
+      premium: ['Dzieciństwo i podwórko', 'Internet i telefon', 'Geografia i podróże', 'Pikantne']
     },
     keywords: ['gra wymień 3 rzeczy', 'szybka trójka gra', 'gra na skojarzenia', 'gra imprezowa na czas'],
     steps: [

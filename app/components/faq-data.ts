@@ -62,7 +62,7 @@ export const faqs = [
   {
     question: 'Dla kogo jest BIFOR?',
     answer:
-      'Dla osób pełnoletnich, które spotykają się w grupie: domówki, before, wyjazdy, otrzęsiny, integracje. To nie jest gra dla jednej osoby ani gra z obcymi przez internet.'
+      'Dla osób od 16 lat, które spotykają się w grupie: domówki, before, wyjazdy, otrzęsiny, integracje. To nie jest gra dla jednej osoby ani gra z obcymi przez internet.'
   },
   {
     question: 'Czy gry są po polsku?',

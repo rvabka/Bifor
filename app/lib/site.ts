@@ -30,7 +30,7 @@ export const KEY_FACTS: string[] = [
   'Wszystkie gry są darmowe i każda ma darmowe kategorie haseł. BIFOR+ to opcjonalna subskrypcja (tygodniowa albo roczna z darmowym tygodniem na start), która dodaje ponad 4500 haseł i pytań w sześciu grach.',
   'W pokoju online płatne kategorie wnosi host: jeśli osoba prowadząca pokój ma BIFOR+, cała ekipa gra nimi bez własnego zakupu.',
   'Aplikację pobiera się z App Store (iPhone) i Google Play (Android). Interfejs i wszystkie hasła są po polsku, pisane od zera, a nie tłumaczone.',
-  'Aplikacja jest przeznaczona dla osób pełnoletnich.'
+  'Aplikacja jest przeznaczona dla osób od 16 lat.'
 ];
 
 export const AUDIENCE = [
