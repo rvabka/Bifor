@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { APP_STORE_URL, PLAY_URL } from '../lib/download';
+import { PLAY_URL } from '../lib/download';
+import AppStoreLink from './AppStoreLink';
 
 /* Oficjalne przyciski sklepów w polskiej wersji (Apple i Google wymagają ich
    grafik, własnych rysować nie wolno). PNG Google ma w sobie przezroczysty
@@ -16,13 +17,12 @@ export default function StoreBadges({
     <div
       className={`flex flex-wrap items-center gap-x-3 gap-y-2 ${center ? 'justify-center' : ''} ${className}`}
     >
-      <a
-        href={APP_STORE_URL}
+      <AppStoreLink
         className="block transition-transform duration-200 hover:-translate-y-0.5"
-        aria-label="Pobierz BIFOR z App Store"
+        ariaLabel="Pobierz BIFOR z App Store"
       >
         <img src="/sklepy/app-store-pl.svg" alt="Pobierz z App Store" width={144} height={48} className="h-12 w-auto" />
-      </a>
+      </AppStoreLink>
       {PLAY_URL && (
         <a
           href={PLAY_URL}

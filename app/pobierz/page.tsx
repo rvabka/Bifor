@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { SITE_URL } from '../lib/site';
 import PageShell from '../components/ui/PageShell';
+import SafariPromptOnLoad from '../components/SafariPromptOnLoad';
 import StoreBadges from '../components/StoreBadges';
 
 export const metadata: Metadata = {
@@ -66,6 +67,7 @@ export default function DownloadPage() {
           </Link>
         </div>
       </div>
+      <SafariPromptOnLoad />
     </PageShell>
   );
 }

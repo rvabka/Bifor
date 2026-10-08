@@ -1,21 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 
-const APP_STORE_URL = 'https://apps.apple.com/app/id0000000000';
-const PLAY_STORE_URL =
-  'https://play.google.com/store/apps/details?id=com.bifor.app';
+import { APP_STORE_URL, androidTarget } from '../../lib/download';
+
+type Platform = 'ios' | 'android' | 'other';
+
+const noSubscription = () => () => {};
+const detectPlatform = (): Platform => {
+  const ua = navigator.userAgent;
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'ios';
+  if (/Android/i.test(ua)) return 'android';
+  return 'other';
+};
 
 export default function AuthCallbackPage() {
-  const [platform, setPlatform] = useState<'ios' | 'android' | 'other'>('other');
+  const platform = useSyncExternalStore<Platform>(noSubscription, detectPlatform, () => 'other');
 
   useEffect(() => {
-    const ua = navigator.userAgent;
-    const isIos = /iPhone|iPad|iPod/i.test(ua);
-    const isAndroid = /Android/i.test(ua);
-    setPlatform(isIos ? 'ios' : isAndroid ? 'android' : 'other');
-
-    if (isIos || isAndroid) {
+    if (platform !== 'other') {
       const params = new URLSearchParams(window.location.search);
       const hasAuthPayload =
         params.has('code') || params.has('token_hash') || params.has('error');
@@ -24,9 +27,9 @@ export default function AuthCallbackPage() {
         window.location.href = scheme;
       }
     }
-  }, []);
+  }, [platform]);
 
-  const storeUrl = platform === 'ios' ? APP_STORE_URL : PLAY_STORE_URL;
+  const storeUrl = platform === 'ios' ? APP_STORE_URL : androidTarget;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-950 px-6 text-white">
