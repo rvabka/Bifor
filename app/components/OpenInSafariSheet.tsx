@@ -44,10 +44,10 @@ export default function OpenInSafariSheet({ onClose }: { onClose: () => void }) 
       <svg
         aria-hidden
         viewBox="0 0 24 24"
-        className="pointer-events-none absolute top-2 right-4 h-8 w-8 text-white motion-safe:animate-bounce"
+        className="pointer-events-none absolute top-1 right-2 h-16 w-16 text-white motion-safe:animate-bounce"
         fill="none"
         stroke="currentColor"
-        strokeWidth={2.2}
+        strokeWidth={2.6}
         strokeLinecap="round"
         strokeLinejoin="round"
       >
@@ -91,7 +91,8 @@ export default function OpenInSafariSheet({ onClose }: { onClose: () => void }) 
         </ol>
 
         <p className="text-on-surface-variant mt-6 text-sm leading-relaxed">
-          Możesz też wpisać <span className="font-semibold text-white">BIFOR</span> w wyszukiwarce App&nbsp;Store.
+          Możesz też wpisać <span className="font-semibold text-white">BIFOR</span>
+          {' w wyszukiwarce App\u00a0Store.'}
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
