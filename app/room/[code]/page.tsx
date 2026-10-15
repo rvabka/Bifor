@@ -67,9 +67,10 @@ export default async function RoomInvitePage({ params }: Props) {
             Nie masz jeszcze BIFOR?
           </h2>
           <p className="text-on-surface-variant mx-auto mt-3 max-w-md text-sm leading-relaxed text-pretty sm:text-base">
-            Pobierz za darmo, stuknij plus na dole ekranu, wybierz Dołącz i wpisz kod {code}.
+            Pobierz za darmo. Kod {code} skopiujemy, gdy przejdziesz do sklepu - w BIFOR
+            wkleisz go jednym stuknięciem na ekranie dołączania.
           </p>
-          <StoreBadges center className="mt-8" source={INVITE_SOURCE} />
+          <StoreBadges center className="mt-8" source={INVITE_SOURCE} roomCode={code} />
         </div>
       </div>
     </PageShell>

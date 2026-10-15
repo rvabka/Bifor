@@ -11,11 +11,13 @@ import PlayStoreLink from './PlayStoreLink';
 export default function StoreBadges({
   className = '',
   center = false,
-  source = SITE_SOURCE
+  source = SITE_SOURCE,
+  roomCode = null
 }: {
   className?: string;
   center?: boolean;
   source?: string;
+  roomCode?: string | null;
 }) {
   return (
     <div
@@ -25,6 +27,7 @@ export default function StoreBadges({
         className="block transition-transform duration-200 hover:-translate-y-0.5"
         ariaLabel="Pobierz BIFOR z App Store"
         source={source}
+        roomCode={roomCode}
       >
         <img src="/sklepy/app-store-pl.svg" alt="Pobierz z App Store" width={144} height={48} className="h-12 w-auto" />
       </AppStoreLink>
@@ -33,6 +36,7 @@ export default function StoreBadges({
           className="block transition-transform duration-200 hover:-translate-y-0.5"
           ariaLabel="Pobierz BIFOR z Google Play"
           source={source}
+          roomCode={roomCode}
         >
           <img
             src="/sklepy/google-play-pl.png"

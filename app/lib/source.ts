@@ -36,11 +36,15 @@ export const appStoreUrlFor = (source: string | null) =>
     ? `https://apps.apple.com/app/apple-store/id${APP_STORE_ID}?pt=${APP_STORE_PROVIDER_TOKEN}&ct=${source}&mt=8`
     : APP_STORE_URL;
 
-export const playUrlFor = (source: string | null) => {
+// `room` jedzie przez instalację do apki (Google Play oddaje referrer przy
+// pierwszym uruchomieniu), więc zaproszony znajomy po nicku trafia od razu do
+// pokoju, zamiast szukać ekranu dołączania.
+export const playUrlFor = (source: string | null, room: string | null = null) => {
   if (!PLAY_URL) return androidTarget;
-  if (!source) return PLAY_URL;
-  const referrer = encodeURIComponent(`utm_source=${source}&utm_medium=${mediumFor(source)}`);
-  return `${PLAY_URL}&referrer=${referrer}`;
+  if (!source && !room) return PLAY_URL;
+  const parts = source ? [`utm_source=${source}`, `utm_medium=${mediumFor(source)}`] : [];
+  if (room) parts.push(`room=${room}`);
+  return `${PLAY_URL}&referrer=${encodeURIComponent(parts.join('&'))}`;
 };
 
 // Źródło z adresu wejścia zostaje w sesji, bo do sklepu klika się zwykle dopiero
