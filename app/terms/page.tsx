@@ -51,7 +51,7 @@ export default function TermsPage() {
             Regulamin
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 8 października 2026
+            Ostatnia aktualizacja: 15 października 2026
           </p>
           <p className={P_CLASS}>
             Niniejszy Regulamin (dalej „Regulamin”) stanowi umowę licencyjną
@@ -104,7 +104,7 @@ export default function TermsPage() {
         <Section title="3. Wiek i uprawnienie do korzystania">
           <p className={P_CLASS}>
             Aby zakładać konto i korzystać z Aplikacji, musisz mieć ukończone co
-            najmniej 16 lat; przy pierwszym uruchomieniu potwierdzasz swój wiek.
+            najmniej 16 lat; wiek potwierdzasz przy zakładaniu konta.
             Jeśli nie masz jeszcze 18 lat, zakupy w Aplikacji (w tym subskrypcja
             BIFOR+) wymagają zgody rodzica lub opiekuna.
             Aplikacja zawiera treści imprezowe - pytania, zabawy i wyzwania

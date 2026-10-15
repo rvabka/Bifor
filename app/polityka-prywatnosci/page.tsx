@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             Polityka prywatności
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 8 października 2026
+            Ostatnia aktualizacja: 15 października 2026
           </p>
         </div>
 
@@ -160,9 +160,11 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>
               <strong className="font-normal text-on-surface">Wiek</strong> -
-              jednorazowe potwierdzenie ukończenia 16 lat. Podana data urodzenia
-              służy wyłącznie do weryfikacji wieku i pozostaje lokalnie na Twoim
-              urządzeniu - nie wysyłamy jej na serwer.
+              potwierdzenie ukończenia 16 lat przy zakładaniu konta (pole zgody
+              przy rejestracji mailem albo informacja pod logowaniem przez Apple
+              lub Google). Nie pytamy o datę urodzenia. Na Twoim urządzeniu
+              zapisujemy wyłącznie wersję zaakceptowanego Regulaminu i datę
+              akceptacji - nie wysyłamy ich na serwer.
             </li>
           </ul>
         </section>
