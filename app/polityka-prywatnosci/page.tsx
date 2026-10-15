@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             Polityka prywatności
           </h1>
           <p className="text-on-surface-variant text-sm">
-            Ostatnia aktualizacja: 15 października 2026
+            Ostatnia aktualizacja: 16 października 2026
           </p>
         </div>
 
@@ -131,7 +131,10 @@ export default function PrivacyPolicyPage() {
                 Powiadomienia i urządzenie
               </strong>{' '}
               - token powiadomień push, strefa czasowa, znacznik ostatniej gry
-              oraz Twoje preferencje powiadomień (jeśli włączysz powiadomienia).
+              oraz Twoje preferencje powiadomień (gdy zezwolisz na powiadomienia
+              w systemie telefonu). Konto nie jest do tego potrzebne - bez konta
+              zapisujemy te dane przy losowym, anonimowym identyfikatorze
+              urządzenia razem z liczbą rozegranych gier.
             </li>
             <li>
               <strong className="font-normal text-on-surface">
@@ -190,10 +193,18 @@ export default function PrivacyPolicyPage() {
               wyłączając statystyki w Ustawieniach Aplikacji.
             </li>
             <li>
-              Newsletter oraz powiadomienia marketingowe (np. zaproszenia na
-              weekend, nowości) - art. 6 ust. 1 lit. a RODO (Twoja dobrowolna
-              zgoda). Powiadomienia marketingowe są domyślnie wyłączone i wymagają
-              osobnego włączenia.
+              Newsletter - art. 6 ust. 1 lit. a RODO (Twoja dobrowolna zgoda
+              wyrażona przy zapisie).
+            </li>
+            <li>
+              Powiadomienia push (przypomnienia o grze, zaproszenia na weekend,
+              nowości) - art. 6 ust. 1 lit. a RODO (Twoja zgoda). Wysyłamy je
+              każdemu, kto zezwoli na powiadomienia w systemie telefonu, z kontem
+              albo bez. Na iPhonie Aplikacja może najpierw dostarczać je po cichu
+              - trafiają wtedy tylko do Centrum powiadomień, bez dźwięku i
+              banera, a system pyta, czy chcesz je dalej otrzymywać. Zgodę
+              wycofasz w każdej chwili w Aplikacji (Ustawienia → Powiadomienia)
+              albo w ustawieniach telefonu.
             </li>
             <li>
               Moderacja treści, bezpieczeństwo i zapobieganie nadużyciom - art. 6
@@ -329,7 +340,9 @@ export default function PrivacyPolicyPage() {
             <li>
               Dane gości - identyfikatory graczy bez konta są usuwane
               automatycznie po 30 dniach bez aktywności, a techniczne sesje
-              logowania gości po 30 dniach od ich utworzenia.
+              logowania gości po 30 dniach od ich utworzenia. Gdy gość ma
+              włączone powiadomienia, jego sesja i dane powiadomień zostają do
+              pół roku od ostatniego uruchomienia Aplikacji.
             </li>
             <li>
               Zgłoszenia moderacyjne - przechowywane do czasu rozpatrzenia oraz w
